@@ -1,0 +1,38 @@
+﻿<Window x:Class="DataBindStudy.TestValidateWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:DataBindStudy"
+        xmlns:ui="clr-namespace:DataBindStudy.UIModels"
+        mc:Ignorable="d"
+        Title="TestValidateWin" Height="450" Width="800">
+    <Window.DataContext>
+        <ui:ValidateModel/>
+    </Window.DataContext>
+    <StackPanel Orientation="Vertical">
+        <Border BorderThickness="2" BorderBrush="Coral">
+            <TextBox Name="tb">
+                <TextBox.Text>
+                    <Binding Path="Value" 
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnExceptions="True"
+                             >
+                        <Binding.ValidationRules>
+                            <!--用于捕获在绑定值转换或更新过程中抛出的异常-->
+                            <ExceptionValidationRule />
+                            <!--用于验证实现了 IDataErrorInfo 接口的绑定源对象-->
+                            <!-- <DataErrorValidationRule/> -->
+                            <!--用于验证实现了 INotifyDataErrorInfo 接口的绑定源对象-->
+                            <!-- <NotifyDataErrorValidationRule/>-->
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </Border>
+        <Border BorderThickness="2" BorderBrush="Brown">
+            <TextBox Text="{Binding Path=(Validation.Errors)[0].ErrorContent, ElementName= tb}"></TextBox>
+        </Border>
+        <Button Content="Get Error" Click="ButtonBase_OnClick"></Button>
+    </StackPanel>
+</Window>

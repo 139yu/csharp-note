@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFStudyDemo", "WPFStudyDemo\WPFStudyDemo.csproj", "{AEB0FB1C-E65E-44A2-8AA8-305C5F984FE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBindStudy", "DataBindStudy\DataBindStudy.csproj", "{60E5FB51-A172-4DBB-BBB3-1B62B741B117}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFC5Test", "WPFC5Test\WPFC5Test.csproj", "{6F7E8937-4406-4238-9C30-8FE8A17412D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEB0FB1C-E65E-44A2-8AA8-305C5F984FE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEB0FB1C-E65E-44A2-8AA8-305C5F984FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEB0FB1C-E65E-44A2-8AA8-305C5F984FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEB0FB1C-E65E-44A2-8AA8-305C5F984FE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60E5FB51-A172-4DBB-BBB3-1B62B741B117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60E5FB51-A172-4DBB-BBB3-1B62B741B117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60E5FB51-A172-4DBB-BBB3-1B62B741B117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60E5FB51-A172-4DBB-BBB3-1B62B741B117}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F7E8937-4406-4238-9C30-8FE8A17412D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F7E8937-4406-4238-9C30-8FE8A17412D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F7E8937-4406-4238-9C30-8FE8A17412D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F7E8937-4406-4238-9C30-8FE8A17412D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

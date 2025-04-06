@@ -1920,19 +1920,38 @@ textBox.SetBinding(TextBox.TextProperty, binding);
 自定义数据格式转换逻辑：
 
 ```C#
-public class BoolToVisibilityConverter : IValueConverter
-{
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+public class CustomerValueConverter: IValueConverter
+{   
+    /// <summary>
+    /// 将绑定源的值转换为适合绑定目标属性的类型
+    /// </summary>
+    /// <param name="value">从绑定源获取的值</param>
+    /// <param name="targetType">绑定目标属性所期望的数据类型</param>
+    /// <param name="parameter">这是一个可选参数，可以在 XAML 绑定中通过 ConverterParameter 属性设置</param>
+    /// <param name="culture">用于提供与文化相关的信息，例如日期时间格式、数字格式等</param>
+    /// <returns>返回转换后的值，该值的类型应该与 targetType 兼容，以便可以设置到绑定目标属性上。</returns>
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return (bool)value ? Visibility.Visible : Visibility.Collapsed;
+        throw new NotImplementedException();
     }
-
-    public object ConvertBack(...) { ... }
+    /// <summary>
+    /// 与 Convert 方法相反，当数据从绑定目标流向绑定源（例如在双向绑定中，用户在 TextBox 中输入值后，需要将该值转换为适合绑定源属性的类型）时，会调用此方法
+    /// </summary>
+    /// <param name="value">从绑定目标获取的值，其类型取决于绑定目标属性的类型</param>
+    /// <param name="targetType">绑定源属性所期望的数据类型</param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns>返回转换后的值，该值的类型应该与绑定源属性的类型兼容</returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 // XAML 中使用
 <CheckBox IsChecked="{Binding IsVisible}"/>
-<TextBlock Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
+<TextBlock Visibility="{Binding IsVisible, Converter={StaticResource CustomerValueConverter}}"/>
 ```
 
 ##### **(3) 数据验证与错误处理**
@@ -2137,6 +2156,8 @@ public class BoolToVisibilityConverter : IValueConverter
 
 ##### **(6) `RelativeSource`：相对源绑定**
 
+- **相对源**：基于绑定目标元素自身的位置和层次结构来确定源，而不是依赖于绝对的数据源引用。
+
 - **作用**：绑定到当前元素的关联对象（如父容器、自身）。
 
 - **常见模式**：
@@ -2257,7 +2278,9 @@ public class FullNameConverter : IMultiValueConverter
   - **Snoop**：实时查看元素的数据上下文和绑定值。
   - **WPF Inspector**：检查绑定状态和可视化树。
 
-## 静态属性绑定
+## 示例代码
+
+### 静态属性绑定
 
 代码：
 
@@ -2350,5 +2373,77 @@ public class StaticClassTest
         }
     }
 }
+```
+
+### 属性校验异常捕获
+
+```C#
+public partial class TestValidateWin : Window
+{
+    public TestValidateWin()
+    {
+        InitializeComponent();
+        this.DataContext = this;
+    }
+
+    public static readonly DependencyProperty MyContentProperty = DependencyProperty.Register("MyContent", typeof(string),
+        typeof(TestValidateWin), new FrameworkPropertyMetadata("null"), OnValidateValueCallback);
+
+    private static bool OnValidateValueCallback(object? value)
+    {
+        if (value == null)
+        {
+            return true;
+        }
+
+        string str = value as string;
+        if (str.Length > 11)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public string MyContent
+    {
+        get => (string)this.GetValue(MyContentProperty);
+        set => this.SetValue(MyContentProperty,value);
+    }
+}
+```
+
+```xaml
+<Window x:Class="DataBindStudy.TestValidateWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:DataBindStudy"
+        mc:Ignorable="d"
+        Title="TestValidateWin" Height="450" Width="800">
+    <StackPanel Orientation="Vertical">
+        <Border BorderThickness="2" BorderBrush="Chartreuse">
+            <TextBox Name="tb">
+                <TextBox.Text>
+                    <Binding Path="MyContent" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <!--用于捕获在绑定值转换或更新过程中抛出的异常-->
+                            <ExceptionValidationRule />
+                            <!--用于验证实现了 IDataErrorInfo 接口的绑定源对象-->
+                            <!-- <DataErrorValidationRule/> -->
+                            <!--用于验证实现了 INotifyDataErrorInfo 接口的绑定源对象-->
+                            <!-- <NotifyDataErrorValidationRule/>-->
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </Border>
+        <Border BorderThickness="2" BorderBrush="Brown">
+            <TextBox Text="{Binding Path=(Validation.Errors)[0].ErrorContent, ElementName= tb}"></TextBox>
+        </Border>
+        <Button Content="Get Error" Click="ButtonBase_OnClick"></Button>
+    </StackPanel>
+</Window>
 ```
 
