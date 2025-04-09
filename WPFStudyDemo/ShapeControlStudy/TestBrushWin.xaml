@@ -1,0 +1,59 @@
+﻿<Window x:Class="ShapeControlStudy.TestBrushWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:ShapeControlStudy"
+        mc:Ignorable="d"
+        Title="TestBrushWin" Height="450" Width="800">
+    <StackPanel>
+        <Border Height="50" Opacity="1">
+            <Border.Background>
+                <DrawingBrush Viewport="0,0,20,25" ViewportUnits="Absolute" TileMode="Tile">
+                    <DrawingBrush.Drawing>
+                        <GeometryDrawing>
+                            <GeometryDrawing.Pen>
+                                    <Pen Brush="CadetBlue" Thickness="1"></Pen>
+                            </GeometryDrawing.Pen>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <LineGeometry StartPoint="0,0" EndPoint="10,0"></LineGeometry>
+                                    <LineGeometry StartPoint="0,0" EndPoint="0,200"></LineGeometry>
+                                    <LineGeometry StartPoint="0,200" EndPoint="10,200"></LineGeometry>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Border.Background>
+        </Border>
+        <TextBox Margin="0,20,0,0" Text="12345" FontSize="20" Name="tb"></TextBox>
+        <Border Height="{Binding ElementName=tb,Path=ActualHeight}" BorderThickness="2" BorderBrush="OrangeRed">
+            <Border.Background>
+                <VisualBrush Visual="{Binding ElementName=tb}"></VisualBrush>
+            </Border.Background>
+        </Border>
+        <Border Height="{Binding ElementName=tb,Path=ActualHeight}" Margin="0,20,0,20" BorderBrush="CadetBlue" BorderThickness="2">
+            <Border.Background>
+                <BitmapCacheBrush Target="{Binding ElementName=tb}">
+                    <BitmapCacheBrush.BitmapCache>
+                        <BitmapCache SnapsToDevicePixels="True" RenderAtScale="1"></BitmapCache>
+                    </BitmapCacheBrush.BitmapCache>
+                </BitmapCacheBrush>
+            </Border.Background>
+        </Border>
+        <TextBox Text="上山打老虎" FontSize="20">
+            <TextBox.Effect>
+                <BlurEffect Radius="2" RenderingBias="Performance" KernelType="Gaussian"></BlurEffect>
+            </TextBox.Effect>
+        </TextBox>
+        <Button Content="安安" Foreground="Azure" Margin="0,20,0,0" Width="100" Height="30">
+            <Button.Background>
+                <SolidColorBrush Color="DarkRed"></SolidColorBrush>
+            </Button.Background>
+            <Button.Effect>
+                <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="5" Color="CornflowerBlue"></DropShadowEffect>
+            </Button.Effect>
+        </Button>
+    </StackPanel>
+</Window>

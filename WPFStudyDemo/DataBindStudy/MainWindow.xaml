@@ -4,38 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataBindStudy"
-        xmlns:uiModels="clr-namespace:DataBindStudy.UIModels"
+        xmlns:view="clr-namespace:DataBindStudy.ViewModels"
+        xmlns:converter="clr-namespace:DataBindStudy.Converter"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+    </Window.Resources>
     <Window.DataContext>
-        <uiModels:MainViewModel/>
+        <view:MixModel></view:MixModel>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="30"/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="Aqua">
-            <TextBox Text="{Binding VM01.Value01}" Height="20"></TextBox>
-        </Border>
-        <Border Grid.Row="1" Background="Bisque">
-            <ListView ItemsSource="{Binding ListViewModel}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Border Background="Chartreuse" Margin="5,0"> 
-                            <StackPanel Orientation="Horizontal">
-                                <!--基于自身向上查找类型为Window的祖先元素，找到它的DataContext，沿着VM01.Value01获取值-->
-                                <TextBox Text="{Binding Path=DataContext.VM01.Value01, 
-                                RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
-                                <TextBox Text="{Binding Value01}"/>
-                            </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Border>
+        <!--<StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+            <Label Content="用户名："></Label>
+            <TextBox Name="UsernameBox" Text="{Binding Path =User.Username,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Width="150" VerticalAlignment="Center"></TextBox>
+            <TextBlock Foreground="OrangeRed" Margin="5,0" VerticalAlignment="Center" Text="{Binding Path=(Validation.Errors)[0].ErrorContent,ElementName=UsernameBox}"></TextBlock>
+        </StackPanel>-->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
+            <Label Content="用户名："></Label>
+            <TextBox Name="EmpNameBox" 
+                     Text="{Binding Path =Employee.EmpName,ValidatesOnNotifyDataErrors=True,UpdateSourceTrigger=PropertyChanged}" 
+                     Width="150" 
+                     VerticalAlignment="Center"></TextBox>
+            <TextBlock Foreground="OrangeRed" 
+                       VerticalAlignment="Center" 
+                       Visibility="{Binding ElementName=EmpNameBox,Path=(Validation.HasError)}">
+                <TextBlock.Text>
+                    <Binding Path="(Validation.Errors)" ElementName="EmpNameBox">
+                        <Binding.Converter>
+                            <converter:ErrorCollectionConverterToString/>
+                        </Binding.Converter>
+                    </Binding>
+                </TextBlock.Text>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </Window>

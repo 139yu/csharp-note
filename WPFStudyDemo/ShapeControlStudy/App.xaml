@@ -1,8 +1,8 @@
-﻿<Application x:Class="DataBindStudy.App"
+﻿<Application x:Class="ShapeControlStudy.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:DataBindStudy"
-             StartupUri="TestPriorityBindingWin.xaml">
+             xmlns:local="clr-namespace:ShapeControlStudy"
+             StartupUri="Test3DWin.xaml">
     <Application.Resources>
          
     </Application.Resources>

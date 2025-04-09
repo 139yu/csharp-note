@@ -1,8 +1,8 @@
-﻿<Application x:Class="DataBindStudy.App"
+﻿<Application x:Class="AnimationStudy.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:DataBindStudy"
-             StartupUri="TestPriorityBindingWin.xaml">
+             xmlns:local="clr-namespace:AnimationStudy"
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
          
     </Application.Resources>

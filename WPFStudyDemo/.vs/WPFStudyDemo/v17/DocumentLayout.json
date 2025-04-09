@@ -1,0 +1,190 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{37E5F4EF-EF2D-4A2A-8A4E-CFC2A5A31BDB}|AnimationStudy\\AnimationStudy.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\animationstudy\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{37E5F4EF-EF2D-4A2A-8A4E-CFC2A5A31BDB}|AnimationStudy\\AnimationStudy.csproj|solutionrelative:animationstudy\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37E5F4EF-EF2D-4A2A-8A4E-CFC2A5A31BDB}|AnimationStudy\\AnimationStudy.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\animationstudy\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37E5F4EF-EF2D-4A2A-8A4E-CFC2A5A31BDB}|AnimationStudy\\AnimationStudy.csproj|solutionrelative:animationstudy\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\wpfeventstudy\\customerslider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|solutionrelative:wpfeventstudy\\customerslider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\wpfeventstudy\\testrouteeventswin.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|solutionrelative:wpfeventstudy\\testrouteeventswin.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\wpfeventstudy\\testrouteeventswin.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|solutionrelative:wpfeventstudy\\testrouteeventswin.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\wpfeventstudy\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|solutionrelative:wpfeventstudy\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\wpfeventstudy\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|solutionrelative:wpfeventstudy\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\wpfeventstudy\\testmouseeventwin.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|solutionrelative:wpfeventstudy\\testmouseeventwin.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\wpfeventstudy\\testmouseeventwin.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|solutionrelative:wpfeventstudy\\testmouseeventwin.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\wpfeventstudy\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F91C8B37-C8D3-45FD-BBCE-E69A6B1F92AE}|WPFEventStudy\\WPFEventStudy.csproj|solutionrelative:wpfeventstudy\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\AnimationStudy\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "AnimationStudy\\MainWindow.xaml",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\AnimationStudy\\MainWindow.xaml",
+              "RelativeToolTip": "AnimationStudy\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-09T14:27:46.004Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\AnimationStudy\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "AnimationStudy\\MainWindow.xaml.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\AnimationStudy\\MainWindow.xaml.cs",
+              "RelativeToolTip": "AnimationStudy\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T14:27:45.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CustomerSlider.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\CustomerSlider.cs",
+              "RelativeDocumentMoniker": "WPFEventStudy\\CustomerSlider.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\CustomerSlider.cs",
+              "RelativeToolTip": "WPFEventStudy\\CustomerSlider.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAgwCQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T13:20:48.712Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TestRouteEventsWin.xaml.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\TestRouteEventsWin.xaml.cs",
+              "RelativeDocumentMoniker": "WPFEventStudy\\TestRouteEventsWin.xaml.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\TestRouteEventsWin.xaml.cs",
+              "RelativeToolTip": "WPFEventStudy\\TestRouteEventsWin.xaml.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAxwDoAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T09:53:18.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TestRouteEventsWin.xaml",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\TestRouteEventsWin.xaml",
+              "RelativeDocumentMoniker": "WPFEventStudy\\TestRouteEventsWin.xaml",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\TestRouteEventsWin.xaml",
+              "RelativeToolTip": "WPFEventStudy\\TestRouteEventsWin.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-09T09:52:34.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TestMouseEventWin.xaml",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\TestMouseEventWin.xaml",
+              "RelativeDocumentMoniker": "WPFEventStudy\\TestMouseEventWin.xaml",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\TestMouseEventWin.xaml",
+              "RelativeToolTip": "WPFEventStudy\\TestMouseEventWin.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-09T08:02:57.534Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "App.xaml",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\App.xaml",
+              "RelativeDocumentMoniker": "WPFEventStudy\\App.xaml",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\App.xaml",
+              "RelativeToolTip": "WPFEventStudy\\App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-09T08:05:00.301Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TestMouseEventWin.xaml.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\TestMouseEventWin.xaml.cs",
+              "RelativeDocumentMoniker": "WPFEventStudy\\TestMouseEventWin.xaml.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\TestMouseEventWin.xaml.cs",
+              "RelativeToolTip": "WPFEventStudy\\TestMouseEventWin.xaml.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAhwDEAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T08:03:45.16Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\App.xaml.cs",
+              "RelativeDocumentMoniker": "WPFEventStudy\\App.xaml.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\App.xaml.cs",
+              "RelativeToolTip": "WPFEventStudy\\App.xaml.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAIBAwBoAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T07:38:22.674Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "WPFEventStudy\\MainWindow.xaml.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\WPFEventStudy\\MainWindow.xaml.cs",
+              "RelativeToolTip": "WPFEventStudy\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAiwDMAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T07:37:59.317Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

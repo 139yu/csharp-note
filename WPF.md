@@ -2447,3 +2447,1874 @@ public partial class TestValidateWin : Window
 </Window>
 ```
 
+### 实现IDataErrorInfo接口
+
+```C#
+public class UserViewModel : IDataErrorInfo
+    {
+        private string _username = "root";
+        
+        [CustomerStringLength(minLength:2,maxLength:20)]
+        public string Username
+        {
+            get { return _username; }
+            set { _username = value; }
+        }
+        
+        private int _age = 0;
+        public int Age
+        {
+            get
+            {
+                return this._age;
+            }
+            set
+            {
+                _age = value;
+            }
+        }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                var propertyInfo = this.GetType().GetProperty(columnName);
+                if (propertyInfo != null && propertyInfo.IsDefined(typeof(CustomerStringLength),false))
+                {
+                    CustomerStringLength stringLength = (CustomerStringLength)propertyInfo.GetCustomAttribute(typeof(CustomerStringLength));
+                    var stringLengthMinLength = stringLength.MinLength;
+                    var stringLengthMaxLength = stringLength.MaxLength;
+                    var value = propertyInfo.GetValue(this, null) as string;
+                    if (value != null && !(value.Length > stringLengthMinLength && value.Length < stringLengthMaxLength))
+                    {
+                        return $"{columnName} length must be between {stringLengthMinLength} and {stringLengthMaxLength}.";
+                    }
+                }
+                return null;
+            }
+        }
+    }
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    public class CustomerStringLength: Attribute
+    {
+        public int MaxLength { get; set; }
+        public int MinLength { get; set; }
+
+        public CustomerStringLength(int minLength, int maxLength)
+        {
+            this.MaxLength = maxLength;
+            this.MinLength = minLength;
+        }
+    }
+```
+
+```xaml
+<Window x:Class="DataBindStudy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DataBindStudy"
+        xmlns:model="clr-namespace:DataBindStudy.Models"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <model:UserViewModel></model:UserViewModel>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+      
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+            <Label Content="用户名："></Label>
+            <TextBox Name="UsernameBox" Text="{Binding Path =Username,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Width="150" VerticalAlignment="Center"></TextBox>
+            <TextBlock Foreground="OrangeRed" Margin="5,0" VerticalAlignment="Center" Text="{Binding Path=(Validation.Errors)[0].ErrorContent,ElementName=UsernameBox}"></TextBlock>
+        </StackPanel>
+    </Grid>
+</Window>
+```
+
+# 图形控件
+
+## 图形控件基础介绍
+
+### **1. 基本形状控件**
+
+#### **Ellipse（椭圆/圆形）**
+
+- **功能**：绘制椭圆或正圆。
+- **关键属性**：
+  - `Width`/`Height`：定义形状尺寸。
+  - `Fill`：填充颜色或画刷。
+  - `Stroke`：边框颜色。
+  - `StrokeThickness`：边框粗细。
+- **示例**：
+
+```xaml
+<Ellipse Width="100" Height="60" Fill="Blue" Stroke="Black" StrokeThickness="2"/>
+```
+
+- **场景**：按钮背景、圆形图标、数据可视化中的节点。
+
+#### **Rectangle（矩形/正方形）**
+
+- **功能**：绘制矩形或正方形。
+- **关键属性**：
+  - `RadiusX`/`RadiusY`：圆角半径。
+- **示例**：
+
+```xaml
+<Rectangle Width="120" Height="80" Fill="Green" RadiusX="10" RadiusY="10"/>
+```
+
+- **场景**：卡片式布局、进度条背景、自定义按钮。
+
+#### **Line（直线）**
+
+- **功能**：绘制直线。
+- **关键属性**：
+  - `X1`/`Y1`：起点坐标。
+  - `X2`/`Y2`：终点坐标。
+- **示例**：
+
+```xaml
+<Line X1="0" Y1="0" X2="200" Y2="50" Stroke="Red" StrokeThickness="3"/>
+```
+
+- **场景**：图表中的轴线、分隔线、简单图形连线。
+
+#### **Polygon（多边形）**
+
+- **功能**：绘制闭合多边形。
+- **关键属性**：
+  - `Points`：顶点坐标集合（如 `"0,0 100,0 50,100"`）。
+- **示例**：
+
+```xaml
+<Polygon Points="0,0 100,0 50,100" Fill="Orange" Stroke="Black"/>
+```
+
+- **场景**：自定义图标、几何图形绘制。
+
+#### **Polyline（多段线）**
+
+- **功能**：绘制非闭合的多段线。
+- **示例**：
+
+```xaml
+<Polyline Points="0,0 50,30 100,10" Stroke="Purple" StrokeThickness="2"/>
+```
+
+- **场景**：折线图、手绘路径。
+
+### **2. Path（路径）**
+
+- **功能**：绘制复杂矢量图形，支持贝塞尔曲线、弧线等。
+- **关键属性**：
+  - `Data`：使用路径标记语法（如 `M0,0 L100,100`）。
+  - `StrokeDashArray`：虚线样式。
+- **示例**：
+
+```xaml
+<Path Data="M0,0 L100,50 C150,100 200,0 300,50"
+      Stroke="Blue" StrokeThickness="3"/>
+```
+
+- **路径语法**：
+  - `M`：移动起点。
+  - `L`：直线。
+  - `C`：三次贝塞尔曲线。
+  - `A`：弧线。
+- **场景**：图标设计、复杂几何图形、动态生成的形状。 
+
+### **3.几何图形与路径标记**
+
+#### **Geometry（几何图形）**
+
+- **类型**：
+  - `LineGeometry`：直线几何。
+  - `RectangleGeometry`：矩形几何。
+  - `EllipseGeometry`：椭圆几何。
+  - `PathGeometry`：复杂路径几何。
+- **示例**：
+
+```xaml
+<Path Fill="Green">
+    <Path.Data>
+        <PathGeometry>
+            <PathFigure StartPoint="0,0">
+                <LineSegment Point="100,0"/>
+                <ArcSegment Point="200,50" Size="50,50" SweepDirection="Clockwise"/>
+            </PathFigure>
+        </PathGeometry>
+    </Path.Data>
+</Path>
+```
+
+## Path微语言
+
+在 WPF 中，**Path 微语言（Path Mini-Language）** 是一种简洁的字符串语法，用于描述复杂的几何路径（`PathGeometry`）。通过该语法，可以高效地定义直线、曲线、弧线等图形，而无需编写冗长的 XAML 元素。以下是其核心语法和用法的详细说明：
+
+### **1. 语法结构**
+
+Path 微语言通过 `Path.Data` 属性的字符串值定义，基本格式如下：
+`"命令1 参数1 参数2 ... 命令2 参数1 ..."`
+每个命令由 **单个字母** 表示，参数为数值或坐标点。
+
+------
+
+### **2. 基础命令**
+
+#### **(1) 移动命令（Move To）**
+
+- **`M` 或 `m`**：将起点移动到指定坐标。
+  - **大写 `M`**：绝对坐标（相对于画布原点）。
+  - **小写 `m`**：相对坐标（相对于当前点）。
+
+**示例**：
+
+```xaml
+<!-- 绝对坐标：移动到 (10,20) -->
+<Path Data="M 10,20 ..." />
+
+<!-- 相对坐标：向右移动 30，向下移动 40 -->
+<Path Data="m 30,40 ..." />
+```
+
+#### **(2) 直线命令（Line To）**
+
+- **`L` 或 `l`**：从当前点绘制直线到目标点。
+- **`H`/`h`**：水平直线（仅指定 x 坐标）。
+- **`V`/`v`**：垂直直线（仅指定 y 坐标）。
+
+**示例**：
+
+```xaml
+<!-- 绝对坐标：从 (10,20) 到 (50,60) -->
+<Path Data="M 10,20 L 50,60" Stroke="Black"/>
+
+<!-- 相对坐标：向右画 40，向下画 30 -->
+<Path Data="M 10,20 l 40,30" Stroke="Black"/>
+```
+
+#### **(3) 闭合命令（Close）**
+
+- **`Z` 或 `z`**：闭合路径（从当前点绘制直线到起点）。
+
+**示例**：
+
+```xaml
+<!-- 绘制三角形 -->
+<Path Data="M 0,0 L 100,0 L 50,100 Z" Fill="Blue"/>
+```
+
+### **3. 曲线命令**
+
+#### **(1) 三次贝塞尔曲线（Cubic Bezier）**
+
+- **`C` 或 `c`**：定义三次贝塞尔曲线，需要两个控制点和一个终点。
+  **格式**：`C 控制点1 控制点2 终点`
+
+**示例**：
+
+```xaml
+<!-- 从 (0,0) 到 (100,0)，控制点 (20,50) 和 (80,50) -->
+<Path Data="M 0,0 C 20,50 80,50 100,0" Stroke="Red"/>
+```
+
+#### **(2) 二次贝塞尔曲线（Quadratic Bezier）**
+
+- **`Q` 或 `q`**：定义二次贝塞尔曲线，需要一个控制点和一个终点。
+  **格式**：`Q 控制点 终点`
+
+**示例**：
+
+```xaml
+<!-- 从 (0,0) 到 (100,0)，控制点 (50,80) -->
+<Path Data="M 0,0 Q 50,80 100,0" Stroke="Green"/>
+```
+
+#### **(3) 椭圆弧（Arc）**
+
+- **`A` 或 `a`**：绘制椭圆弧，参数较多。
+  **格式**：
+  `A 椭圆半径X 椭圆半径Y 旋转角度 是否大弧 是否顺时针 终点`
+
+**参数详解**：
+
+- **半径X/Y**：椭圆的长半轴和短半轴。
+- **旋转角度**：椭圆相对于坐标轴的旋转角度（度数）。
+- **是否大弧**：`0`（小弧）或 `1`（大弧）。
+- **是否顺时针**：`0`（逆时针）或 `1`（顺时针）。
+- **终点**：弧的终点坐标。
+
+**示例**：
+
+```xaml
+<!-- 从 (0,0) 到 (100,0)，绘制半圆 -->
+<Path Data="M 0,0 A 50,50 0 1 1 100,0" Stroke="Purple"/>
+```
+
+### **5. 注意事项**
+
+1. **坐标系统**：原点 `(0,0)` 在左上角，x 向右递增，y 向下递增。
+2. **闭合路径**：使用 `Z` 命令确保路径闭合，否则可能无法正确填充。
+3. **性能优化**：复杂路径建议用 `StreamGeometry` 替代字符串语法（性能更高）。
+4. **工具支持**：可使用 Blend 或在线工具（如 Path Editor）生成路径数据。
+
+## 对象基本变形操作
+
+### **WPF 对象基本变形操作详解**
+
+在 WPF 中，**变形（Transform）** 是修改对象位置、大小、旋转和倾斜的核心机制。通过变换操作，可以实现动态的视觉效果（如动画、交互反馈），而无需直接修改控件的布局属性。以下是变形操作的分类、核心属性及使用场景的全面解析：
+
+#### **1. 变形类型与核心属性**
+
+WPF 提供 6 种基本变形类型，均继承自 `Transform` 类：
+
+| **变形类型**           | **作用**                   | **关键属性**                                                 |
+| :--------------------- | :------------------------- | :----------------------------------------------------------- |
+| **TranslateTransform** | 平移（位移）               | `X`：水平偏移量；`Y`：垂直偏移量。                           |
+| **RotateTransform**    | 旋转                       | `Angle`：旋转角度（度数）；`CenterX/Y`：旋转中心点。         |
+| **ScaleTransform**     | 缩放                       | `ScaleX/Y`：缩放比例；`CenterX/Y`：缩放中心点。              |
+| **SkewTransform**      | 斜切（倾斜）               | `AngleX/Y`：X/Y轴倾斜角度；`CenterX/Y`：倾斜中心点。         |
+| **MatrixTransform**    | 矩阵变换（自定义任意变形） | `Matrix`：定义变换矩阵（6个参数：M11, M12, M21, M22, OffsetX, OffsetY）。 |
+| **TransformGroup**     | 组合多个变形               | `Children`：包含多个变形对象的集合。                         |
+
+------
+
+##### **(1) 平移（TranslateTransform）**
+
+- **功能**：沿 X/Y 轴移动对象。
+- **示例**：
+
+```xaml
+<Rectangle Width="100" Height="50" Fill="Blue">
+    <Rectangle.RenderTransform>
+        <TranslateTransform X="20" Y="30"/>
+    </Rectangle.RenderTransform>
+</Rectangle>
+```
+
+- **场景**：实现拖拽动画、元素位置微调。
+
+##### **(2) 旋转（RotateTransform）**
+
+- **功能**：绕指定中心点旋转对象。
+
+- **示例**：
+
+  ```xaml
+  <Button Content="旋转按钮">
+      <Button.RenderTransform>
+          <RotateTransform Angle="45" CenterX="50" CenterY="15"/>
+      </Button.RenderTransform>
+  </Button>
+  ```
+
+- **场景**：仪表盘指针、动态图标、卡片翻转效果。
+
+##### **(3) 缩放（ScaleTransform）**
+
+- **功能**：按比例放大或缩小对象。
+- **示例**：
+
+```xaml
+<Image Source="logo.png">
+    <Image.RenderTransform>
+        <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="0" CenterY="0"/>
+    </Image.RenderTransform>
+</Image>
+```
+
+##### **(4) 斜切（SkewTransform）**
+
+- **功能**：沿 X/Y 轴倾斜对象，产生平行四边形效果。
+- **示例**：
+
+```xaml
+<Border Width="100" Height="50" Background="Green">
+    <Border.RenderTransform>
+        <SkewTransform AngleX="30" AngleY="0"/>
+    </Border.RenderTransform>
+</Border>
+```
+
+##### **(5) 矩阵变换（MatrixTransform）**
+
+- **功能**：通过矩阵定义任意复杂变换（平移、旋转、缩放、斜切的组合）。
+- **矩阵参数**：
+
+```xaml
+| M11  		M12  	0 |
+| M21  		M22  	0 |
+| OffsetX  OffsetY  1 |
+```
+
+|     参数      |        作用        |                数学意义                 | 默认值 |            示例场景            |
+| :-----------: | :----------------: | :-------------------------------------: | :----: | :----------------------------: |
+|   **`M11`**   | X 轴缩放与旋转因子 | 控制 X 轴缩放和旋转的余弦分量（`cosθ`） | `1.0`  |   `M11=2` 表示 X 轴放大 2 倍   |
+|   **`M12`**   | X 轴倾斜与旋转因子 | 控制 X 轴倾斜和旋转的正弦分量（`sinθ`） | `0.0`  | `M12=0.5` 表示 X 轴倾斜 26.6°  |
+|   **`M21`**   | Y 轴倾斜与旋转因子 |   控制 Y 轴倾斜的正弦分量（`-sinθ`）    | `0.0`  | `M21=0.5` 表示 Y 轴逆时针倾斜  |
+|   **`M22`**   | Y 轴缩放与旋转因子 | 控制 Y 轴缩放和旋转的余弦分量（`cosθ`） | `1.0`  |  `M22=0.5` 表示 Y 轴缩小 50%   |
+| **`OffsetX`** |     X 轴平移量     |       控制水平位移（单位：像素）        | `0.0`  | `OffsetX=50` 向右移动 50 像素  |
+| **`OffsetY`** |     Y 轴平移量     |       控制垂直位移（单位：像素）        | `0.0`  | `OffsetY=-30` 向上移动 30 像素 |
+
+- **示例**：
+
+```xaml
+<Path Data="M0,0 L50,0 25,50 Z" Fill="Red">
+    <Path.RenderTransform>
+        <MatrixTransform Matrix="1, 0.5, 0, 1, 20, 0"/>
+    </Path.RenderTransform>
+</Path>
+```
+
+##### **(6) 组合变换（TransformGroup）**
+
+- **功能**：按顺序应用多个变换（顺序影响最终效果）。
+- **示例**：
+
+```xaml
+<Ellipse Width="80" Height="80" Fill="Orange">
+    <Ellipse.RenderTransform>
+        <TransformGroup>
+            <RotateTransform Angle="30"/>
+            <ScaleTransform ScaleX="1.2" ScaleY="0.8"/>
+        </TransformGroup>
+    </Ellipse.RenderTransform>
+</Ellipse>
+```
+
+#### **2. 核心变形操作详解**
+
+##### **(1) 平移（TranslateTransform）**
+
+- **功能**：沿 X/Y 轴移动对象。
+- **示例**：
+
+```xaml
+<Rectangle Width="100" Height="50" Fill="Blue">
+    <Rectangle.RenderTransform>
+        <TranslateTransform X="20" Y="30"/>
+    </Rectangle.RenderTransform>
+</Rectangle>
+```
+
+##### **(2) 旋转（RotateTransform）**
+
+- **功能**：绕指定中心点旋转对象。
+- **示例**：
+
+```xaml
+<Button Content="旋转按钮">
+    <Button.RenderTransform>
+        <RotateTransform Angle="45" CenterX="50" CenterY="15"/>
+    </Button.RenderTransform>
+</Button>
+```
+
+- **场景**：仪表盘指针、动态图标、卡片翻转效果。
+
+##### **(3) 缩放（ScaleTransform）**
+
+- **功能**：按比例放大或缩小对象。
+- **示例**：
+
+```xaml
+<Image Source="logo.png">
+    <Image.RenderTransform>
+        <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="0" CenterY="0"/>
+    </Image.RenderTransform>
+</Image>
+```
+
+- **场景**：鼠标悬停放大效果、响应式布局适配。
+
+##### **(4) 斜切（SkewTransform）**
+
+- **功能**：沿 X/Y 轴倾斜对象，产生平行四边形效果。
+- **示例**：
+
+```xaml
+<Border Width="100" Height="50" Background="Green">
+    <Border.RenderTransform>
+        <SkewTransform AngleX="30" AngleY="0"/>
+    </Border.RenderTransform>
+</Border>
+```
+
+- **场景**：创意图标、动态阴影效果。
+
+##### **(5) 矩阵变换（MatrixTransform）**
+
+- **功能**：通过矩阵定义任意复杂变换（平移、旋转、缩放、斜切的组合）。
+- **矩阵参数**：
+
+| **`M11`**     | X 轴缩放与旋转因子 | 控制 X 轴缩放和旋转的余弦分量（`cosθ`） | `1.0` | `M11=2` 表示 X 轴放大 2 倍     |
+| ------------- | ------------------ | --------------------------------------- | ----- | ------------------------------ |
+| **`M12`**     | X 轴倾斜与旋转因子 | 控制 X 轴倾斜和旋转的正弦分量（`sinθ`） | `0.0` | `M12=0.5` 表示 X 轴倾斜 26.6°  |
+| **`M21`**     | Y 轴倾斜与旋转因子 | 控制 Y 轴倾斜的正弦分量（`-sinθ`）      | `0.0` | `M21=0.5` 表示 Y 轴逆时针倾斜  |
+| **`M22`**     | Y 轴缩放与旋转因子 | 控制 Y 轴缩放和旋转的余弦分量（`cosθ`） | `1.0` | `M22=0.5` 表示 Y 轴缩小 50%    |
+| **`OffsetX`** | X 轴平移量         | 控制水平位移（单位：像素）              | `0.0` | `OffsetX=50` 向右移动 50 像素  |
+| **`OffsetY`** | Y 轴平移量         | 控制垂直位移（单位：像素）              | `0.0` | `OffsetY=-30` 向上移动 30 像素 |
+
+```xaml
+<Path Data="M0,0 L50,0 25,50 Z" Fill="Red">
+    <Path.RenderTransform>
+        <MatrixTransform Matrix="1, 0.5, 0, 1, 20, 0"/>
+    </Path.RenderTransform>
+</Path>
+```
+
+##### **(6) 组合变换（TransformGroup）**
+
+- **功能**：按顺序应用多个变换（顺序影响最终效果）。
+- **示例**：
+
+```xaml
+<Ellipse Width="80" Height="80" Fill="Orange">
+    <Ellipse.RenderTransform>
+        <TransformGroup>
+            <RotateTransform Angle="30"/>
+            <ScaleTransform ScaleX="1.2" ScaleY="0.8"/>
+        </TransformGroup>
+    </Ellipse.RenderTransform>
+</Ellipse>
+```
+
+
+
+#### **3. 变形操作的核心概念**
+
+##### **(1) 变换中心点（CenterX/Y）**
+
+- **默认值**：所有变换的默认中心点为对象左上角 `(0,0)`。
+- **调整效果**：通过设置 `CenterX/Y` 可改变变换的基准点（如绕中心旋转）。
+
+```xaml
+<!-- 围绕中心点旋转 -->
+<RotateTransform Angle="45" CenterX="50" CenterY="50"/>
+```
+
+##### **(2) RenderTransform 与 LayoutTransform**
+
+- **RenderTransform**：
+  - **作用**：仅影响渲染位置，不改变布局计算。
+  - **性能**：高效，适合动画和视觉调整。
+  - **示例**：按钮悬停放大效果。
+- **LayoutTransform**：
+  - **作用**：影响布局系统，会触发重新布局。
+  - **性能**：开销较大，适合需要布局适配的场景（如旋转后自动调整容器大小）。
+  - **示例**：文本旋转后自动扩展父容器。
+
+##### **(3) 变换的数学基础**
+
+所有变换均可表示为 **3x3 变换矩阵**，最终通过矩阵乘法组合。
+例如，以下两个操作等价：
+
+```xaml
+<!-- 方式1：组合变换 -->
+<TransformGroup>
+    <ScaleTransform ScaleX="2" ScaleY="1"/>
+    <SkewTransform AngleX="30"/>
+</TransformGroup>
+
+<!-- 方式2：矩阵变换 -->
+<MatrixTransform Matrix="2, 0, 0.577, 1, 0, 0"/>
+```
+
+#### **4. 性能优化与最佳实践**
+
+##### **(1) 冻结变换对象（Freeze）**
+
+对静态变换使用 `Freeze()` 提升性能：
+
+```C#
+var transform = new RotateTransform(45);
+transform.Freeze(); // 变为不可修改，减少内存开销
+```
+
+##### **(2) 硬件加速**
+
+- 启用 GPU 加速：确保 `RenderOptions.ProcessRenderMode` 设置为 `Default` 或 `Hardware`。
+- 避免过度复杂变换：复杂矩阵运算可能降低帧率。
+
+##### **(3) 动画优化**
+
+- 使用 `DoubleAnimation` 直接操作变换属性：
+
+```xaml
+<Storyboard>
+    <DoubleAnimation 
+        Storyboard.TargetProperty="(Button.RenderTransform).(RotateTransform.Angle)"
+        To="360" Duration="0:0:2"/>
+</Storyboard>
+```
+
+## Brush填充
+
+以下是 WPF 中 **Brush（画刷）** 的完整参数解析，涵盖所有子类及其属性，结合技术文档与实际应用场景整理：
+
+------
+
+### 一、Brush 基类核心属性
+
+所有画刷均继承自 `System.Windows.Media.Brush`，共享以下通用属性：
+
+|       **参数**        |  **类型**   | **默认值** |                           **说明**                           |
+| :-------------------: | :---------: | :--------: | :----------------------------------------------------------: |
+|      **Opacity**      |  `double`   |   `1.0`    |       画刷的不透明度（0.0 完全透明，1.0 完全不透明）。       |
+|     **Transform**     | `Transform` |   `null`   | 应用几何变换（如旋转、缩放），影响画刷的渲染效果，但不改变布局系统。 |
+| **RelativeTransform** | `Transform` |   `null`   | 相对于画刷输出区域的变换（归一化坐标，如 `(0,0)` 到 `(1,1)`）。 |
+
+### 二、SolidColorBrush（纯色画刷）
+
+专用于单一颜色填充。
+
+| **参数**  | **类型** | **默认值**  |                           **说明**                           |
+| :-------: | :------: | :---------: | :----------------------------------------------------------: |
+| **Color** | `Color`  | `#00000000` | 填充颜色，支持多种格式： - 预定义名称（`Red`、`Blue`） - HEX值（`#AARRGGBB`） - RGB分量（`Color.FromRgb(255,0,0)`） |
+
+**示例**：
+
+```xaml
+<Rectangle>
+    <Rectangle.Fill>
+        <SolidColorBrush Color="#FFFF0000"/> <!-- 红色，不透明 -->
+    </Rectangle.Fill>
+</Rectangle>
+```
+
+### 三、GradientBrush 基类
+
+渐变画刷（`LinearGradientBrush` 和 `RadialGradientBrush`）共享以下属性：
+
+|          **参数**          |         **类型**         |        **默认值**         |                           **说明**                           |
+| :------------------------: | :----------------------: | :-----------------------: | :----------------------------------------------------------: |
+|     **GradientStops**      | `GradientStopCollection` |          空集合           | 颜色过渡点集合，每个 `GradientStop` 包含 `Color` 和 `Offset`（0.0 到 1.0）。 |
+|      **SpreadMethod**      |  `GradientSpreadMethod`  |           `Pad`           | 渐变范围外的填充方式： - `Pad`：延伸边缘颜色 - `Reflect`：镜像重复 - `Repeat`：平铺重复 |
+| **ColorInterpolationMode** | `ColorInterpolationMode` | `SRgbLinearInterpolation` |   颜色插值模式（`SRgb*` 或 `ScRgbLinearInterpolation`）。    |
+|      **MappingMode**       |    `BrushMappingMode`    |  `RelativeToBoundingBox`  | 坐标系模式： - `RelativeToBoundingBox`：归一化坐标（0.0-1.0） - `Absolute`：物理像素坐标 |
+
+------
+
+#### 1. **LinearGradientBrush（线性渐变）**
+
+|    **参数**    | **类型** | **默认值** |                        **说明**                         |
+| :------------: | :------: | :--------: | :-----------------------------------------------------: |
+| **StartPoint** | `Point`  |  `(0,0)`   | 渐变起点（相对坐标或绝对坐标，由 `MappingMode` 决定）。 |
+|  **EndPoint**  | `Point`  |  `(1,1)`   |             渐变终点（默认从左上到右下）。              |
+
+**示例**：
+
+```xaml
+<Rectangle Width="200" Height="100">
+    <Rectangle.Fill>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="Yellow" Offset="0"/>
+            <GradientStop Color="Red" Offset="1"/>
+        </LinearGradientBrush>
+    </Rectangle.Fill>
+</Rectangle>
+```
+
+#### 2. **RadialGradientBrush（径向渐变）**
+
+|      **参数**      | **类型** | **默认值**  |                      **说明**                      |
+| :----------------: | :------: | :---------: | :------------------------------------------------: |
+|     **Center**     | `Point`  | `(0.5,0.5)` |             渐变椭圆中心（相对坐标）。             |
+| **GradientOrigin** | `Point`  | `(0.5,0.5)` | 渐变起点（通常与 `Center` 不同以创建非对称效果）。 |
+|    **RadiusX**     | `double` |    `0.5`    |               水平半径（相对尺寸）。               |
+|    **RadiusY**     | `double` |    `0.5`    |               垂直半径（相对尺寸）。               |
+
+**示例**：
+
+```xaml
+<Ellipse Width="150" Height="150">
+    <Ellipse.Fill>
+        <RadialGradientBrush Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="Blue" Offset="1"/>
+        </RadialGradientBrush>
+    </Ellipse.Fill>
+</Ellipse>
+```
+
+### 四、ImageBrush（图像画刷）
+
+用图像填充区域。
+
+|     **参数**      |      **类型**      |       **默认值**        |                           **说明**                           |
+| :---------------: | :----------------: | :---------------------: | :----------------------------------------------------------: |
+|  **ImageSource**  |   `ImageSource`    |         `null`          |        图像资源（`BitmapImage`、`DrawingImage` 等）。        |
+|    **Stretch**    |     `Stretch`      |         `Fill`          | 图像拉伸模式： - `None`：原始尺寸 - `Fill`：填充区域（可能变形） - `Uniform`：等比缩放 - `UniformToFill`：等比填满 |
+|   **TileMode**    |     `TileMode`     |         `None`          | 平铺方式： - `None`：不重复 - `Tile`：平铺 - `FlipX/Y/XY`：镜像平铺 |
+|   **Viewport**    |       `Rect`       |       `(0,0,1,1)`       |               定义平铺区域（相对或绝对坐标）。               |
+| **ViewportUnits** | `BrushMappingMode` | `RelativeToBoundingBox` |                    `Viewport` 坐标模式。                     |
+| **AlignmentX/Y**  |   `AlignmentX/Y`   |        `Center`         | 图像对齐方式（`Left/Center/Right` 或 `Top/Center/Bottom`）。 |
+
+**示例**：
+
+```xaml
+<Rectangle Width="300" Height="200">
+    <Rectangle.Fill>
+        <ImageBrush ImageSource="texture.jpg" Stretch="UniformToFill"/>
+    </Rectangle.Fill>
+</Rectangle>
+```
+
+### 五、VisualBrush（视觉画刷）
+
+用另一个视觉元素（如控件、形状）填充区域。
+
+|       **参数**        |      **类型**      |       **默认值**        |                           **说明**                           |
+| :-------------------: | :----------------: | :---------------------: | :----------------------------------------------------------: |
+|      **Visual**       |      `Visual`      |         `null`          | 引用的视觉元素（如 `{Binding ElementName=sourceControl}`）。 |
+| **AutoLayoutContent** |       `bool`       |         `false`         |       是否自动布局引用内容（需配合 `Viewbox` 使用）。        |
+|      **Viewbox**      |       `Rect`       |       `(0,0,1,1)`       |          定义引用内容的可见区域（相对或绝对坐标）。          |
+|   **ViewboxUnits**    | `BrushMappingMode` | `RelativeToBoundingBox` |                     `Viewbox` 坐标模式。                     |
+
+**示例**：
+
+```xaml
+<Rectangle Width="200" Height="200">
+    <Rectangle.Fill>
+        <VisualBrush Visual="{Binding ElementName=sourceElement}"/>
+    </Rectangle.Fill>
+</Rectangle>
+<TextBlock x:Name="sourceElement" Text="Hello, WPF!" FontSize="24"/>
+```
+
+### **六、BitmapCacheBrush** （**位图缓存**）
+
+是将一个视觉元素（如控件、图形或布局）渲染为位图并缓存，后续绘制时直接复用缓存位图，从而减少实时渲染的计算开销。
+
+#### **1.BitmapCacheBrush 的关键属性**
+
+|       **属性**        |   **类型**    | **默认值** |                           **说明**                           |
+| :-------------------: | :-----------: | :--------: | :----------------------------------------------------------: |
+|      **Target**       |   `Visual`    |   `null`   |              绑定的源视觉元素（如控件、容器）。              |
+| **AutoLayoutContent** |    `bool`     |  `false`   | 是否自动更新缓存： `true`=源元素布局变化时自动刷新缓存；`false`=需在C#代码中手动调用 `Invalidate()`。 |
+|    **BitmapCache**    | `BitmapCache` |   `null`   |          位图缓存的详细配置（如分辨率、缓存策略）。          |
+
+#### **2.BitmapCacheBrush 的代码示例**
+
+```xaml
+<Grid>
+    <!-- 源视觉元素（复杂图形） -->
+    <Canvas x:Name="sourceCanvas" Width="200" Height="200">
+        <Path Fill="Blue">
+            <Path.Data>
+                <GeometryGroup>
+                    <!-- 复杂几何图形 -->
+                    <EllipseGeometry Center="100,100" RadiusX="80" RadiusY="80"/>
+                    <RectangleGeometry Rect="50,50,100,100"/>
+                </GeometryGroup>
+            </Path.Data>
+        </Path>
+    </Canvas>
+
+    <!-- 使用 BitmapCacheBrush 绘制缓存 -->
+    <Rectangle Width="400" Height="400">
+        <Rectangle.Fill>
+            <BitmapCacheBrush 
+                Target="{Binding ElementName=sourceCanvas}"
+                AutoLayoutContent="True"/>
+        </Rectangle.Fill>
+    </Rectangle>
+</Grid>
+```
+
+#### **3.与 VisualBrush 的对比**
+
+|   **特性**   |    **BitmapCacheBrush**    |             **VisualBrush**              |
+| :----------: | :------------------------: | :--------------------------------------: |
+| **渲染方式** | 基于位图缓存（静态快照）。 |       实时渲染源元素（动态更新）。       |
+|   **性能**   |    高（适合静态内容）。    |       低（复杂动态内容可能卡顿）。       |
+|   **内存**   |      高（存储位图）。      |              低（无缓存）。              |
+| **适用场景** | 静态/低频更新的复杂元素。  | 需要实时同步的动态效果（如反射、动画）。 |
+
+### 七、DrawingBrush（绘图画刷）
+
+用矢量图形（几何图形、图像组合）填充区域。
+
+|   **参数**   | **类型**  | **默认值**  |                           **说明**                           |
+| :----------: | :-------: | :---------: | :----------------------------------------------------------: |
+| **Drawing**  | `Drawing` |   `null`    | 包含绘图内容（`GeometryDrawing`、`ImageDrawing`、`VideoDrawing` 等）。 |
+| **Viewbox**  |  `Rect`   | `(0,0,1,1)` |             定义绘图可见区域（相对或绝对坐标）。             |
+| **Viewport** |  `Rect`   | `(0,0,1,1)` |             定义平铺区域（需启用 `TileMode`）。              |
+
+**示例**：
+
+```xaml
+<Rectangle Width="100" Height="100">
+    <Rectangle.Fill>
+        <DrawingBrush>
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="LightBlue">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="50,50" RadiusX="40" RadiusY="40"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+    </Rectangle.Fill>
+</Rectangle>
+```
+
+### 八、高级参数与性能优化
+
+#### 1. **TileMode 详解**
+
+|  **值**  |       **效果**       | **适用场景** |
+| :------: | :------------------: | :----------: |
+|  `None`  | 不重复，仅显示一次。 |   单次填充   |
+|  `Tile`  |    平铺重复图像。    | 无缝纹理背景 |
+| `FlipX`  |    水平镜像平铺。    |   对称图案   |
+| `FlipY`  |    垂直镜像平铺。    |   对称图案   |
+| `FlipXY` | 水平和垂直镜像平铺。 | 复杂对称纹理 |
+
+#### 2. **Stretch 模式对比**
+
+|    **模式**     |            **效果**            |    **适用场景**    |
+| :-------------: | :----------------------------: | :----------------: |
+|     `None`      | 保持原始尺寸，可能不填满区域。 |  精确控制图像尺寸  |
+|     `Fill`      |    拉伸填满区域，可能变形。    |      快速填充      |
+|    `Uniform`    |    等比缩放，确保完整显示。    | 保持比例的图像展示 |
+| `UniformToFill` |  等比缩放填满区域，可能裁剪。  |     封面图效果     |
+
+## Effect
+
+### 一、Effect 的本质与作用
+
+#### 1. **定义**
+
+- **Effect** 是 WPF 中用于为 UI 元素（如控件、图形）添加 **GPU 加速的视觉效果** 的类，继承自 `System.Windows.Media.Effects.Effect`。
+- 通过像素着色器（Pixel Shader）实现，支持动态渲染优化。
+
+#### 2. **核心用途**
+
+1. **视觉增强**：添加阴影、模糊、发光等效果，提升界面质感。
+2. **交互反馈**：高亮焦点元素，动态响应操作（如悬停、点击）。
+3. **非破坏性叠加**：不修改原始元素内容，仅叠加渲染层效果。
+
+### 二、内置 Effect 参数全表
+
+#### 1. **`DropShadowEffect`（投影效果，阴影）**
+
+|    **参数**     |    **类型**     | **默认值**  |                           **说明**                           |
+| :-------------: | :-------------: | :---------: | :----------------------------------------------------------: |
+|     `Color`     |     `Color`     | `#FF000000` |   投影颜色（支持透明度，如 `#800000FF` 表示半透明蓝色）。    |
+|   `Direction`   |    `double`     |    `315`    | 光源方向（角度：0=右侧，顺时针增加）。示例： 0°→右，90°→下，180°→左，270°→上。 |
+|  `ShadowDepth`  |    `double`     |     `5`     |              投影距离（像素），值越大投影越远。              |
+|  `BlurRadius`   |    `double`     |     `5`     |       模糊半径（像素，范围 0-100），值越大边缘越模糊。       |
+|    `Opacity`    |    `double`     |    `1.0`    |            不透明度（0.0 完全透明，1.0 不透明）。            |
+| `RenderingBias` | `RenderingBias` |  `Quality`  | 渲染质量模式： `Quality`（高质量，性能消耗高）或 `Performance`（快速渲染）。 |
+
+**示例**：
+
+```xaml
+<Button Content="Projection">
+    <Button.Effect>
+        <DropShadowEffect Color="#800000FF" Direction="45" ShadowDepth="10" BlurRadius="15"/>
+    </Button.Effect>
+</Button>
+```
+
+#### 2. **`BlurEffect`（模糊效果）**
+
+|   **参数**   |   **类型**   | **默认值** |                           **说明**                           |
+| :----------: | :----------: | :--------: | :----------------------------------------------------------: |
+|   `Radius`   |   `double`   |    `5`     | 模糊半径（像素，范围 0-100）。值越大越模糊，超过 50 可能显著降低性能。 |
+| `KernelType` | `KernelType` | `Gaussian` | 模糊算法： `Gaussian`（平滑高斯模糊）或 `Box`（快速但锯齿明显）。 |
+
+**示例**：
+
+```xaml
+<Image Source="background.jpg">
+    <Image.Effect>
+        <BlurEffect Radius="20" KernelType="Gaussian"/>
+    </Image.Effect>
+</Image>
+```
+
+#### 3. **`ShaderEffect`（自定义着色器效果）**
+
+|   **参数**    |   **类型**    |                           **说明**                           |
+| :-----------: | :-----------: | :----------------------------------------------------------: |
+| `PixelShader` | `PixelShader` |    编译后的像素着色器（`.ps` 文件），通过 HLSL 代码生成。    |
+|    `Input`    |    `Brush`    | 输入图像或颜色，通过 `RegisterPixelShaderSamplerProperty` 注册采样器。 |
+
+### 三、Effect 的通用特性
+
+#### 1. **继承与组合**
+
+- **多效果叠加**：通过 `EffectGroup` 组合多个效果：
+
+```xaml
+<Button.Effect>
+    <BitmapEffectGroup>
+        <DropShadowEffect BlurRadius="10"/>
+        <BlurEffect Radius="5"/>
+    </BitmapEffectGroup>
+</Button.Effect>
+```
+
+#### 2. **性能优化**
+
+- **硬件检测**：
+
+```C#
+if (RenderCapability.IsPixelShaderVersionSupported(2, 0)) {
+    // 应用效果
+} else {
+    // 降级处理
+}
+```
+
+### 五、注意事项与最佳实践
+
+1. **性能敏感参数**：
+   - `BlurRadius` 和 `ShadowDepth` 超过 `50` 可能导致性能显著下降。
+   - 避免在频繁更新的元素（如动画中的控件）上使用高模糊或复杂着色器。
+2. **硬件兼容性**：
+   - 确保目标设备支持 DirectX 9.0c 和像素着色器 2.0+。
+3. **视觉效果层级**：
+   - 优先使用内置效果（`DropShadowEffect`、`BlurEffect`），仅在必要时使用自定义 `ShaderEffect`。
+4. **资源管理**：
+   - 对静态效果调用 `Freeze()` 冻结对象以提升性能
+
+```csharp
+var effect = new DropShadowEffect();
+effect.Freeze(); // 禁止后续修改
+```
+
+## 3D图形（了解）
+
+### 一、WPF 3D 的核心概念
+
+WPF 的 3D 图形基于 DirectX 的软件渲染层实现，通过 **Viewport3D** 容器实现 3D 内容的集成。其核心组件包括：
+
+- **Model3DGroup**：3D 模型容器，组合多个几何体。
+- **GeometryModel3D**：将几何数据（顶点、三角形）与材质关联。
+- **MeshGeometry3D**：定义 3D 网格的几何数据（顶点坐标、三角形索引、法线等）。
+- **Camera**：定义观察视角（透视或正交投影）。
+- **Light**：光源（环境光、方向光、点光源等）。
+- **Material**：表面材质（颜色、纹理、反射属性）。
+
+### 二、3D 图形的绘制原理
+
+#### 1. **3D 渲染管线流程**
+
+- **顶点处理**：将模型顶点从 **模型坐标系** 转换到 **世界坐标系**（通过 `Transform` 矩阵）。
+- **视图变换**：世界坐标系 → **相机坐标系**（由 `Camera` 定义观察位置和方向）。
+- **投影变换**：相机坐标系 → **屏幕坐标系**（透视或正交投影）。
+- **光栅化**：将三角形转换为像素，计算颜色（基于材质和光照）。
+- **像素处理**：应用材质、纹理和光照效果，最终输出到屏幕。
+
+#### 2. **坐标系统**
+
+- **模型坐标系**：模型自身的局部坐标。
+- **世界坐标系**：所有模型统一的空间坐标（通过 `Model3D.Transform` 转换）。
+- **相机坐标系**：以相机为原点的观察空间。
+- **屏幕坐标系**：2D 投影后的最终显示坐标。
+
+------
+
+### 三、核心参数与属性详解
+
+#### 1. **MeshGeometry3D（网格几何数据）**
+
+|       **参数**       |       **类型**       |                           **说明**                           |
+| :------------------: | :------------------: | :----------------------------------------------------------: |
+|     `Positions`      | `Point3DCollection`  |    顶点坐标集合，定义模型的每个顶点位置（例如 `0,0,0`）。    |
+|  `TriangleIndices`   |  `Int32Collection`   | 三角形索引，每3个整数表示一个三角形的顶点顺序（例如 `0,1,2`）。 |
+|      `Normals`       | `Vector3DCollection` |    顶点法线向量，用于光照计算（若未指定，WPF 自动计算）。    |
+| `TextureCoordinates` |  `PointCollection`   | 纹理坐标（UV 映射），将纹理图像映射到表面（例如 `0,0` 表示纹理左上角）。 |
+
+#### 2. **Material（材质）**
+
+|       类型       |       关键参数       |                    说明                     |
+| :--------------: | :------------------: | :-----------------------------------------: |
+| DiffuseMaterial  |        Brush         |               漫反射颜色/纹理               |
+| SpecularMaterial | Brush, SpecularPower | 镜面反射高光（SpecularPower值越大光斑越小） |
+| EmissiveMaterial |        Brush         |                 自发光效果                  |
+|  MaterialGroup   |       Children       |                多种材质叠加                 |
+
+#### 3. **Light（光源）**
+
+|       类型       |                          关键参数                          |                      说明                      |
+| :--------------: | :--------------------------------------------------------: | :--------------------------------------------: |
+|   AmbientLight   |                           Color                            |           环境光（均匀照亮所有表面）           |
+| DirectionalLight |                      Color, Direction                      | 平行光（类似太阳光） Direction示例：`"0,0,-1"` |
+|    PointLight    |                   Color, Position, Range                   |               点光源（类似灯泡）               |
+|    SpotLight     | Color, Position, Direction, InnerConeAngle, OuterConeAngle |             聚光灯（锥形照明区域）             |
+
+#### 4. **Camera（相机）**
+
+|        类型        |                           关键参数                           |           说明           |
+| :----------------: | :----------------------------------------------------------: | :----------------------: |
+| PerspectiveCamera  | Position, LookDirection, UpDirection, FieldOfView, NearPlaneDistance, FarPlaneDistance | 透视投影（模拟人眼视角） |
+| OrthographicCamera | Position, LookDirection, UpDirection, Width, NearPlaneDistance, FarPlaneDistance |  正交投影（无透视变形）  |
+
+### 四、完整示例代码
+
+```xaml
+<Window x:Class="Wpf3DDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WPF 3D Demo" Height="600" Width="800">
+    <Grid>
+        <!-- 3D 视口容器 -->
+        <Viewport3D>
+            
+            <!-- 相机设置 -->
+            <Viewport3D.Camera>
+                <PerspectiveCamera 
+                    Position="0,0,5" 
+                    LookDirection="0,0,-1" 
+                    UpDirection="0,1,0" 
+                    FieldOfView="60"
+                    NearPlaneDistance="1"
+                    FarPlaneDistance="100"/>
+            </Viewport3D.Camera>
+
+            <!-- 光源系统 -->
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        <AmbientLight Color="#404040"/>
+                        <DirectionalLight Color="#FFFFFF" Direction="-1,-1,-1"/>
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+
+            <!-- 3D 模型 -->
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        
+                        <!-- 立方体几何 -->
+                        <GeometryModel3D>
+                            <GeometryModel3D.Geometry>
+                                <MeshGeometry3D 
+                                    Positions="-1,-1,1 1,-1,1 1,1,1 -1,1,1  // 前表面
+                                              -1,-1,-1 1,-1,-1 1,1,-1 -1,1,-1 // 后表面
+                                              -1,-1,1 1,-1,1 1,-1,-1 -1,-1,-1 // 底面
+                                              -1,1,1 1,1,1 1,1,-1 -1,1,-1     // 顶面
+                                              -1,-1,1 -1,1,1 -1,1,-1 -1,-1,-1 // 左面
+                                              1,-1,1 1,1,1 1,1,-1 1,-1,-1"    // 右面
+                                    TriangleIndices="0,1,2 2,3,0   // 前表面
+                                                    4,5,6 6,7,4   // 后表面
+                                                    8,9,10 10,11,8 // 底面
+                                                    12,13,14 14,15,12 // 顶面
+                                                    16,17,18 18,19,16 // 左面
+                                                    20,21,22 22,23,20" // 右面
+                                    TextureCoordinates="0,0 1,0 1,1 0,1   // 每个面的UV坐标
+                                                        0,0 1,0 1,1 0,1
+                                                        0,0 1,0 1,1 0,1
+                                                        0,0 1,0 1,1 0,1
+                                                        0,0 1,0 1,1 0,1
+                                                        0,0 1,0 1,1 0,1"/>
+                            </GeometryModel3D.Geometry>
+
+                            <!-- 材质组合 -->
+                            <GeometryModel3D.Material>
+                                <MaterialGroup>
+                                    <DiffuseMaterial>
+                                        <DiffuseMaterial.Brush>
+                                            <ImageBrush ImageSource="texture.jpg"/>
+                                        </DiffuseMaterial.Brush>
+                                    </DiffuseMaterial>
+                                    <SpecularMaterial Brush="White" SpecularPower="100"/>
+                                </MaterialGroup>
+                            </GeometryModel3D.Material>
+
+                            <!-- 变换系统 -->
+                            <GeometryModel3D.Transform>
+                                <Transform3DGroup>
+                                    <RotateTransform3D>
+                                        <RotateTransform3D.Rotation>
+                                            <AxisAngleRotation3D Axis="0,1,0" Angle="{Binding ElementName=slider, Path=Value}"/>
+                                        </RotateTransform3D.Rotation>
+                                    </RotateTransform3D>
+                                    <TranslateTransform3D OffsetX="0" OffsetY="0" OffsetZ="0"/>
+                                </Transform3DGroup>
+                            </GeometryModel3D.Transform>
+                        </GeometryModel3D>
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+        </Viewport3D>
+
+        <!-- 交互控制 -->
+        <StackPanel VerticalAlignment="Bottom" Margin="10">
+            <Slider x:Name="slider" Minimum="0" Maximum="360" Value="30"/>
+            <TextBlock Text="{Binding ElementName=slider, Path=Value, StringFormat=Rotation Angle: {0}°}"/>
+        </StackPanel>
+    </Grid>
+</Window> 
+```
+
+```xaml
+<Window x:Class="ShapeControlStudy.Test3DWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:ShapeControlStudy"
+        mc:Ignorable="d"
+        Title="Test3DWin" Height="1000" Width="1200">
+    <Grid>
+        <!-- 3D 视口容器 -->
+        <Viewport3D>
+            <!-- 相机设置 -->
+            <Viewport3D.Camera>
+                <PerspectiveCamera 
+                    Position="5,5,5" 
+                    LookDirection="-1,-1,-1"
+                    UpDirection="0,1,0" 
+                    FieldOfView="60"
+                    NearPlaneDistance="1"
+                    FarPlaneDistance="100"/>
+            </Viewport3D.Camera>
+
+            <!-- 光源系统 -->
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        <AmbientLight Color="#808080"/>
+                        <DirectionalLight Color="White" Direction="-1,-1,-1"/>
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+
+            <!-- 立方体模型 -->
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        <!-- 立方体几何数据（8顶点 + 12三角形） -->
+                        <GeometryModel3D>
+                            <GeometryModel3D.Geometry>
+                                <MeshGeometry3D 
+                                    Positions="
+                                        0,0,0 3,0,0 3,2,0 0,2,0  
+                                        0,0,1 3,0,1 3,2,1 0,2,1 
+                                    "
+                                    TriangleIndices="
+                                        0,1,2 0,2,3
+                                        4,5,6 4,6,7
+                                        0,1,5 0,5,4
+                                        3,2,6 3,6,7
+                                        0,4,7 0,7,3
+                                        1,5,6 1,6,2
+                                    "
+                                    TextureCoordinates="
+                                        0,0 1,0 1,1 0,1
+                                        0,0 1,0 1,1 0,1
+                                        0,0 1,0 1,1 0,1
+                                        0,0 1,0 1,1 0,1
+                                        0,0 1,0 1,1 0,1
+                                        0,0 1,0 1,1 0,1"/>
+                            </GeometryModel3D.Geometry>
+
+                            <!-- 材质 -->
+                            <GeometryModel3D.Material>
+                                <DiffuseMaterial>
+                                    <DiffuseMaterial.Brush>
+                                        <LinearGradientBrush>
+                                            <GradientStop Color="Blue" Offset="0"/>
+                                            <GradientStop Color="LightBlue" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </DiffuseMaterial.Brush>
+                                </DiffuseMaterial>
+                            </GeometryModel3D.Material>
+                            <GeometryModel3D.BackMaterial>
+                                <DiffuseMaterial>
+                                    <DiffuseMaterial.Brush>
+                                        <SolidColorBrush Color="Red"/>
+                                    </DiffuseMaterial.Brush>
+                                </DiffuseMaterial>
+                            </GeometryModel3D.BackMaterial>
+
+                            <!-- 旋转变换（动态效果） -->
+                            <GeometryModel3D.Transform>
+                                <RotateTransform3D>
+                                    <RotateTransform3D.Rotation>
+                                        <AxisAngleRotation3D 
+                                            Axis="0,1,0" 
+                                            Angle="{Binding ElementName=slider, Path=Value}"/>
+                                    </RotateTransform3D.Rotation>
+                                </RotateTransform3D>
+                            </GeometryModel3D.Transform>
+                        </GeometryModel3D>
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+        </Viewport3D>
+
+        <!-- 交互控制 -->
+        <StackPanel VerticalAlignment="Bottom" Margin="10">
+            <Slider x:Name="slider" Minimum="0" Maximum="360" Value="0"/>
+            <TextBlock Text="{Binding ElementName=slider, Path=Value, StringFormat=Rotation Angle: {0}°}"/>
+        </StackPanel>
+    </Grid>
+</Window>
+```
+
+
+
+## 示例代码
+
+```xaml
+<Window x:Class="ShapeControlStudy.TestGeometryWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:ShapeControlStudy"
+        mc:Ignorable="d"
+        Title="TestGeometryWin" Height="800" Width="800">
+    <StackPanel>
+        <Path Stroke="Aquamarine" StrokeThickness="2">
+            <Path.Data>
+                <LineGeometry StartPoint="15,15" EndPoint="300,100"></LineGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Brown" StrokeThickness="2">
+            <Path.Data>
+                <!--X,Y,width,height-->
+                <RectangleGeometry Rect="50,10,100,150"></RectangleGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Brown" StrokeThickness="2" Margin="150,0,0,0">
+            <Path.Data>
+                <EllipseGeometry Center="0,0" RadiusX="100" RadiusY="50"></EllipseGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Gray" StrokeThickness="2">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure StartPoint="0,0">
+                        <LineSegment Point="100,30"></LineSegment>
+                        <LineSegment Point="90,10"></LineSegment>
+                        <!--point：结束位置-->
+                        <!--RotationAngle：旋转角度-->
+                        <!--SweepDirection：顺时针还是逆时针-->
+                        <!--IsLargeArc：大弧还是小弧-->
+                        <ArcSegment  Point="100 100" Size="100,50" RotationAngle="45" SweepDirection="Clockwise" IsLargeArc="True"></ArcSegment>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Firebrick">
+            <Path.Data>
+                <GeometryGroup>
+                    <EllipseGeometry Center="150,50" RadiusX="100" RadiusY="50"></EllipseGeometry>
+                    <RectangleGeometry Rect="50,0,100,100"></RectangleGeometry>
+                    <LineGeometry StartPoint="50,50" EndPoint="100,50"></LineGeometry>
+                </GeometryGroup>
+            </Path.Data>
+        </Path>
+        <Path Stroke="CornflowerBlue" Fill="CornflowerBlue">
+            <Path.Data>
+                <!--GeometryCombineMode：此属性指定要对 Geometry1 和 Geometry2 执行的布尔运算模式，取值为 Union、Intersect、Xor 或 Exclude-->
+                <CombinedGeometry GeometryCombineMode="Xor">
+                    <CombinedGeometry.Geometry1>
+                        <!--RadiusX、RadiusY：椭圆的宽高-->
+                        <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"></EllipseGeometry>
+                    </CombinedGeometry.Geometry1>
+                    <CombinedGeometry.Geometry2>
+                        <!--RadiusX、RadiusY：x轴方向和y轴方向圆角-->
+                        <RectangleGeometry Rect="100,25,50,50" RadiusX="30" RadiusY="5"></RectangleGeometry>
+                    </CombinedGeometry.Geometry2>
+                </CombinedGeometry>
+            </Path.Data>
+        </Path>
+    </StackPanel>
+</Window>
+```
+
+```xaml
+<Window x:Class="ShapeControlStudy.TestGeometryWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:ShapeControlStudy"
+        mc:Ignorable="d"
+        Title="TestGeometryWin" Height="1000" Width="800">
+    <StackPanel>
+        <Path Stroke="Aquamarine" StrokeThickness="2">
+            <Path.Data>
+                <LineGeometry StartPoint="15,15" EndPoint="300,100"></LineGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Brown" StrokeThickness="2">
+            <Path.Data>
+                <!--X,Y,width,height-->
+                <RectangleGeometry Rect="50,10,100,150"></RectangleGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Brown" StrokeThickness="2" Margin="150,0,0,0">
+            <Path.Data>
+                <EllipseGeometry Center="0,0" RadiusX="100" RadiusY="50"></EllipseGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Gray" StrokeThickness="2">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure StartPoint="0,0">
+                        <LineSegment Point="100,30"></LineSegment>
+                        <LineSegment Point="90,10"></LineSegment>
+                        <!--point：结束位置-->
+                        <!--RotationAngle：旋转角度-->
+                        <!--SweepDirection：顺时针还是逆时针-->
+                        <!--IsLargeArc：大弧还是小弧-->
+                        <ArcSegment  Point="100 100" Size="100,50" RotationAngle="45" SweepDirection="Clockwise" IsLargeArc="True"></ArcSegment>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Firebrick">
+            <Path.Data>
+                <GeometryGroup>
+                    <EllipseGeometry Center="150,50" RadiusX="100" RadiusY="50"></EllipseGeometry>
+                    <RectangleGeometry Rect="50,0,100,100"></RectangleGeometry>
+                    <LineGeometry StartPoint="50,50" EndPoint="100,50"></LineGeometry>
+                </GeometryGroup>
+            </Path.Data>
+        </Path>
+        <Path Stroke="CornflowerBlue" Fill="CornflowerBlue">
+            <Path.Data>
+                <!--GeometryCombineMode：此属性指定要对 Geometry1 和 Geometry2 执行的布尔运算模式，取值为 Union、Intersect、Xor 或 Exclude-->
+                <CombinedGeometry GeometryCombineMode="Xor">
+                    <CombinedGeometry.Geometry1>
+                        <!--RadiusX、RadiusY：椭圆的宽高-->
+                        <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"></EllipseGeometry>
+                    </CombinedGeometry.Geometry1>
+                    <CombinedGeometry.Geometry2>
+                        <!--RadiusX、RadiusY：x轴方向和y轴方向圆角-->
+                        <RectangleGeometry Rect="100,25,50,50" RadiusX="30" RadiusY="5"></RectangleGeometry>
+                    </CombinedGeometry.Geometry2>
+                </CombinedGeometry>
+            </Path.Data>
+        </Path>
+        <Path Data="M0,0L100,50M100,50A110,50 0 1 1 150,100Q10,200 200,200M150,100T50,150 200,200" Stroke="Aqua" StrokeThickness="2"></Path>
+        <!-- <Path Data="M100,-25C10,-50 200,50 100,100z" Stroke="CornflowerBlue" StrokeThickness="2"></Path> -->
+        <Path Data="M 24,4 
+          A 10,10 0 0 1 24,44 
+          A 10,10 0 0 1 24,4 
+          L 4,24 
+          A 10,10 0 0 0 44,24 
+          Z"
+              Fill="Red"/>
+    </StackPanel>
+</Window>
+
+```
+
+# 事件与生命周期
+
+## App生命周期
+
+WPF 应用程序的生命周期由 **`Application` 类** 和 **`Window` 类** 的事件组成，每个事件对应特定的阶段。
+
+### **一、应用程序级别事件（Application Class）**
+
+#### **1. `Startup` 事件**
+
+- **触发时机**：应用程序启动时，**主窗口实例化之前**。
+- **用途**：初始化全局资源、处理命令行参数、配置服务等。
+
+#### **2. `Activated` 事件**
+
+- **触发时机**：应用程序从后台切换到前台（如用户点击任务栏图标）。
+- **用途**：恢复暂停的操作或更新 UI。
+
+#### **3. `Deactivated` 事件**
+
+- **触发时机**：应用程序切换到后台（如用户最小化窗口或切换程序）。
+- **用途**：暂停耗时操作或保存临时数据。
+
+#### **4. `SessionEnding` 事件**
+
+- **触发时机**：用户注销或关闭操作系统时。
+- **用途**：紧急保存数据。
+
+#### **5. `Exit` 事件**
+
+- **触发时机**：应用程序关闭时（所有窗口已关闭或调用 `Shutdown()`）。
+- **用途**：释放全局资源（如数据库连接、文件句柄）。
+
+----
+
+#### 监听示例：
+
+```csharp
+public partial class App : Application
+{
+    public App()
+    {
+        //应用程序启动时，​​主窗口实例化之前​​。
+        this.Startup += App_Startup;
+        //应用程序从后台切换到前台
+        this.Activated += OnActivated;
+        //应用程序切换到后台
+        this.Deactivated += App_Deactivated;
+        //用户注销或关闭操作系统时。
+        this.SessionEnding += App_SessionEnding;
+        //应用程序关闭时（所有窗口已关闭或调用 Shutdown()）
+        this.Exit += OnExit;
+    }
+
+ 
+    private void OnExit(object sender, ExitEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void App_SessionEnding(object sender, SessionEndingCancelEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void App_Deactivated(object? sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnActivated(object? sender, EventArgs e)
+    {
+        
+    }
+
+    private void App_Startup(object sender, StartupEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+}
+```
+
+### **二、窗口级别事件（Window Class）**
+
+#### **1. `Initialized` 事件**
+
+- **触发时机**：窗口的 XAML 解析完成，但尚未布局或渲染。
+- **用途**：访问 XAML 元素或初始化逻辑。
+
+#### **2. `SourceInitialized` 事件**
+
+- **触发时机**：窗口的 Win32 句柄（HWND）创建后，首次显示前。
+- **用途**：与 Win32 API 交互（如设置窗口图标）。
+
+#### **3. `Loaded` 事件**
+
+- **触发时机**：窗口布局和渲染完成，即将显示。
+- **用途**：加载数据、启动动画、订阅事件。
+
+#### **4. `ContentRendered` 事件**
+
+- **触发时机**：窗口内容首次完成渲染（仅触发一次）。
+- **用途**：执行依赖完整 UI 的操作（如截图）。
+
+#### **5. `Closing` 事件**
+
+- **触发时机**：窗口即将关闭，但尚未释放资源。
+- **用途**：验证数据、提示保存或取消关闭。
+
+#### **6. `Closed` 事件**
+
+- **触发时机**：窗口已关闭，资源已释放。
+- **用途**：解绑事件、释放非托管资源。
+
+----
+
+#### 监听示例：
+
+```csharp
+ public partial class MainWindow : Window
+ {
+     public MainWindow()
+     {
+         InitializeComponent();
+         this.Initialized += OnInitialized;
+         this.SourceInitialized += MainWindow_SourceInitialized;
+         this.Loaded += OnLoaded;
+         this.ContentRendered += MainWindow_ContentRendered;
+         this.Closed += OnClosed;
+     }
+
+     private void MainWindow_ContentRendered(object? sender, EventArgs e)
+     {
+         throw new NotImplementedException();
+     }
+
+     private void OnLoaded(object sender, RoutedEventArgs e)
+     {
+         throw new NotImplementedException();
+     }
+
+     private void MainWindow_SourceInitialized(object? sender, EventArgs e)
+     {
+         throw new NotImplementedException();
+     }
+
+     private void OnInitialized(object? sender, EventArgs e)
+     {
+         throw new NotImplementedException();
+     }
+
+     private void OnClosed(object? sender, EventArgs e)
+     {
+         throw new NotImplementedException();
+     }
+ }
+```
+
+### **三、全局事件与异常处理**
+
+在 WPF 中，全局事件与异常捕获需要区分 **UI 线程**和**非 UI 线程（多线程/任务）**的处理方式。
+
+#### **1.UI 线程的全局异常捕获**
+
+##### **`DispatcherUnhandledException` 事件**
+
+- **作用**：捕获 UI 线程（主线程）未处理的异常。
+- **触发条件**：任何未在 UI 线程代码中 `try-catch` 的异常。
+
+- 注意事项：
+  - 设置 `e.Handled = true` 可防止应用崩溃，但需确保异常不会导致后续逻辑错误。
+  - 仅能捕获 UI 线程异常，**无法捕获后台线程或 Task 的异常**。
+
+#### **2.非 UI 线程（多线程/任务）的异常捕获**
+
+##### **`TaskScheduler.UnobservedTaskException` 事件**
+
+- **作用**：捕获未观察到的 `Task` 异常（未调用 `await` 或未访问 `Task.Exception`）。
+- **触发时机**：当垃圾回收器回收未处理异常的 `Task` 时触发（通常延迟触发）。
+- 关键点：
+  - 默认情况下，未观察的 `Task` 异常会导致进程崩溃（.NET 4.5 之前）。
+  - 从 .NET 4.5 开始，未观察的异常不会立即崩溃应用，但建议显式处理。
+
+#### **3.全局异常捕获的完整方案**
+
+##### **(1)组合所有异常捕获方式**
+
+```csharp
+public partial class App : Application {
+    protected override void OnStartup(StartupEventArgs e) {
+        // UI线程异常
+        DispatcherUnhandledException += OnUIThreadUnhandledException;
+        
+        // Task异常
+        TaskScheduler.UnobservedTaskException += OnTaskUnhandledException;
+        
+        // 其他全局异常处理（如 AppDomain）
+        AppDomain.CurrentDomain.UnhandledException += OnDomainUnhandledException;
+    }
+
+    // UI线程异常处理
+    private void OnUIThreadUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
+        HandleException(e.Exception);
+        e.Handled = true;
+    }
+
+    // Task异常处理
+    private void OnTaskUnhandledException(object sender, UnobservedTaskExceptionEventArgs e) {
+        HandleException(e.Exception);
+        e.SetObserved();
+    }
+
+    // 非托管线程异常处理（如通过ThreadPool）
+    private void OnDomainUnhandledException(object sender, UnhandledExceptionEventArgs e) {
+        if (e.ExceptionObject is Exception ex) {
+            HandleException(ex);
+        }
+    }
+
+    // 统一异常处理逻辑
+    private void HandleException(Exception ex) {
+        Logger.Error(ex, "全局异常");
+        Dispatcher.Invoke(() => 
+            MessageBox.Show($"错误: {ex.Message}", "全局错误", MessageBoxButton.OK));
+    }
+}
+```
+
+##### **(2)异常处理原则**
+
+- **UI 线程**：通过 `DispatcherUnhandledException` 捕获，避免闪退。
+- **Task**：优先使用 `await` 或 `ContinueWith` 显式处理，其次用 `UnobservedTaskException` 兜底。
+- **非托管线程**：通过 `AppDomain.CurrentDomain.UnhandledException` 捕获，但无法阻止进程终止。
+
+### **四、生命周期管理最佳实践**
+
+1. **避免在构造函数中执行耗时操作**
+   构造函数应仅初始化变量和 UI 元素，耗时操作放在 `Loaded` 事件中。
+2. **资源释放**
+   - 在 `Closed` 事件中释放非托管资源（文件流、网络连接）。
+   - 使用 `IDisposable` 接口管理托管资源。
+3. **事件解绑**
+   在 `Closed` 事件中取消订阅外部事件，防止内存泄漏：
+
+```csharp
+Loaded += OnLoaded;
+Closed += (s, e) => Loaded -= OnLoaded;
+```
+
+4. **控制关闭行为**
+   通过 `ShutdownMode` 控制应用程序退出逻辑：
+
+```xaml
+<Application ShutdownMode="OnMainWindowClose" />
+```
+
+## 事件
+
+#### **一、路由事件的核心概念**
+
+路由事件（Routed Event）是 WPF 中特有的事件机制，允许事件在可视化树（Visual Tree）中沿特定方向传播，使得多个元素可以响应同一个事件。与传统事件不同，路由事件具有以下特点：
+
+- **传播方向**：支持冒泡（Bubbling）、隧道（Tunneling）和直接（Direct）三种策略。
+- **多元素处理**：一个事件可以被多个元素处理。
+- **灵活控制**：通过 `e.Handled = true` 可终止事件传递。
+
+#### **二、路由事件的三种策略**
+
+1. **冒泡事件（Bubbling）**
+   事件从源元素向父级元素逐级传递，直到根元素（如Window）。例如`MouseUp`。
+2. **隧道事件（Tunneling）**
+   事件从根元素向子元素逐级传递，直到源元素。隧道事件通常以`Preview`开头，如`PreviewMouseDown`。
+3. **直接事件（Direct）**
+   仅在触发元素处理（如 `MouseEnter`）。
+
+#### **三、内置路由事件示例**
+
+以下示例展示隧道事件和冒泡事件的触发顺序。
+
+##### **1. XAML 结构**
+
+```xaml
+<Window x:Class="RoutedEventDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="路由事件示例" Height="300" Width="400"
+        PreviewMouseDown="Window_PreviewMouseDown"
+        MouseDown="Window_MouseDown">
+    <Grid PreviewMouseDown="Grid_PreviewMouseDown" MouseDown="Grid_MouseDown">
+        <Button Content="点击我" 
+                PreviewMouseDown="Button_PreviewMouseDown" 
+                MouseDown="Button_MouseDown"
+                Click="Button_Click"/>
+    </Grid>
+</Window>
+```
+
+##### **2. 事件处理代码**
+
+```csharp
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Input;
+
+namespace RoutedEventDemo {
+    public partial class MainWindow : Window {
+        public MainWindow() {
+            InitializeComponent();
+        }
+
+        // 隧道事件处理（父级优先）
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
+            Debug.WriteLine($"隧道事件: Window");
+        }
+
+        private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
+            Debug.WriteLine($"隧道事件: Grid");
+        }
+
+        private void Button_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
+            Debug.WriteLine($"隧道事件: Button");
+        }
+
+        // 冒泡事件处理（子级优先）
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
+            Debug.WriteLine($"冒泡事件: Window");
+        }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e) {
+            Debug.WriteLine($"冒泡事件: Grid");
+        }
+
+        private void Button_MouseDown(object sender, MouseButtonEventArgs e) {
+            Debug.WriteLine($"冒泡事件: Button");
+            // e.Handled = true; // 阻止事件继续冒泡
+        }
+
+        // Click事件（直接事件）
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            Debug.WriteLine("Click事件: Button");
+        }
+    }
+}
+```
+
+##### **3. 输出结果**
+
+点击按钮时，输出顺序为：
+
+```
+隧道事件: Window
+隧道事件: Grid
+隧道事件: Button
+冒泡事件: Button
+冒泡事件: Grid
+冒泡事件: Window
+Click事件: Button
+```
+
+##### **4. 关键点说明**
+
+- **事件顺序**：隧道事件（`Preview*`）先于冒泡事件触发。
+- **事件源**：`e.Source` 是逻辑触发源（如 `Button`），`e.OriginalSource` 是实际触发元素（如 `Button` 内部的 `TextBlock`）。
+- **终止传递**：在 `Button_MouseDown` 中设置 `e.Handled = true` 会阻止后续冒泡事件。
+
+------
+
+#### **四、自定义路由事件示例**
+
+以下示例展示如何创建自定义冒泡事件 `ValueChanged`。
+
+```csharp
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+
+public class CustomSlider : Slider {
+    // 1. 注册路由事件
+    public static readonly RoutedEvent ValueChangedEvent =
+        EventManager.RegisterRoutedEvent(
+            name: "ValueChanged",                      // 事件名称
+            routingStrategy: RoutingStrategy.Bubble,   //策略（冒泡）
+            handlerType: typeof(RoutedPropertyChangedEventHandler<double>), // 处理程序类型
+            ownerType: typeof(CustomSlider)            // 所属类型
+        );
+
+    // 2. 定义CLR事件包装器
+    public event RoutedPropertyChangedEventHandler<double> ValueChanged {
+        add { AddHandler(ValueChangedEvent, value); }   // 订阅事件
+        remove { RemoveHandler(ValueChangedEvent, value); } // 取消订阅
+    }
+
+    // 3. 触发事件的方法
+    protected override void OnValueChanged(double oldValue, double newValue) {
+        // 创建事件参数
+        RoutedPropertyChangedEventArgs<double> args = 
+            new RoutedPropertyChangedEventArgs<double>(oldValue, newValue) {
+                RoutedEvent = ValueChangedEvent // 关联路由事件
+            };
+        
+        // 触发事件
+        RaiseEvent(args);
+    }
+
+   
+}
+```
+
+```xaml
+<Window x:Class="RoutedEventDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RoutedEventDemo"
+        Title="自定义路由事件" Height="200" Width="300">
+    <Grid>
+        <local:CustomSlider Minimum="0" Maximum="100" 
+                           ValueChanged="CustomSlider_ValueChanged"/>
+    </Grid>
+</Window>
+```
+
+```csharp
+private void CustomSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+    Debug.WriteLine($"值已改变: {e.OldValue} → {e.NewValue}");
+}
+```
+
+#### **五、动态订阅路由事件**
+
+通过 `AddHandler` 监听事件，包括已处理的事件。
+
+```csharp
+public MainWindow() {
+    InitializeComponent();
+    // 动态订阅Button的Click事件（即使已被标记为已处理）
+    this.AddHandler(
+        Button.ClickEvent,
+        new RoutedEventHandler(GlobalButtonClick),
+        handledEventsToo: true
+    );
+}
+
+private void GlobalButtonClick(object sender, RoutedEventArgs e) {
+    Debug.WriteLine($"全局点击: {((Button)e.OriginalSource).Content}");
+}
+```
+
+##### **1. `routedEvent`（路由事件类型）**
+
+- **作用**：指定要订阅的**路由事件**（必须是 `RoutedEvent` 类型的静态字段）。
+
+- 
+
+  示例
+
+  ：
+
+  - `Button.ClickEvent`
+  - `Mouse.MouseDownEvent`
+  - 自定义路由事件（如 `MyCustomControl.ValueChangedEvent`）。
+
+- **注意**：需通过 `EventManager` 注册的路由事件，不能是普通 CLR 事件。
+
+------
+
+##### **2. `handler`（事件处理程序）**
+
+- **作用**：绑定到事件的**委托方法**，方法签名必须与路由事件的委托类型匹配。
+
+- 
+
+  示例
+
+  ：
+
+  - `RoutedEventHandler`：处理无附加数据的事件（如 `Click`）。
+  - `MouseButtonEventHandler`：处理鼠标事件（如 `MouseDown`）。
+  - 自定义委托类型（如 `RoutedPropertyChangedEventHandler<double>`）。
+
+- **正确示例**
+
+```csharp
+// 方法签名需匹配
+private void OnButtonClick(object sender, RoutedEventArgs e) { /* ... */ }
+
+// 订阅 Click 事件
+this.AddHandler(Button.ClickEvent, new RoutedEventHandler(OnButtonClick));
+```
+
+##### **3. `handledEventsToo`（是否处理已处理的事件）**
+
+- **作用**：若设为 `true`，即使事件已被其他元素标记为 `e.Handled = true`，仍会触发当前处理程序。
+- **默认值**：`false`（不处理已标记为“已处理”的事件，如Button.MouseLeftButtonDownEvent）。
+- 典型场景：
+  - 父容器需要全局监听所有子元素的点击事件，即使子元素已处理该事件。
+  - 需要强制拦截已被其他逻辑处理的事件。

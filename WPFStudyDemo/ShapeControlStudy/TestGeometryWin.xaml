@@ -1,0 +1,75 @@
+﻿<Window x:Class="ShapeControlStudy.TestGeometryWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:ShapeControlStudy"
+        mc:Ignorable="d"
+        Title="TestGeometryWin" Height="1000" Width="800">
+    <StackPanel>
+        <Path Stroke="Aquamarine" StrokeThickness="2">
+            <Path.Data>
+                <LineGeometry StartPoint="15,15" EndPoint="300,100"></LineGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Brown" StrokeThickness="2">
+            <Path.Data>
+                <!--X,Y,width,height-->
+                <RectangleGeometry Rect="50,10,100,150"></RectangleGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Brown" StrokeThickness="2" Margin="150,0,0,0">
+            <Path.Data>
+                <EllipseGeometry Center="0,0" RadiusX="100" RadiusY="50"></EllipseGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Gray" StrokeThickness="2">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure StartPoint="0,0">
+                        <LineSegment Point="100,30"></LineSegment>
+                        <LineSegment Point="90,10"></LineSegment>
+                        <!--point：结束位置-->
+                        <!--RotationAngle：旋转角度-->
+                        <!--SweepDirection：顺时针还是逆时针-->
+                        <!--IsLargeArc：大弧还是小弧-->
+                        <ArcSegment  Point="100 100" Size="100,50" RotationAngle="45" SweepDirection="Clockwise" IsLargeArc="True"></ArcSegment>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="Firebrick">
+            <Path.Data>
+                <GeometryGroup>
+                    <EllipseGeometry Center="150,50" RadiusX="100" RadiusY="50"></EllipseGeometry>
+                    <RectangleGeometry Rect="50,0,100,100"></RectangleGeometry>
+                    <LineGeometry StartPoint="50,50" EndPoint="100,50"></LineGeometry>
+                </GeometryGroup>
+            </Path.Data>
+        </Path>
+        <Path Stroke="CornflowerBlue" Fill="CornflowerBlue">
+            <Path.Data>
+                <!--GeometryCombineMode：此属性指定要对 Geometry1 和 Geometry2 执行的布尔运算模式，取值为 Union、Intersect、Xor 或 Exclude-->
+                <CombinedGeometry GeometryCombineMode="Xor">
+                    <CombinedGeometry.Geometry1>
+                        <!--RadiusX、RadiusY：椭圆的宽高-->
+                        <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"></EllipseGeometry>
+                    </CombinedGeometry.Geometry1>
+                    <CombinedGeometry.Geometry2>
+                        <!--RadiusX、RadiusY：x轴方向和y轴方向圆角-->
+                        <RectangleGeometry Rect="100,25,50,50" RadiusX="30" RadiusY="5"></RectangleGeometry>
+                    </CombinedGeometry.Geometry2>
+                </CombinedGeometry>
+            </Path.Data>
+        </Path>
+        <Path Data="M0,0L100,50M100,50A110,50 0 1 1 150,100Q10,200 200,200M150,100T50,150 200,200" Stroke="Aqua" StrokeThickness="2"></Path>
+        <!-- <Path Data="M100,-25C10,-50 200,50 100,100z" Stroke="CornflowerBlue" StrokeThickness="2"></Path> -->
+        <Path Data="M 24,4 
+          A 10,10 0 0 1 24,44 
+          A 10,10 0 0 1 24,4 
+          L 4,24 
+          A 10,10 0 0 0 44,24 
+          Z"
+              Fill="Red"/>
+    </StackPanel>
+</Window>
