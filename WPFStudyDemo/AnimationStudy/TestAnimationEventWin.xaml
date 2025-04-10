@@ -1,0 +1,31 @@
+﻿<Window x:Class="AnimationStudy.TestAnimationEventWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnimationStudy"
+        mc:Ignorable="d"
+        Title="TestAnimationEventWin" Height="450" Width="800">
+    <!-- 定义动画 -->
+    <Window.Resources>
+        <Storyboard x:Key="MoveAnimation">
+            <DoubleAnimation
+                Storyboard.TargetName="animatedBox"
+                Storyboard.TargetProperty="(Canvas.Left)"
+                From="0" To="300" Duration="0:0:5"/>
+        </Storyboard>
+    </Window.Resources>
+
+    <!-- UI布局 -->
+    <Canvas>
+        <!-- 动画目标元素 -->
+        <Rectangle x:Name="animatedBox" Width="50" Height="50" Fill="Tomato" Canvas.Left="0"/>
+
+        <!-- 控制按钮 -->
+        <Button Content="开始" Click="StartButton_Click" Canvas.Top="200" Width="60"/>
+        <Button Content="暂停" Click="PauseButton_Click" Canvas.Top="200" Canvas.Left="80" Width="60"/>
+        <Button Content="继续" Click="ResumeButton_Click" Canvas.Top="200" Canvas.Left="160" Width="60"/>
+        <Button Content="停止" Click="StopButton_Click" Canvas.Top="200" Canvas.Left="240" Width="60"/>
+        <Button Content="跳转" Click="SeekButton_Click" Canvas.Top="200" Canvas.Left="320" Width="60"/>
+    </Canvas>
+</Window>

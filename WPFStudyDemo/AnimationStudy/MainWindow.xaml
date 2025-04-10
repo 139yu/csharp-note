@@ -8,18 +8,57 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <Storyboard x:Key="sb">
-            <DoubleAnimation 
+            <!--<DoubleAnimation 
                 Duration="0:0:0.25"
                 Storyboard.TargetName="bd" 
                 Storyboard.TargetProperty="Width" 
-                To="150"/>
+                To="150"/>-->
+            <ColorAnimation Duration="0:0:0.5"
+                            Storyboard.TargetName="bd"
+                            Storyboard.TargetProperty="Background.Color"
+                            From="CadetBlue" To="Aqua" />
+            <DoubleAnimation
+                
+                Storyboard.TargetName="bdX"
+                Duration="0:0:0.5"
+                By="20"
+                Storyboard.TargetProperty="X" />
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="bd2" Storyboard.TargetProperty="Width">
+                <LinearDoubleKeyFrame Value="110" KeyTime="0:0:0.1"/>
+                <DiscreteDoubleKeyFrame Value="120" KeyTime="0:0:0.3"/>
+                <DiscreteDoubleKeyFrame Value="160" KeyTime="0:0:0.4"/>
+                <LinearDoubleKeyFrame Value="100" KeyTime="0:0:0.5"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="bd2" Storyboard.TargetProperty="Height">
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0.1" Value="31"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0.2" Value="35"/>
+                <DiscreteDoubleKeyFrame  KeyTime="0:0:0.4" Value="40"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0.5" Value="50"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0.6"  Value="30"/>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="bd3X" Storyboard.TargetProperty="Y">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="50">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BounceEase Bounces="1" Bounciness="2"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="80">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BounceEase Bounces="1" Bounciness="2"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <!-- <BounceEase Bounces="1" Bounciness="2"/> -->
+                        <ElasticEase Oscillations="2" Springiness="2" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-        <Storyboard x:Key="sb1">
-            <DoubleAnimation 
-                Storyboard.TargetName="bd"
-                Storyboard.TargetProperty="Width"
-                Duration="0:0:0.5" />
-        </Storyboard>
+        <Style TargetType="Border">
+            <Setter Property="Margin" Value="0,10"></Setter>
+        </Style>
     </Window.Resources>
     <Window.Triggers>
         <EventTrigger RoutedEvent="Button.Click" SourceName="bt">
@@ -29,7 +68,28 @@
         </EventTrigger>
     </Window.Triggers>
     <StackPanel>
-        <Border Background="CornflowerBlue" Height="30" Width="100" Name="bd"/>
-        <Button Name="bt" Width="100" Height="30" Content="Click Me" Background="CadetBlue" Foreground="White" Margin="0, 10"></Button>
+        <Border Background="CornflowerBlue" Height="30" Width="100" Name="bd">
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="bdX"></TranslateTransform>
+            </Border.RenderTransform>
+        </Border>
+        <Border Name="bd2"
+                Background="DarkOrange"
+                Width="100" Height="30" />
+
+        <Border Name="bd3" Width="30" Height="30" Background="Chartreuse">
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="bd3X" ></TranslateTransform>
+            </Border.RenderTransform>
+        </Border>
+
+        <Button Name="bt"
+                Width="100"
+                Height="30"
+                Content="Click Me"
+                Background="CadetBlue"
+                BorderBrush="CadetBlue"
+                Foreground="White"
+                Margin="0, 10" />
     </StackPanel>
 </Window>

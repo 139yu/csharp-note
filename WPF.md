@@ -4318,3 +4318,781 @@ this.AddHandler(Button.ClickEvent, new RoutedEventHandler(OnButtonClick));
 - 典型场景：
   - 父容器需要全局监听所有子元素的点击事件，即使子元素已处理该事件。
   - 需要强制拦截已被其他逻辑处理的事件。
+
+# 动画
+
+
+
+### **一、WPF 动画基础概念与核心参数**
+
+------
+
+#### **1. 动画的本质**
+
+WPF 动画是通过 **动态修改界面元素的属性值**，在指定时间段内平滑过渡，从而产生动态视觉效果的技术。例如：
+
+- 元素的移动（如 `Canvas.Left`）。
+- 颜色的渐变（如 `Background.Color`）。
+- 大小的缩放（如 `Width`、`Height`）。
+
+------
+
+#### **2. 动画的核心组件**
+
+WPF 动画由以下核心组件构成：
+
+- **时间轴（`Timeline`）**：定义动画的时间范围和行为（如持续时间、重复次数）。
+- **动画类（`AnimationTimeline`）**：针对不同数据类型（如 `double`、`Color`、`Point`）的动画实现。
+- **故事板（`Storyboard`）**：容器，用于组合和管理多个动画。
+- **触发器（`Trigger`）**：定义动画启动的条件（如按钮点击、页面加载）。
+
+------
+
+#### **3. 时间轴（`Timeline`）的通用参数**
+
+所有动画继承自 `Timeline`，以下是其核心参数：
+
+|      **参数**       |     **类型**     |                           **作用**                           |
+| :-----------------: | :--------------: | :----------------------------------------------------------: |
+|     `BeginTime`     |   `TimeSpan?`    |       动画开始前的延迟时间（如 `0:0:1` 表示延迟1秒）。       |
+|     `Duration`      |    `Duration`    |        动画单次播放的持续时间（如 `0:0:2` 表示2秒）。        |
+|    `AutoReverse`    |      `bool`      |    是否自动反向播放（反向播放的时长与 `Duration` 相同）。    |
+|  `RepeatBehavior`   | `RepeatBehavior` |         重复次数（如 `3x`）或无限循环（`Forever`）。         |
+|   `FillBehavior`    |  `FillBehavior`  | 动画结束后的行为： `HoldEnd`（保持结束值） `Stop`（恢复初始值）。 |
+|    `SpeedRatio`     |     `double`     | 播放速度倍数（如 `2` 表示双倍速度，实际时长 = `Duration / SpeedRatio`）。 |
+|    `IsAdditive`     |      `bool`      | 默认false：动画的起始值完全覆盖目标属性的当前值。true：动画的起始值 = 目标属性的当前值 + 动画定义的 `From` 值（或默认值）。 |
+| `DecelerationRatio` |      double      | 关键帧动画中的一个参数，用于控制动画的 **减速阶段占总动画时间的比例**。通过调整该参数，可以让动画在接近结束时逐渐减速（类似缓出效果）。**取值范围**：`0.0` 到 `1.0` |
+| `DesiredFrameRate`  |       int        | 是 WPF 中一个 **全局静态属性**，用于设置动画的 **目标帧率（FPS）**，控制动画的刷新频率。通过调整该参数可以平衡动画流畅性与性能。默认值60，帧率越高，动画越流畅，但 CPU/GPU 负载越大。 |
+
+------
+
+#### **4. 基本动画类型**
+
+WPF 提供多种动画类，针对不同数据类型的属性：
+
+|      **动画类**      | **适用属性类型** |              **示例属性**              |
+| :------------------: | :--------------: | :------------------------------------: |
+|  `DoubleAnimation`   |     `double`     |   `Width`, `Opacity`, `Canvas.Left`    |
+|   `ColorAnimation`   |     `Color`      | `Background.Color`, `Foreground.Color` |
+|   `PointAnimation`   |     `Point`      |        `PathGeometry` 的坐标点         |
+| `ThicknessAnimation` |   `Thickness`    |          `Margin`, `Padding`           |
+
+------
+
+#### **5. `DoubleAnimation` 的参数详解**
+
+以 `DoubleAnimation` 为例，其核心参数如下：、
+
+```xaml
+<DoubleAnimation
+    Storyboard.TargetProperty="Width"
+    From="100"       <!-- 起始值（可选） -->
+    To="200"         <!-- 结束值（必须） -->
+    By="50"          <!-- 相对变化值（优先级低于From/To） -->
+    Duration="0:0:2" <!-- 持续时间 -->
+    AutoReverse="True"
+    RepeatBehavior="3x"/>
+```
+
+#### **6. 简单示例：按钮宽度动画**
+
+```xaml
+<Button Content="点击放大" Width="100">
+    <Button.Triggers>
+        <EventTrigger RoutedEvent="Button.Click">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation
+                        Storyboard.TargetProperty="Width"
+                        From="100" To="200" Duration="0:0:2"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Button.Triggers>
+</Button>
+```
+
+**效果**：点击按钮后，宽度从 100 匀速增加到 200，持续 2 秒。
+
+### **二、关键帧动画与缓动函数**
+
+#### **1. 关键帧动画（KeyFrame Animation）**
+
+关键帧动画通过定义多个时间点的目标值（关键帧），实现复杂的动画路径。每个关键帧可以指定不同的插值方式（如线性、贝塞尔曲线或缓动函数）。
+
+##### **核心组件**
+
+- **`XXXAnimationUsingKeyFrames`**：关键帧动画的基类，如 `DoubleAnimationUsingKeyFrames`。
+
+- 
+
+  关键帧类型
+
+  ：
+
+  - `LinearXXXKeyFrame`：线性插值（匀速）。
+  - `SplineXXXKeyFrame`：贝塞尔曲线插值（变速）。
+  - `DiscreteXXXKeyFrame`：离散跳跃（无过渡）。
+  - `EasingXXXKeyFrame`：缓动函数插值（非线性效果）。
+
+------
+
+#### **2. 关键帧参数详解**
+
+以 `DoubleAnimationUsingKeyFrames` 为例：
+
+```xaml
+<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)">
+    <!-- 线性关键帧 -->
+    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0"/>
+    <!-- 贝塞尔关键帧 -->
+    <SplineDoubleKeyFrame 
+        Value="300" 
+        KeyTime="0:0:3"
+        KeySpline="0.5,0 0.5,1"/>
+    <!-- 缓动关键帧 -->
+    <EasingDoubleKeyFrame 
+        Value="500" 
+        KeyTime="0:0:5"
+        EasingFunction="{BounceEase Bounces='3'}"/>
+</DoubleAnimationUsingKeyFrames>
+```
+
+|     **参数**     |                           **说明**                           |
+| :--------------: | :----------------------------------------------------------: |
+|     `Value`      |                       关键帧的目标值。                       |
+|    `KeyTime`     |             关键帧的时间点（格式 `时:分:秒`）。              |
+|   `KeySpline`    | （仅 `SplineXXXKeyFrame`）贝塞尔曲线控制点，格式 `X1,Y1 X2,Y2`。 |
+| `EasingFunction` | （仅 `EasingXXXKeyFrame`）缓动函数（如 `BounceEase`、`ElasticEase`）。 |
+
+------
+
+#### **3. 缓动函数（Easing Functions）**
+
+缓动函数用于控制动画的加速度，实现非线性效果（如弹跳、弹性、缓入缓出）。
+
+##### **常用缓动函数**
+
+|  **函数名**   |         **效果**         |                     **关键参数**                      |
+| :-----------: | :----------------------: | :---------------------------------------------------: |
+| `BounceEase`  |  弹跳效果（如小球落地）  |    `Bounces`（弹跳次数）、`Bounciness`（弹跳高度）    |
+| `ElasticEase` |  弹性震动（如弹簧拉伸）  | `Oscillations`（震动次数）、`Springiness`（弹性强度） |
+|  `PowerEase`  | 幂次加速（默认平方曲线） |              `Power`（幂次，控制加速度）              |
+|  `SineEase`   | 正弦曲线运动（平滑起伏） |                          无                           |
+
+##### **示例：弹跳效果**
+
+```xaml
+<DoubleAnimation From="0" To="200" Duration="0:0:2">
+    <DoubleAnimation.EasingFunction>
+        <BounceEase Bounces="3" EasingMode="EaseOut"/>
+    </DoubleAnimation.EasingFunction>
+</DoubleAnimation>
+```
+
+#### **4. 动画性能优化**
+
+##### **优化策略**
+
+- **使用 `RenderTransform`**：替代布局属性（如 `Width`、`Margin`），避免触发布局计算。
+
+```xaml
+<Button.RenderTransform>
+    <TranslateTransform x:Name="translation"/>
+</Button.RenderTransform>
+```
+
+- **启用位图缓存**：对静态元素使用 `CacheMode="BitmapCache"`。
+
+```xaml
+<Canvas CacheMode="BitmapCache">
+    <Path .../>
+</Canvas>
+```
+
+- **限制帧率**：全局设置 `Timeline.DesiredFrameRate=30`。
+
+### 三、路径动画
+
+路径动画允许元素沿预定义的几何路径（如直线、曲线等）进行动态移动。以下是三个核心类的参数、属性及其详细说明：
+
+------
+
+#### **1. DoubleAnimationUsingPath**
+
+**用途**：控制 `double` 类型的属性（如 X/Y 坐标或旋转角度），使元素沿路径移动或旋转。
+
+##### **核心参数与属性**
+
+|    参数/属性     |         类型          |   默认值   |                             作用                             |
+| :--------------: | :-------------------: | :--------: | :----------------------------------------------------------: |
+|  `PathGeometry`  |    `PathGeometry`     | 无（必需） | 定义动画的路径形状，由 `PathFigure` 和 `PathSegment` 组成。  |
+|     `Source`     | `PathAnimationSource` |    `X`     | 指定路径数据的来源： • `X`：沿路径的 X 坐标。 • `Y`：沿路径的 Y 坐标。 • `Angle`：路径切线方向的角度（单位：度）。 |
+| `IsOffsetCurved` |        `bool`         |  `False`   | 是否沿路径的弧长计算偏移量： • `True`：精确沿曲线长度插值（性能较低）。 • `False`：直线插值路径点（默认，性能更高）。 |
+|    `Duration`    |      `Duration`       |    自动    |             动画持续时间（如 `0:0:5` 表示5秒）。             |
+|  `AutoReverse`   |        `bool`         |  `False`   |                    动画是否自动反向播放。                    |
+| `RepeatBehavior` |   `RepeatBehavior`    |    `1x`    |         重复次数（如 `3x`）或无限循环（`Forever`）。         |
+
+##### **示例场景**
+
+- **移动元素**：沿路径的 X/Y 坐标移动按钮。
+- **旋转元素**：根据路径方向自动旋转箭头。
+
+#### **2. PointAnimationUsingPath**
+
+**用途**：控制 `Point` 类型的属性（如几何图形的中心点），使点沿路径动态移动。
+
+##### **核心参数与属性**
+
+|    参数/属性     |      类型      |   默认值   |                          作用                           |
+| :--------------: | :------------: | :--------: | :-----------------------------------------------------: |
+|  `PathGeometry`  | `PathGeometry` | 无（必需） |                     定义路径形状。                      |
+| `IsOffsetCurved` |     `bool`     |  `False`   | 是否沿弧长计算偏移量（同 `DoubleAnimationUsingPath`）。 |
+|    `Duration`    |   `Duration`   |    自动    |                     动画持续时间。                      |
+
+##### **示例场景**
+
+- **动态几何图形**：让圆形沿路径移动。
+- **路径绘制**：动态更新 `PathFigure` 的起点。
+
+#### **3. MatrixAnimationUsingPath**
+
+**用途**：通过矩阵变换（`MatrixTransform`）控制元素的平移、旋转和缩放，使其自动沿路径方向运动。
+
+##### **核心参数与属性**
+
+|        参数/属性        |      类型      |   默认值   |                          作用                          |
+| :---------------------: | :------------: | :--------: | :----------------------------------------------------: |
+|     `PathGeometry`      | `PathGeometry` | 无（必需） |                     定义路径形状。                     |
+| `DoesRotateWithTangent` |     `bool`     |  `False`   | 是否根据路径切线方向自动旋转元素（如车辆沿弯道行驶）。 |
+|    `IsOffsetCurved`     |     `bool`     |  `False`   |                 是否沿弧长计算偏移量。                 |
+|       `Duration`        |   `Duration`   |    自动    |                     动画持续时间。                     |
+
+##### **示例场景**
+
+- **复杂运动**：汽车沿路径移动并自动调整方向。
+- **组合变换**：同时平移和旋转元素。
+
+#### 4.示例
+
+##### 示例一：
+
+```xaml
+<Window x:Class="AnimationStudy.TestPathAnimationWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnimationStudy"
+        mc:Ignorable="d"
+        Title="TestPathAnimationWin" Height="450" Width="800">
+    <Window.Resources>
+        <Storyboard x:Key="sb">
+            <PointAnimationUsingPath 
+                Storyboard.TargetName="ell" 
+                Duration="0:0:1"
+                Storyboard.TargetProperty="Center">
+                <PointAnimationUsingPath.PathGeometry>
+                    <PathGeometry Figures="M0,0L60,20C50,120,200,50 160,150Q10,30 200,30"></PathGeometry>
+                </PointAnimationUsingPath.PathGeometry>
+            </PointAnimationUsingPath>
+            <DoubleAnimationUsingPath Storyboard.TargetName="tb"></DoubleAnimationUsingPath>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Button.Click" SourceName="tb">
+            <BeginStoryboard Storyboard="{StaticResource sb}"/>
+        </EventTrigger>
+    </Window.Triggers>
+    <Grid>
+        <Path Data="M0,0L60,20C50,120,200,50 160,150Q10,30 200,30" Stroke="OrangeRed" StrokeThickness="2"></Path>
+        <Path Fill="CadetBlue">
+            <Path.Data>
+                <EllipseGeometry x:Name="ell" Center="0,0" RadiusX="50" RadiusY="50"></EllipseGeometry>
+            </Path.Data>
+        </Path>
+        <Button 
+            Name="tb"
+            Width="100" 
+            Height="50" 
+            Content="Click"/>
+    </Grid>
+</Window>
+```
+
+##### 示例二：
+
+```xaml
+<Window x:Class="PathAnimationDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="路径动画示例" Height="400" Width="600">
+    
+    <!-- 1. 定义路径 -->
+    <Window.Resources>
+        <!-- 贝塞尔曲线路径：从 (0,0) 到 (500,200) -->
+        <PathGeometry x:Key="MotionPath">
+            <PathFigure StartPoint="0,0">
+                <BezierSegment 
+                    Point1="200,300"   <!-- 控制点1 -->
+                    Point2="300,-100"  <!-- 控制点2 -->
+                    Point3="500,200"/> <!-- 终点 -->
+            </PathFigure>
+        </PathGeometry>
+    </Window.Resources>
+
+    <!-- 2. 动画触发器 -->
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Button.Click" SourceName="startButton">
+            <BeginStoryboard>
+                <Storyboard>
+                    <!-- 3. 矩阵动画：平移 + 旋转 -->
+                    <MatrixAnimationUsingPath
+                        Storyboard.TargetName="arrowTransform"
+                        Storyboard.TargetProperty="Matrix"
+                        PathGeometry="{StaticResource MotionPath}"
+                        DoesRotateWithTangent="True"  <!-- 自动旋转方向 -->
+                        Duration="0:0:5"
+                        RepeatBehavior="Forever"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <!-- 4. UI布局 -->
+    <Canvas>
+        <!-- 4.1 箭头图像（需替换为本地图片路径） -->
+        <Image Source="/arrow.png" Width="40" Height="20">
+            <Image.RenderTransform>
+                <!-- 矩阵变换控制位置和旋转 -->
+                <MatrixTransform x:Name="arrowTransform"/>
+            </Image.RenderTransform>
+        </Image>
+
+        <!-- 4.2 路径可视化 -->
+        <Path 
+            Data="{StaticResource MotionPath}"
+            Stroke="Gray" 
+            StrokeThickness="1"
+            Canvas.Top="50"/>
+
+        <!-- 4.3 启动按钮 -->
+        <Button 
+            x:Name="startButton"
+            Content="启动动画"
+            Width="80" Height="30"
+            Canvas.Left="10" Canvas.Top="300"/>
+    </Canvas>
+</Window>
+```
+
+
+
+### **四、MVVM 动画控制与自定义动画详解**
+
+#### **一、MVVM 模式下的动画控制**
+
+在 MVVM 模式中，动画的触发和状态管理应通过数据绑定和命令实现，避免在 View 中直接编写动画逻辑，以保持代码解耦和可维护性。以下是两种常用方法：
+
+------
+
+##### **1. 通过数据绑定触发动画**
+
+###### **核心思路**
+
+- 在 ViewModel 中定义控制动画的 `布尔类型属性`（如 `IsAnimating`）。
+- 在 View 中通过 `DataTrigger` 监听该属性，触发动画的启动或停止。
+
+###### **示例代码**
+
+**ViewModel**
+
+```xaml
+public class MainViewModel : INotifyPropertyChanged {
+    private bool _isAnimating;
+    public bool IsAnimating {
+        get => _isAnimating;
+        set {
+            _isAnimating = value;
+            OnPropertyChanged();
+        }
+    }
+
+    // 切换动画状态的命令
+    public ICommand ToggleAnimationCommand { get; }
+
+    public MainViewModel() {
+        ToggleAnimationCommand = new RelayCommand(() => IsAnimating = !IsAnimating);
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string name = null) {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+}
+```
+
+**XAML**
+
+```xaml
+<Window.DataContext>
+    <local:MainViewModel/>
+</Window.DataContext>
+
+<StackPanel>
+    <!-- 动画目标元素 -->
+    <Border x:Name="animatedBox" Width="50" Height="50" Background="Tomato">
+        <Border.RenderTransform>
+            <TranslateTransform x:Name="translation"/>
+        </Border.RenderTransform>
+    </Border>
+
+    <!-- 控制按钮 -->
+    <Button Content="切换动画" Command="{Binding ToggleAnimationCommand}"/>
+
+    <!-- 通过 DataTrigger 控制动画 -->
+    <Window.Style>
+        <Style TargetType="Window">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsAnimating}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard x:Name="animation">
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetName="translation"
+                                    Storyboard.TargetProperty="X"
+                                    To="300" Duration="0:0:2"
+                                    AutoReverse="True"
+                                    RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <StopStoryboard BeginStoryboardName="animation"/>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
+</StackPanel>
+```
+
+**效果**
+
+- 点击按钮时，`IsAnimating` 属性切换，触发 `DataTrigger`。
+- 当 `IsAnimating` 为 `True` 时，启动水平移动动画；为 `False` 时停止动画。
+
+------
+
+##### **2. 通过附加属性封装动画**
+
+###### **核心思路**
+
+- 创建自定义的附加属性（Attached Property），将动画逻辑封装为可复用的行为。
+- 在 XAML 中通过绑定 ViewModel 属性控制动画。
+
+###### **示例代码**
+
+**附加属性定义**
+
+```csharp
+public static class AnimationBehavior {
+    // 定义附加属性：是否启用动画
+    public static readonly DependencyProperty IsEnabledProperty =
+        DependencyProperty.RegisterAttached(
+            "IsEnabled", typeof(bool), typeof(AnimationBehavior),
+            new PropertyMetadata(false, OnIsEnabledChanged));
+
+    public static void SetIsEnabled(DependencyObject obj, bool value) => obj.SetValue(IsEnabledProperty, value);
+    public static bool GetIsEnabled(DependencyObject obj) => (bool)obj.GetValue(IsEnabledProperty);
+
+    // 属性变化时触发动画
+    private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        if (d is FrameworkElement element && e.NewValue is bool isEnabled) {
+            if (isEnabled) {
+                StartAnimation(element);
+            } else {
+                StopAnimation(element);
+            }
+        }
+    }
+
+    // 启动动画
+    private static void StartAnimation(FrameworkElement element) {
+        Storyboard storyboard = new Storyboard();
+        DoubleAnimation anim = new DoubleAnimation {
+            To = 300,
+            Duration = TimeSpan.FromSeconds(2),
+            AutoReverse = true,
+            RepeatBehavior = RepeatBehavior.Forever
+        };
+        Storyboard.SetTarget(anim, element);
+        Storyboard.SetTargetProperty(anim, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.X)"));
+        storyboard.Children.Add(anim);
+        storyboard.Begin(element);
+    }
+
+    // 停止动画
+    private static void StopAnimation(FrameworkElement element) {
+        element.BeginAnimation(TranslateTransform.XProperty, null);
+    }
+}
+```
+
+```xaml
+<Border 
+    Background="Tomato" 
+    Width="50" Height="50"
+    local:AnimationBehavior.IsEnabled="{Binding IsAnimating}">
+    <Border.RenderTransform>
+        <TranslateTransform/>
+    </Border.RenderTransform>
+</Border>
+```
+
+**效果**
+
+- 当 `IsAnimating` 为 `True` 时，自动启动动画；为 `False` 时停止。
+- 动画逻辑完全封装在附加属性中，View 和 ViewModel 无需直接操作动画。
+
+------
+
+#### **二、自定义动画的实现**
+
+通过继承 `AnimationTimeline` 类，可以创建完全自定义的动画逻辑，例如随机抖动、正弦波动等。
+
+------
+
+##### **1. 创建随机抖动动画**
+
+###### **步骤**
+
+1. 继承 `AnimationTimeline`，重写 `GetCurrentValue` 方法。
+2. 定义目标属性类型（如 `double`）。
+3. 实现随机值生成逻辑。
+
+###### **代码示例**
+
+```csharp
+public class RandomJitterAnimation : AnimationTimeline {
+    // 定义目标属性类型
+    public override Type TargetPropertyType => typeof(double);
+
+    // 生成当前帧的值
+    public override object GetCurrentValue(
+        object defaultOriginValue, 
+        object defaultDestinationValue, 
+        AnimationClock animationClock) {
+        Random rand = new Random();
+        return (double)defaultOriginValue + rand.NextDouble() * 20 - 10; // 抖动范围：[-10, 10]
+    }
+
+    // 必须重写的方法
+    protected override Freezable CreateInstanceCore() => new RandomJitterAnimation();
+}
+```
+
+```xaml
+<Button Content="抖动按钮" Width="100">
+    <Button.Triggers>
+        <EventTrigger RoutedEvent="Button.Click">
+            <BeginStoryboard>
+                <Storyboard>
+                    <local:RandomJitterAnimation
+                        Storyboard.TargetProperty="Width"
+                        Duration="0:0:2"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Button.Triggers>
+</Button>
+```
+
+**效果**
+
+- 点击按钮后，宽度在 2 秒内随机抖动，范围 ±10。
+
+------
+
+##### **2. 创建正弦波动画**
+
+###### **代码示例**
+
+```csharp
+public class SineWaveAnimation : AnimationTimeline {
+    // 定义目标属性类型
+    public override Type TargetPropertyType => typeof(double);
+
+    // 波动幅度（可定义依赖属性以支持 XAML 设置）
+    public double Amplitude { get; set; } = 50;
+
+    // 生成当前帧的值
+    public override object GetCurrentValue(
+        object defaultOriginValue, 
+        object defaultDestinationValue, 
+        AnimationClock animationClock) {
+        double time = animationClock.CurrentTime.Value.TotalSeconds;
+        return (double)defaultOriginValue + Amplitude * Math.Sin(time * Math.PI);
+    }
+
+    protected override Freezable CreateInstanceCore() => new SineWaveAnimation();
+}
+```
+
+```xaml
+<Button Content="正弦波" Width="100">
+    <Button.Triggers>
+        <EventTrigger RoutedEvent="Button.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <local:SineWaveAnimation
+                        Storyboard.TargetProperty="(Canvas.Top)"
+                        Amplitude="50"
+                        Duration="0:0:5"
+                        RepeatBehavior="Forever"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Button.Triggers>
+</Button>
+```
+
+**效果**
+
+- 按钮加载后，垂直位置按正弦曲线波动，幅度为 50。
+
+### 五、动画的控制与事件
+
+#### **1. 动画的控制方法**
+
+WPF 动画通过 `Storyboard` 提供多种控制方法，允许你手动管理动画的播放状态。
+
+##### **核心控制方法**
+
+|      方法名      |               作用                |         示例场景         |
+| :--------------: | :-------------------------------: | :----------------------: |
+|    `Begin()`     |            启动动画。             |  点击按钮开始移动元素。  |
+|    `Pause()`     |    暂停动画（保持当前状态）。     |    用户点击暂停按钮。    |
+|    `Resume()`    |        继续已暂停的动画。         |    用户点击继续按钮。    |
+|     `Stop()`     |   停止动画（恢复到初始状态）。    |    用户点击停止按钮。    |
+| `Seek(TimeSpan)` | 跳转到指定时间点（如快进/快退）。 | 拖动进度条调整动画位置。 |
+
+##### **示例代码：通过按钮控制动画**
+
+```xaml
+<Window x:Class="AnimationControlDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="动画控制示例" Height="300" Width="400">
+    
+    <!-- 定义动画 -->
+    <Window.Resources>
+        <Storyboard x:Key="MoveAnimation">
+            <DoubleAnimation
+                Storyboard.TargetName="animatedBox"
+                Storyboard.TargetProperty="(Canvas.Left)"
+                From="0" To="300" Duration="0:0:5"/>
+        </Storyboard>
+    </Window.Resources>
+
+    <!-- UI布局 -->
+    <Canvas>
+        <!-- 动画目标元素 -->
+        <Rectangle x:Name="animatedBox" Width="50" Height="50" Fill="Tomato" Canvas.Left="0"/>
+        
+        <!-- 控制按钮 -->
+        <Button Content="开始" Click="StartButton_Click" Canvas.Top="200" Width="60"/>
+        <Button Content="暂停" Click="PauseButton_Click" Canvas.Top="200" Canvas.Left="80" Width="60"/>
+        <Button Content="继续" Click="ResumeButton_Click" Canvas.Top="200" Canvas.Left="160" Width="60"/>
+        <Button Content="停止" Click="StopButton_Click" Canvas.Top="200" Canvas.Left="240" Width="60"/>
+    </Canvas>
+</Window>
+```
+
+```csharp
+// 后台代码（C#）
+public partial class MainWindow : Window {
+    private Storyboard moveStoryboard;
+
+    public MainWindow() {
+        InitializeComponent();
+        // 获取资源中的动画
+        moveStoryboard = (Storyboard)FindResource("MoveAnimation");
+    }
+
+    // 按钮点击事件处理
+    private void StartButton_Click(object sender, RoutedEventArgs e) {
+        moveStoryboard.Begin();
+    }
+
+    private void PauseButton_Click(object sender, RoutedEventArgs e) {
+        moveStoryboard.Pause();
+    }
+
+    private void ResumeButton_Click(object sender, RoutedEventArgs e) {
+        moveStoryboard.Resume();
+    }
+
+    private void StopButton_Click(object sender, RoutedEventArgs e) {
+        moveStoryboard.Stop();
+    }
+}
+```
+
+#### **2. 动画事件**
+
+动画在播放过程中会触发关键事件，允许你在特定时间点执行自定义逻辑。
+
+##### **生命周期事件**
+
+|   **阶段**   |                       **描述**                       |       **触发事件**        |
+| :----------: | :--------------------------------------------------: | :-----------------------: |
+|  **初始化**  |  动画被创建，但未播放（如通过 `Storyboard` 定义）。  |            无             |
+|   **启动**   |        调用 `Begin()` 方法或通过触发器启动。         | `CurrentStateInvalidated` |
+|   **运行**   |           动画正在播放，属性值随时间变化。           | `CurrentTimeInvalidated`  |
+|   **暂停**   |            调用 `Pause()` 方法暂停动画。             | `CurrentStateInvalidated` |
+|   **恢复**   |            调用 `Resume()` 方法继续播放。            | `CurrentStateInvalidated` |
+|   **停止**   |           调用 `Stop()` 方法强制结束动画。           | `CurrentStateInvalidated` |
+| **自然完成** |                 动画正常播放到结束。                 |        `Completed`        |
+| **资源释放** | 动画对象被销毁或资源回收（通常由垃圾回收机制处理）。 |            无             |
+
+##### **示例代码：监听动画事件**
+
+```xaml
+<Storyboard x:Key="MoveAnimation" Completed="MoveAnimation_Completed">
+    <!-- 动画定义 -->
+</Storyboard>
+```
+
+```csharp
+// 事件处理方法
+private void MoveAnimation_Completed(object sender, EventArgs e) {
+    MessageBox.Show("动画播放完成！");
+}
+```
+
+
+
+### 六、缓动函数分类与对照表
+
+|     **缓动函数**      |                     **效果描述**                     |                         **关键参数**                         |           **适用场景**           |
+| :-------------------: | :--------------------------------------------------: | :----------------------------------------------------------: | :------------------------------: |
+|   **`BounceEase`**    |       模拟物体落地时的弹跳效果（如小球弹跳）。       | `Bounces`（弹跳次数，默认3）  `Bounciness`（弹跳高度，默认2，值越大越平缓） |    按钮点击反馈、物体下落动画    |
+|   **`ElasticEase`**   |        弹簧般的弹性震动效果（如拉伸后回弹）。        | -`Oscillations`（震动次数，默认3） `Springiness`（弹性强度，默认3，值越小震动幅度越大） |    弹性菜单展开、拖拽释放动画    |
+|    **`SineEase`**     |            正弦曲线运动，平滑加速或减速。            |                          无特殊参数                          |    自然过渡效果（如淡入淡出）    |
+|    **`PowerEase`**    | 幂次曲线运动（默认二次方曲线，即 `QuadraticEase`）。 |           `Power`（幂次，默认2，值越大加速越陡峭）           |    自定义加速度（如模拟重力）    |
+|    **`CubicEase`**    |       三次方曲线运动，比 `PowerEase` 更平滑。        |                          无特殊参数                          |          平滑加速/减速           |
+|   **`CircleEase`**    |             圆形曲线运动（缓入或缓出）。             |                          无特殊参数                          |  圆形路径运动（如旋转加载动画）  |
+|    **`BackEase`**     |      动画开始或结束时略微回退（类似拔河效果）。      |               - `Amplitude`（回退幅度，默认1）               |      卡片弹出、窗口关闭动画      |
+| **`ExponentialEase`** |          指数曲线运动（加速或减速更剧烈）。          |                 - `Exponent`（指数，默认2）                  |      模拟爆炸、能量释放效果      |
+|  **`QuadraticEase`**  |    二次方曲线运动（同 `PowerEase` 的默认行为）。     |                          无特殊参数                          |           通用缓动效果           |
+|   **`QuarticEase`**   |   四次方曲线运动，加速度比 `QuadraticEase` 更快。    |                          无特殊参数                          |           快速启动动画           |
+|   **`QuinticEase`**   |             五次方曲线运动，加速度极快。             |                          无特殊参数                          | 强调快速变化的场景（如闪屏过渡） |
+
+#### **通用参数 `EasingMode`（所有缓动函数均支持）**
+
+|   **值**    |                   **效果**                   |                           **示例**                           |
+| :---------: | :------------------------------------------: | :----------------------------------------------------------: |
+|  `EaseIn`   | 缓动效果集中在动画的开始阶段（如加速启动）。 | `<BounceEase EasingMode="EaseIn"/>`（弹跳效果在开始时明显）  |
+|  `EaseOut`  | 缓动效果集中在动画的结束阶段（如减速停止）。 | `<ElasticEase EasingMode="EaseOut"/>`（弹性效果在结束时明显） |
+| `EaseInOut` | 缓动效果在开始和结束阶段均有体现（默认值）。 |  `<PowerEase EasingMode="EaseInOut"/>`（动画先加速后减速）   |
