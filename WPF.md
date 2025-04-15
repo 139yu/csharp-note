@@ -5096,3 +5096,1571 @@ private void MoveAnimation_Completed(object sender, EventArgs e) {
 |  `EaseIn`   | 缓动效果集中在动画的开始阶段（如加速启动）。 | `<BounceEase EasingMode="EaseIn"/>`（弹跳效果在开始时明显）  |
 |  `EaseOut`  | 缓动效果集中在动画的结束阶段（如减速停止）。 | `<ElasticEase EasingMode="EaseOut"/>`（弹性效果在结束时明显） |
 | `EaseInOut` | 缓动效果在开始和结束阶段均有体现（默认值）。 |  `<PowerEase EasingMode="EaseInOut"/>`（动画先加速后减速）   |
+
+
+
+
+
+
+
+# MVVM
+
+## MVVM入门
+
+### **一、什么是MVVM？**
+
+#### 1. **定义**
+
+MVVM 是一种用于构建 **用户界面（UI）** 的软件架构模式，它将应用程序分为三个核心部分：
+
+- **Model**
+  - **数据表示**：定义应用程序的核心数据结构（如数据库表、API响应模型）。
+  - **业务逻辑**：实现与数据相关的计算、验证和业务规则（如数据加密、格式校验）。
+  - **数据访问**：封装与数据源的交互（如数据库操作、网络请求）。
+
+- **View**
+  - **界面呈现**：通过 XAML 定义用户界面布局和视觉元素。
+  - **用户交互**：响应用户输入（点击、滑动等），但不处理业务逻辑。
+  - **数据绑定**：将 UI 控件与 ViewModel 的属性/命令绑定。
+
+- **ViewModel**
+  - **状态管理**：维护视图的当前状态（如按钮是否可用、进度条数值）。
+  - **命令处理**：定义和执行用户操作的命令逻辑。
+  - **数据转换**：将 Model 层的数据格式转换为适合 View 层显示的形式。
+  - **协调通信**：作为 View 和 Model 之间的桥梁，处理双向数据流。
+
+
+```mermaid
+%% MVVM 核心工作流程
+sequenceDiagram
+    participant User as 用户
+    participant View as View（视图层）
+    participant ViewModel as ViewModel（视图模型）
+    participant Model as Model（模型层）
+    
+    %% 初始化阶段
+    View->>ViewModel: 绑定DataContext
+    ViewModel->>Model: 初始化数据
+    
+    %% 用户操作触发命令
+    User->>View: 点击按钮/输入文本
+    View->>ViewModel: 触发命令(Execute)
+    
+    %% ViewModel处理逻辑
+    ViewModel->>Model: 调用业务方法
+    Model-->>ViewModel: 返回处理结果
+    
+    %% 数据变更通知
+    ViewModel->>ViewModel: 更新属性值
+    ViewModel->>View: 触发PropertyChanged事件
+    
+    %% UI自动更新
+    View->>View: 通过数据绑定刷新界面
+    
+    %% 状态反馈循环
+    View->>ViewModel: 自动调用CanExecute
+    ViewModel-->>View: 返回按钮启用状态
+```
+
+
+
+#### 2. **核心目标**
+
+- **解耦**：将 UI 逻辑与业务逻辑分离
+- **可维护性**：各模块独立开发、测试和修改
+- **数据驱动**：通过数据绑定自动更新UI
+
+### **二、为什么需要MVVM？**
+
+#### 1. **传统UI开发的问题**
+
+- **代码耦合**：UI事件处理与业务逻辑混杂
+- **难以测试**：UI依赖性强，无法单独测试核心逻辑
+- **维护困难**：修改UI可能破坏业务逻辑
+
+#### 2. **MVVM的优势**
+
+- **关注点分离**：各层职责明确
+- **双向绑定**：数据变化自动同步到UI，无需手动操作控件
+- **可复用性**：ViewModel 可跨多个 View 复用
+
+------
+
+### **三、MVVM的三层结构**
+
+#### 1. **Model（模型层）**
+
+- **作用**：封装数据和业务逻辑
+
+- **示例**：
+
+  ```csharp
+  public class UserModel
+  {
+      public string Name { get; set; }
+      public int Age { get; set; }
+      
+      public bool IsAdult() => Age >= 18;
+  }
+  ```
+
+#### 2. **View（视图层）**
+
+- **作用**：定义用户界面的外观和布局
+
+- **技术实现**：在 WPF 中通常是 `.xaml` 文件
+
+- **示例**：
+
+  ```xaml
+  <Window>
+      <StackPanel>
+          <TextBlock Text="{Binding UserName}"/>
+          <Button Content="提交" Command="{Binding SubmitCommand}"/>
+      </StackPanel>
+  </Window>
+  ```
+
+#### 3. **ViewModel（视图模型层）**
+
+- **作用**：暴露数据和命令供 View 绑定
+
+- 关键特性：
+
+  - 实现 `INotifyPropertyChanged` 接口
+  - 包含 `ICommand` 对象
+
+- **示例**：
+
+  ```csharp
+  public class UserViewModel : INotifyPropertyChanged
+  {
+      private string _userName;
+      public string UserName
+      {
+          get => _userName;
+          set
+          {
+              _userName = value;
+              OnPropertyChanged();
+          }
+      }
+  
+      public ICommand SubmitCommand { get; }
+  
+      public UserViewModel()
+      {
+          SubmitCommand = new RelayCommand(Submit);
+      }
+  
+      private void Submit()
+      {
+          // 业务逻辑
+      }
+  
+      public event PropertyChangedEventHandler PropertyChanged;
+      protected void OnPropertyChanged([CallerMemberName] string name = null)
+          => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+  }
+  ```
+
+### **四、核心机制：数据绑定**
+
+#### 1. **绑定模式**
+
+|       模式       |        描述         |       示例       |
+| :--------------: | :-----------------: | :--------------: |
+|     `OneWay`     | 数据源 → UI（单向） |   显示静态数据   |
+|     `TwoWay`     | 数据源 ↔ UI（双向） | 输入框与属性绑定 |
+|    `OneTime`     | 仅初始化时绑定一次  |   加载初始配置   |
+| `OneWayToSource` | UI → 数据源（反向） |   特定场景优化   |
+
+### **五、命令系统（Command）**
+
+#### 1. **ICommand接口**
+
+```csharp
+public interface ICommand
+{
+    bool CanExecute(object parameter);    // 是否可执行
+    void Execute(object parameter);       // 执行命令
+    event EventHandler CanExecuteChanged;  // 状态变化事件
+}
+```
+
+#### 2. **RelayCommand实现**
+
+```csharp
+public class RelayCommand : ICommand
+{
+    private readonly Action _execute;
+    private readonly Func<bool> _canExecute;
+
+    public RelayCommand(Action execute, Func<bool> canExecute = null)
+    {
+        _execute = execute;
+        _canExecute = canExecute;
+    }
+
+    public bool CanExecute(object parameter) => _canExecute?.Invoke() ?? true;
+    public void Execute(object parameter) => _execute();
+    public event EventHandler? CanExecuteChanged
+	{
+    	add => CommandManager.RequerySuggested += value;
+    	remove => CommandManager.RequerySuggested -= value;
+	}
+}
+```
+
+## MVVM命令
+
+### **一、命令的本质：为什么需要命令？**
+
+#### 1. **传统事件处理的缺陷**
+
+UI代码与业务逻辑混杂，难以复用和测试。
+
+#### 2. **命令的优势**
+
+- **核心思想**：将用户操作抽象为可绑定的命令对象。
+- 优势：
+  - 业务逻辑完全在 ViewModel 中
+  - 支持状态管理（按钮启用/禁用）
+  - 方便单元测试
+
+### **二、命令的核心接口：ICommand**
+
+#### 1. **接口定义**
+
+```csharp
+public interface ICommand
+{
+    // 判断命令是否可执行（控制按钮是否可用）
+    bool CanExecute(object parameter);
+    
+    // 执行命令的实际操作
+    void Execute(object parameter);
+    
+    // 当CanExecute结果可能变化时触发的事件
+    event EventHandler CanExecuteChanged;
+}
+```
+
+#### 2. **接口的三个成员解析**
+
+|        成员         |                       作用                        |
+| :-----------------: | :-----------------------------------------------: |
+|    `CanExecute`     |        返回`true`时按钮可用，`false`时禁用        |
+|      `Execute`      |             按钮点击时执行的实际逻辑              |
+| `CanExecuteChanged` | 当外部条件变化时触发，通知WPF重新检查`CanExecute` |
+
+------
+
+### **三、最简单的命令实现：RelayCommand**
+
+#### 1. **基础实现代码**
+
+```csharp
+public class RelayCommand : ICommand
+{
+    private readonly Action _execute;      // 执行逻辑
+    private readonly Func<bool> _canExecute; // 条件判断
+
+    // 构造函数（参数为要执行的逻辑和条件）
+    public RelayCommand(Action execute, Func<bool> canExecute = null)
+    {
+        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        _canExecute = canExecute;
+    }
+
+    public bool CanExecute(object parameter) => _canExecute?.Invoke() ?? true;
+
+    public void Execute(object parameter) => _execute();
+
+    public event EventHandler CanExecuteChanged
+    {
+        add => CommandManager.RequerySuggested += value;
+        remove => CommandManager.RequerySuggested -= value;
+    }
+}
+```
+
+#### 2. **ViewModel中的使用**
+
+```csharp
+public class UserViewModel
+{
+    // 暴露命令属性
+    public ICommand SaveCommand { get; }
+
+    private bool _isValid;
+    public bool IsValid
+    {
+        get => _isValid;
+        set
+        {
+            _isValid = value;
+            // 触发CanExecute重新检查（后文会解释）
+            CommandManager.InvalidateRequerySuggested();
+        }
+    }
+
+    public UserViewModel()
+    {
+        // 初始化命令
+        SaveCommand = new RelayCommand(
+            execute: SaveData,
+            canExecute: () => IsValid // 当IsValid为true时按钮可用
+        );
+    }
+
+    private void SaveData()
+    {
+        // 实际的保存逻辑
+    }
+}
+```
+
+#### 3. **XAML中的绑定**
+
+```xaml
+<Button Content="保存" 
+        Command="{Binding SaveCommand}"/>
+```
+
+### **四、命令的执行流程**
+
+#### 1. **生命周期流程图**
+
+```mermaid
+%% 含异步处理的命令流程
+sequenceDiagram
+    participant User
+    participant View
+    participant ViewModel
+    participant Model
+
+    User->>View: 点击"加载数据"按钮
+    View->>ViewModel: 触发LoadCommand.Execute()
+    
+    activate ViewModel
+    ViewModel->>+Model: 调用异步加载方法
+    Model-->>-ViewModel: 返回Task结果
+    ViewModel->>ViewModel: 更新IsLoading状态
+    ViewModel->>View: 更新加载动画显示
+    
+    par 数据加载完成
+        ViewModel->>ViewModel: 更新数据集合
+        ViewModel->>View: 刷新数据列表
+    and 状态更新
+        ViewModel->>CommandManager: 触发InvalidateRequerySuggested
+        CommandManager->>View: 重新检查所有CanExecute
+    end
+```
+
+#### 2. **详细步骤说明**
+
+1. **用户点击按钮**
+   WPF 查找按钮绑定的 `SaveCommand`
+2. **检查执行条件**
+   调用 `SaveCommand.CanExecute()`，根据返回值决定按钮是否可用
+3. **执行命令**
+   如果用户点击了可用按钮，调用 `SaveCommand.Execute()`
+4. **状态更新**
+   如果业务逻辑修改了 `IsValid` 属性，触发 `CanExecuteChanged` 事件
+   → WPF 重新检查 `CanExecute()`
+   → 按钮状态自动更新
+
+### 五、CommandManager 详解
+
+#### 核心作用
+
+`CommandManager` 是 WPF 命令系统的核心控制器，负责以下功能：
+
+1. **自动化状态同步**：监听 UI 事件（如键盘、鼠标操作），自动触发命令的 `CanExecute` 检查。
+2. **全局命令管理**：协调所有 `ICommand` 实例的状态更新。
+3. **性能优化**：通过智能事件过滤和节流机制减少无效计算。
+
+#### 核心方法解析
+
+##### 1. `RequerySuggested` 事件
+
+- **作用**：
+  当命令的 `CanExecute` 状态可能变化时触发（如用户输入、焦点变化）。
+
+- **绑定方式**：
+
+  ```csharp
+  public event EventHandler CanExecuteChanged
+  {
+      add => CommandManager.RequerySuggested += value;
+      remove => CommandManager.RequerySuggested -= value;
+  }
+  ```
+
+- 触发场景：
+  - 键盘输入
+  - 鼠标点击
+  - 焦点切换
+
+##### 2. `InvalidateRequerySuggested()`
+
+- **作用**：强制立即重新检查所有命令的 `CanExecute` 状态。
+
+- **典型代码**：
+
+  ```csharp
+  // 后台线程更新数据后触发状态刷新
+  Task.Run(() => {
+      _data = FetchData();
+      Dispatcher.Invoke(CommandManager.InvalidateRequerySuggested);
+  });
+  ```
+
+##### 3. `RegisterClassCommandBinding`
+
+- **作用**：为控件类注册全局命令（如为所有 `Button` 绑定 `Enter` 键提交逻辑）。
+
+- **示例**：
+
+  ```csharp
+  CommandManager.RegisterClassCommandBinding(
+      typeof(TextBox),
+      new CommandBinding(ApplicationCommands.Paste, ExecutePaste, CanPaste)
+  );
+  ```
+
+##### 4. `RegisterClassInputBinding`
+
+- **作用**：为控件类注册全局快捷键。
+
+- **示例**：
+
+  ```csharp
+  CommandManager.RegisterClassInputBinding(
+      typeof(Window),
+      new InputBinding(ApplicationCommands.Close, new KeyGesture(Key.W, ModifierKeys.Control))
+  );
+  ```
+
+#### 实现原理
+
+##### 事件监听机制
+
+```mermaid
+graph TD
+    A[用户操作UI] --> B{CommandManager检测事件}
+    B -->|有效事件| C[标记需要刷新状态]
+    B -->|无关事件| D[忽略]
+    C --> E[触发RequerySuggested事件]
+    E --> F[遍历所有命令调用CanExecute]
+```
+
+##### 内部工作流程
+
+1. **DispatcherTimer 轮询**
+
+   - 默认每隔 **16ms（≈60Hz）** 检查一次是否需要刷新状态。
+   - 使用 `DispatcherPriority.Background` 确保低优先级，避免阻塞 UI。
+
+2. **智能状态标记**
+
+   ```csharp
+   private static bool _refreshNeeded; // 标记是否需要刷新
+   
+   public static void InvalidateRequerySuggested() => _refreshNeeded = true;
+   
+   private static void OnTimerTick()
+   {
+       if (_refreshNeeded)
+       {
+           RaiseRequerySuggested(); // 触发所有命令的CanExecute检查
+           _refreshNeeded = false;
+       }
+   }
+   ```
+
+3. **性能优化策略**
+
+   - **事件过滤**：仅监听可能影响状态的 UI 事件。
+   - **批量处理**：合并高频事件的多次触发。
+
+----
+
+#### 跨线程处理示例
+
+```mermaid
+sequenceDiagram
+    participant Background
+    participant UIThread
+    participant CommandManager
+
+    Background->>UIThread: 修改数据属性
+    UIThread->>CommandManager: InvalidateRequerySuggested()
+    CommandManager->>UIThread: 触发CanExecute检查
+    UIThread->>UIThread: 更新按钮启用状态
+```
+
+------
+
+#### 性能优化建议
+
+|      场景      |                 策略                  |           代码示例           |
+| :------------: | :-----------------------------------: | :--------------------------: |
+|  高频更新界面  | 手动调用 `InvalidateRequerySuggested` | 使用 `Throttle` 限制调用频率 |
+|  复杂条件判断  |        缓存 `CanExecute` 结果         |     记录最后一次检查时间     |
+| 大规模命令绑定 |        使用 `WeakEventManager`        |         防止内存泄漏         |
+|    异步操作    |      通过 `Dispatcher` 触发更新       | `Dispatcher.Invoke` 包裹调用 |
+
+------
+
+#### 最佳实践
+
+1. **默认依赖自动更新**：适用于简单交互场景。
+2. **高频场景手动控制**：精确调用 `InvalidateRequerySuggested`。
+3. **线程安全**：跨线程操作必须通过 `Dispatcher` 调度。
+4. **避免滥用全局刷新**：优先使用命令的局部状态更新方法。
+
+
+
+
+
+```mermaid
+sequenceDiagram
+    participant Model
+    participant ViewModel
+    participant Command
+    participant UI
+
+    Model->>ViewModel: 属性变更 (PropertyChanged)
+    ViewModel->>CommandManager: 自动触发 RequerySuggested
+    CommandManager->>Command: 调用 CanExecute()
+    Command->>UI: 更新按钮状态
+```
+
+## 内置命令
+
+#### **1. 内置命令的核心概念**
+
+WPF 内置命令是预定义的、标准化的操作逻辑，通过 `ICommand` 接口实现，可直接用于处理用户交互（如按钮点击、快捷键）。其核心优势包括：
+
+- **标准化操作**：覆盖常见场景（复制、保存、导航等）。
+- **路由事件集成**：支持冒泡（Bubbling）和隧道（Tunneling）传递。
+- **自动状态管理**：通过 `CommandManager` 自动更新 UI 控件的启用状态。
+
+------
+
+#### **2. 内置命令的五大分类**
+
+以下是 WPF 内置命令的完整分类及典型应用场景：
+
+|        **类别**         |                 **核心命令示例**                 |          **适用场景**          |
+| :---------------------: | :----------------------------------------------: | :----------------------------: |
+| **ApplicationCommands** |  `New`, `Open`, `Save`, `Copy`, `Paste`, `Cut`   |      文件操作、剪贴板管理      |
+| **NavigationCommands**  | `BrowseBack`, `BrowseForward`, `Refresh`, `Zoom` |       页面导航、视图缩放       |
+|    **MediaCommands**    |    `Play`, `Pause`, `Stop`, `IncreaseVolume`     |       音频/视频播放控制        |
+|  **ComponentCommands**  |     `MoveLeft`, `MoveToEnd`, `ScrollPageUp`      |     列表、表格等组件的导航     |
+|   **EditingCommands**   |       `ToggleBold`, `AlignLeft`, `Delete`        | 富文本编辑（如字体、段落控制） |
+
+------
+
+#### **3. 内置命令的默认输入手势（快捷键）**
+
+每个内置命令已绑定默认快捷键：
+
+```csharp
+ApplicationCommands.Copy.InputGestures.Add(new KeyGesture(Key.C, ModifierKeys.Control));
+ApplicationCommands.Paste.InputGestures.Add(new KeyGesture(Key.V, ModifierKeys.Control));
+```
+
+可通过 XAML 或代码覆盖默认快捷键。
+
+------
+
+#### **4. 在 XAML 中使用内置命令**
+
+##### **4.1 直接绑定到控件**
+
+```xaml
+<!-- 按钮绑定保存命令 -->
+<Button Command="ApplicationCommands.Save" Content="保存"/>
+
+<!-- 菜单项绑定复制命令 -->
+<MenuItem Command="ApplicationCommands.Copy"/>
+```
+
+##### **4.2 绑定快捷键**
+
+```xaml
+<Window.InputBindings>
+    <KeyBinding Command="ApplicationCommands.Save" Gesture="Ctrl+S"/>
+</Window.InputBindings>
+```
+
+##### **4.3 处理命令逻辑**
+
+```xaml
+<Window.CommandBindings>
+    <CommandBinding 
+        Command="ApplicationCommands.Save"
+        Executed="SaveCommand_Executed"
+        CanExecute="SaveCommand_CanExecute"/>
+</Window.CommandBindings>
+```
+
+```csharp
+// 后台代码处理命令
+private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
+    MessageBox.Show("保存成功！");
+    e.Handled = true; // 阻止事件冒泡
+}
+
+private void SaveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+    e.CanExecute = !string.IsNullOrEmpty(txtEditor.Text);
+    e.Handled = true;
+}
+```
+
+#### **5. 在 MVVM 中集成内置命令**
+
+##### **5.1 ViewModel 中定义命令**
+
+```csharp
+public class DocumentViewModel : INotifyPropertyChanged {
+    // 自定义 RelayCommand
+    public RelayCommand SaveCommand { get; }
+    private string _content;
+
+    public DocumentViewModel() {
+        SaveCommand = new RelayCommand(
+            execute: SaveDocument,
+            canExecute: () => !string.IsNullOrEmpty(Content)
+        );
+    }
+
+    public string Content {
+        get => _content;
+        set {
+            _content = value;
+            OnPropertyChanged();
+            CommandManager.InvalidateRequerySuggested(); // 手动触发状态更新
+        }
+    }
+
+    private void SaveDocument() => File.WriteAllText("document.txt", Content);
+}
+```
+
+##### **5.2 View 中绑定命令**
+
+```xaml
+<Window.CommandBindings>
+    <CommandBinding 
+        Command="ApplicationCommands.Save"
+        Executed="OnSaveExecuted"
+        CanExecute="OnSaveCanExecute"/>
+</Window.CommandBindings>
+
+<Button Command="ApplicationCommands.Save" Content="保存"/>
+```
+
+##### **5.3 代码后台转发命令**
+
+```csharp
+private void OnSaveExecuted(object sender, ExecutedRoutedEventArgs e) {
+    if (ViewModel.SaveCommand.CanExecute(null)) 
+        ViewModel.SaveCommand.Execute(null);
+    e.Handled = true;
+}
+
+private void OnSaveCanExecute(object sender, CanExecuteRoutedEventArgs e) {
+    e.CanExecute = ViewModel.SaveCommand.CanExecute(null);
+    e.Handled = true;
+}
+```
+
+#### **6. 内置命令的底层机制**
+
+##### **6.1 路由事件传播**
+
+```mermaid
+graph TD
+    A[按钮触发命令] --> B{父容器是否处理?}
+    B -->|否| C[继续向上冒泡]
+    B -->|是| D[执行命令逻辑]
+    C --> E[窗口级CommandBinding]
+    E --> D
+```
+
+## InputBindings
+
+`InputBindings` 是 WPF 中用于将 **输入事件**（如键盘按键、鼠标动作）绑定到 **命令** 或 **自定义事件处理逻辑** 的核心机制。
+
+#### **1. 核心作用**
+
+|        **功能**        |                        **说明**                        |
+| :--------------------: | :----------------------------------------------------: |
+|    **输入事件绑定**    |      将键盘、鼠标等输入操作映射到特定命令或事件。      |
+|     **快捷键管理**     |   为命令定义全局或控件级快捷键（如 `Ctrl+S` 保存）。   |
+|  **输入事件路由控制**  |    控制输入事件的传播范围（如窗口级或控件级绑定）。    |
+| **解耦输入与业务逻辑** | 在 MVVM 模式中，通过命令实现输入操作与业务逻辑的解耦。 |
+
+------
+
+#### **2. 输入绑定类型**
+
+WPF 提供两种主要输入绑定类型：
+
+##### **2.1 `KeyBinding`（键盘绑定）**
+
+- **用途**：绑定键盘快捷键。
+
+- **示例**：
+
+  ```xaml
+  <Window.InputBindings>
+      <KeyBinding 
+          Command="ApplicationCommands.Save"
+          Gesture="Ctrl+S"/>
+  </Window.InputBindings>
+  ```
+
+##### **2.2 `MouseBinding`（鼠标绑定）**
+
+- **用途**：绑定鼠标动作（如双击、右键点击）。
+
+- **示例**：
+
+  ```xaml
+  <Window.InputBindings>
+      <MouseBinding 
+          Command="ApplicationCommands.Open"
+          Gesture="LeftDoubleClick"/>
+  </Window.InputBindings>
+  ```
+
+#### **3. 关键特性**
+
+##### **3.1 作用域控制**
+
+- **窗口级**：绑定到 `Window.InputBindings`，全局生效。
+
+- **控件级**：绑定到控件（如 `Button.InputBindings`），仅当控件获得焦点时触发。
+
+  ```xaml
+  <TextBox>
+      <TextBox.InputBindings>
+          <KeyBinding Command="ApplicationCommands.Copy" Gesture="Ctrl+C"/>
+      </TextBox.InputBindings>
+  </TextBox>
+  ```
+
+##### **3.2 覆盖系统默认行为**
+
+- **示例**：覆盖 `TextBox` 默认的 `Ctrl+C` 行为，执行自定义逻辑：
+
+  ```xaml
+  <TextBox>
+      <TextBox.InputBindings>
+          <KeyBinding 
+              Command="{Binding CustomCopyCommand}"
+              Gesture="Ctrl+C"/>
+      </TextBox.InputBindings>
+  </TextBox>
+  ```
+
+##### **3.3 多手势支持**
+
+一个命令可绑定多个输入手势：
+
+```xaml
+<KeyBinding Command="ApplicationCommands.Save" Gesture="Ctrl+S, F2"/>
+```
+
+#### **4. 在 MVVM 中的典型用法**
+
+##### **4.1 绑定到 ViewModel 命令**
+
+```xaml
+<Window.InputBindings>
+    <KeyBinding 
+        Command="{Binding SaveCommand}"
+        Gesture="Ctrl+S"/>
+</Window.InputBindings>
+```
+
+##### **4.2 ViewModel 中定义命令**
+
+```csharp
+public class MainViewModel : INotifyPropertyChanged
+{
+    public ICommand SaveCommand { get; }
+
+    public MainViewModel()
+    {
+        SaveCommand = new RelayCommand(
+            execute: SaveData,
+            canExecute: () => !IsSaving
+        );
+    }
+
+    private void SaveData()
+    {
+        // 保存逻辑
+    }
+}
+```
+
+#### **5. 输入事件路由流程**
+
+```mermaid
+sequenceDiagram
+    participant User as 用户
+    participant InputSystem as 输入系统
+    participant FocusedControl as 焦点控件
+    participant Window as 窗口
+
+    User->>InputSystem: 按下 Ctrl+S
+    InputSystem->>FocusedControl: 触发 PreviewKeyDown（隧道）
+    FocusedControl->>FocusedControl: 检查 InputBindings
+    alt 控件级绑定存在
+        FocusedControl-->>InputSystem: 执行命令，标记事件为已处理
+    else 无控件级绑定
+        InputSystem->>Window: 触发 KeyDown（冒泡）
+        Window-->>InputSystem: 检查 Window.InputBindings
+        alt 窗口级绑定存在
+            Window-->>InputSystem: 执行命令，标记事件为已处理
+        else 无绑定
+            InputSystem->>FocusedControl: 执行默认行为（如文本框粘贴）
+        end
+    end
+```
+
+#### **6. 高级场景**
+
+##### **6.1 动态修改快捷键**
+
+```csharp
+// 动态添加 KeyBinding
+var newBinding = new KeyBinding(
+    ApplicationCommands.Save, 
+    new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift)
+);
+this.InputBindings.Add(newBinding);
+
+// 移除旧绑定
+var oldBinding = this.InputBindings
+    .OfType<KeyBinding>()
+    .FirstOrDefault(b => b.Command == ApplicationCommands.Save);
+if (oldBinding != null)
+    this.InputBindings.Remove(oldBinding);
+```
+
+#### **6. 高级场景**
+
+##### **6.1 动态修改快捷键**
+
+```csharp
+// 动态添加 KeyBinding
+var newBinding = new KeyBinding(
+    ApplicationCommands.Save, 
+    new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift)
+);
+this.InputBindings.Add(newBinding);
+
+// 移除旧绑定
+var oldBinding = this.InputBindings
+    .OfType<KeyBinding>()
+    .FirstOrDefault(b => b.Command == ApplicationCommands.Save);
+if (oldBinding != null)
+    this.InputBindings.Remove(oldBinding);
+```
+
+##### **6.2 条件性输入绑定**
+
+通过 `CanExecute` 动态控制是否响应输入：
+
+```csharp
+// 动态添加 KeyBinding
+var newBinding = new KeyBinding(
+    ApplicationCommands.Save, 
+    new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift)
+);
+this.InputBindings.Add(newBinding);
+
+// 移除旧绑定
+var oldBinding = this.InputBindings
+    .OfType<KeyBinding>()
+    .FirstOrDefault(b => b.Command == ApplicationCommands.Save);
+if (oldBinding != null)
+    this.InputBindings.Remove(oldBinding);
+```
+
+## 绑定任意事件
+
+
+
+### **1. 使用 `Microsoft.Xaml.Behaviors` 实现事件到命令的绑定**
+
+`Microsoft.Xaml.Behaviors`相当于是`System.Windows.Interactivity`的升级版，它们使用方式一样，切换时仅修改命名空间即可
+
+#### **步骤 1：安装 NuGet 包**
+
+```bash
+Install-Package Microsoft.Xaml.Behaviors.Wpf
+```
+
+#### **步骤 2：在 XAML 中引入命名空间**
+
+```xaml
+<Window ...
+        <!--使用Interactivity-->
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        <!--使用Behaviors-->
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
+</Window>
+```
+
+#### **步骤 3：通过 `EventTrigger` 绑定任意事件**
+
+```xaml
+<!-- 示例：将 MouseEnter 事件绑定到命令 -->
+<Button Content="悬停触发命令">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseEnter">
+            <i:InvokeCommandAction 
+                Command="{Binding HoverCommand}" 
+                CommandParameter="来自悬停事件的参数"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+</Button>
+
+<!-- 示例：将 ListBox 的 SelectionChanged 事件绑定到命令 -->
+<ListBox>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="SelectionChanged">
+            <i:InvokeCommandAction 
+                Command="{Binding SelectionChangedCommand}"
+                CommandParameter="{Binding SelectedItem, ElementName=myListBox}"/>
+        </i:Interaction.Triggers>
+    <ListBox.ItemTemplate>
+        <DataTemplate>
+            <TextBlock Text="{Binding Name}"/>
+        </DataTemplate>
+    </ListBox.ItemTemplate>
+</ListBox>
+```
+
+### **2. ViewModel 中定义命令**
+
+```csharp
+public class MainViewModel : INotifyPropertyChanged
+{
+    // 普通命令
+    public ICommand HoverCommand { get; }
+
+    // 带事件参数的命令
+    public ICommand SelectionChangedCommand { get; }
+
+    public MainViewModel()
+    {
+        HoverCommand = new RelayCommand<string>(param => {
+            MessageBox.Show($"触发悬停命令，参数：{param}");
+        });
+
+        SelectionChangedCommand = new RelayCommand<object>(selectedItem => {
+            if (selectedItem is DataItem item)
+                MessageBox.Show($"选中项：{item.Name}");
+        });
+    }
+}
+```
+
+### **3. 高级用法：传递事件参数**
+
+若需要将事件参数（如 `MouseEventArgs`、`SelectionChangedEventArgs`）传递给命令，需通过转换器处理。
+
+#### **步骤 1：创建事件参数转换器**
+
+```csharp
+public class EventArgsConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        // 返回原始事件参数
+        return value;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+```
+
+#### **步骤 2：在 XAML 中使用转换器**
+
+```xaml
+<Window.Resources>
+    <local:EventArgsConverter x:Key="EventArgsConverter"/>
+</Window.Resources>
+
+<TextBox>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="TextChanged">
+            <i:InvokeCommandAction 
+                Command="{Binding TextChangedCommand}"
+                CommandParameter="{Binding EventArgs, Converter={StaticResource EventArgsConverter}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+</TextBox>
+```
+
+### **4. 自定义附加属性实现事件绑定（无第三方库）**
+
+若不想依赖第三方库，可通过附加属性实现事件到命令的绑定。
+
+#### **步骤 1：定义附加属性**
+
+```csharp
+public static class EventCommandBinder
+{
+    public static readonly DependencyProperty EventCommandProperty = 
+        DependencyProperty.RegisterAttached(
+            "EventCommand",
+            typeof(ICommand),
+            typeof(EventCommandBinder),
+            new PropertyMetadata(null, OnEventCommandChanged));
+
+    public static void SetEventCommand(DependencyObject obj, ICommand value) =>
+        obj.SetValue(EventCommandProperty, value);
+
+    public static ICommand GetEventCommand(DependencyObject obj) =>
+        (ICommand)obj.GetValue(EventCommandProperty);
+
+    private static void OnEventCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is UIElement element && e.NewValue is ICommand command)
+        {
+            // 监听任意事件（此处以 MouseEnter 为例）
+            element.MouseEnter += (sender, args) =>
+            {
+                if (command.CanExecute(args))
+                    command.Execute(args);
+            };
+        }
+    }
+}
+```
+
+#### **步骤 2：在 XAML 中使用**
+
+```xaml
+<Button Content="自定义事件绑定"
+        local:EventCommandBinder.EventCommand="{Binding CustomEventCommand}"/>
+```
+
+### **5. 核心原理总结**
+
+|       **技术点**        |                        **作用**                        |
+| :---------------------: | :----------------------------------------------------: |
+|    **EventTrigger**     |   监听指定事件（如 `Click`、`MouseEnter`）并触发命令   |
+| **InvokeCommandAction** |            将事件转发到 ViewModel 中的命令             |
+|  **CommandParameter**   |              传递静态参数或动态绑定的数据              |
+| **EventArgsConverter**  | 将事件参数（如 `RoutedEventArgs`）转换为命令可用的类型 |
+|      **附加属性**       |             实现无第三方库的事件到命令绑定             |
+
+# MVVM Light
+
+### MVVM介绍
+
+#### **一、MVVM Light 的定位**
+
+MVVM Light 是一个专为 XAML 平台（WPF/UWP/Xamarin/MAUI）设计的 **轻量级 MVVM 框架**，由 Laurent Bugnion 开发。它通过提供一套简洁的工具类，帮助开发者快速实现 MVVM 模式的核心功能，避免重复编写样板代码。
+
+#### **二、MVVM Light 解决了哪些痛点？**
+
+1. **属性变更通知的繁琐性**
+   - **原生问题**：手动实现 `INotifyPropertyChanged` 需要为每个属性编写 `RaisePropertyChanged` 逻辑。
+   - **MVVM Light 方案**：通过 `ViewModelBase` 基类自动生成通知代码。
+2. **命令绑定的复杂性**
+   - **原生问题**：需要完整实现 `ICommand` 接口（`CanExecute`/`Execute`）。
+   - **MVVM Light 方案**：通过 `RelayCommand` 一行代码定义命令。
+3. **跨组件通信的耦合性**
+   - **原生问题**：ViewModel 之间直接引用导致紧耦合。
+   - **MVVM Light 方案**：通过 `Messenger` 消息总线解耦。
+4. **依赖管理的混乱性**
+   - **原生问题**：手动管理服务依赖容易出错。
+   - **MVVM Light 方案**：通过 `SimpleIoc` 容器统一管理依赖。
+
+#### **三、典型场景对比**
+
+##### **原生 MVVM 实现属性**
+
+```csharp
+// 原生实现（需手动处理通知）
+private string _name;
+public string Name
+{
+    get => _name;
+    set
+    {
+        _name = value;
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+    }
+}
+```
+
+##### **MVVM Light 实现属性**
+
+```csharp
+// MVVM Light 实现（自动通知）
+private string _name;
+public string Name
+{
+    get => _name;
+    set => Set(ref _name, value); // 自动触发通知
+}
+```
+
+### 基本使用与核心类
+
+#### **一、核心类概览**
+
+|      类名       |                       作用                        |           关键方法/属性           |
+| :-------------: | :-----------------------------------------------: | :-------------------------------: |
+| `ViewModelBase` | ViewModel 基类，自动实现 `INotifyPropertyChanged` | `Set()`, `RaisePropertyChanged()` |
+| `RelayCommand`  |           封装 `ICommand`，简化命令绑定           |  `RelayCommand(Action execute)`   |
+|   `Messenger`   |             消息总线，实现跨组件通信              |      `Send()`, `Register()`       |
+|   `SimpleIoc`   |           轻量级 IoC 容器，管理依赖注入           |   `Register()`, `GetInstance()`   |
+
+#### **二、ViewModelBase 详解**
+
+##### **1. 基础用法**
+
+```csharp
+public class UserViewModel : ViewModelBase
+{
+    private string _userName;
+    public string UserName
+    {
+        get => _userName;
+        set => Set(ref _userName, value); // 自动触发 PropertyChanged事件
+    }
+}
+```
+
+- **`Set()` 方法的作用**：
+  比较新旧值，仅在值变化时触发通知，避免冗余更新。
+
+##### **2. 高级用法**
+
+```csharp
+// 触发多个属性通知
+public string FullName
+{
+    get => $"{FirstName} {LastName}";
+}
+
+public void UpdateName(string firstName, string lastName)
+{
+    Set(ref _firstName, firstName, nameof(FirstName), nameof(FullName));
+    Set(ref _lastName, lastName, nameof(LastName), nameof(FullName));
+}
+```
+
+#### **三、RelayCommand 详解**
+
+##### **1. 基本命令**
+
+```csharp
+public RelayCommand SaveCommand { get; }
+
+public UserViewModel()
+{
+    SaveCommand = new RelayCommand(Save);
+}
+
+private void Save()
+{
+    // 保存逻辑
+}
+```
+
+##### **2. 带条件命令**
+
+```csharp
+public RelayCommand SaveCommand { get; }
+
+public UserViewModel()
+{
+    SaveCommand = new RelayCommand(Save, CanSave);
+}
+
+private bool CanSave() => !string.IsNullOrEmpty(UserName);
+```
+
+##### **3. 带参数命令**
+
+```csharp
+public RelayCommand<string> SearchCommand { get; }
+
+public UserViewModel()
+{
+    SearchCommand = new RelayCommand<string>(Search);
+}
+
+private void Search(string keyword)
+{
+    // 根据关键字搜索
+}
+```
+
+### **MVVM Light 的实现原理**
+
+#### **一、ViewModelBase 的底层机制**
+
+`ViewModelBase`也是通过实现`INotifyPropertyChanged`，并做了一些方法拓展：
+
+```csharp
+namespace GalaSoft.MvvmLight
+{
+    // ObservableObject实现了INotifyPropertyChanged接口
+     public abstract class ViewModelBase : ObservableObject, ICleanup
+ 	{
+         // 设置值并通知UI
+         // broadcast：是否广播，通过Messenger发送PropertyChangedMessage消息。
+         protected bool Set<T>(ref T field, T newValue = null, bool broadcast = false, [CallerMemberName] string propertyName = null)
+		{
+  			if (EqualityComparer<T>.Default.Equals(field, newValue))
+    			return false;
+  			T oldValue = field;
+  			field = newValue;
+  			this.RaisePropertyChanged<T>(propertyName, oldValue, field, broadcast);
+  			return true;
+		}
+        // 子类重写此方法释放资源，需要手动调用
+        public virtual void Cleanup() => this.MessengerInstance.Unregister((object) this);
+    }
+}
+```
+
+#### **二、RelayCommand 的 ICommand 实现**
+
+`RelayCommand`也是直接实现的`ICommand`接口进行拓展，做了泛型的实现。
+
+```csharp
+namespace GalaSoft.MvvmLight.Command
+{
+	public class RelayCommand<T> : ICommand
+	{
+        // 将传入的Action和Func包装成WeakAction、WeakFunc
+        private readonly WeakAction<T> _execute;
+		private readonly WeakFunc<T, bool> _canExecute;
+        // other code
+        public RelayCommand(Action<T> execute, Func<T, bool> canExecute, bool keepTargetAlive = false)
+		{
+  			this._execute = execute != null ? new WeakAction<T>(execute, keepTargetAlive) : throw new ArgumentNullException(nameof (execute));
+  			if (canExecute == null)
+    			return;
+  			this._canExecute = new WeakFunc<T, bool>(canExecute, keepTargetAlive);
+		}
+        // other code
+    }
+}
+```
+
+#### **三、Messenger 的消息路由机制**
+
+##### **1. 消息订阅与分发流程**
+
+```mermaid
+sequenceDiagram
+participant Publisher
+participant Messenger
+participant Subscriber
+
+Publisher->>Messenger: Send(message)
+Messenger->>Messenger: 遍历所有订阅者
+Messenger->>Subscriber: 调用注册的 Action
+```
+
+##### 2.基本使用
+
+```csharp
+namespace Mvvmlight.Object.ViewModel
+{
+    public class MainViewModel : ViewModelBase
+    {
+        public MainViewModel()
+        {
+ 
+            BtnCommand = new RelayCommand<string>(HandlerClick);
+        }
+        private string _value;
+
+        public string Value
+        {
+            get => this._value;
+            set
+            {
+                Set(ref _value, value);
+            }
+        }
+
+        public RelayCommand<string> BtnCommand { get; set; }
+
+        public void HandlerClick(string msg)
+        {
+            Value = "send success";
+            // 发送消息
+            // string：指定发送消息的类型
+            // MainWindow：指定接收消息的类型
+            Messenger.Default.Send<string,MainWindow>(msg);
+        }
+    }
+    
+    public partial class MainWindow : Window
+	{
+    	public MainWindow()
+    	{
+        	InitializeComponent();
+			// 订阅消息，并设置处理消息的方法
+            // this：消息的接收者
+            // ConsumerMsg：处理消息逻辑
+        	Messenger.Default.Register<string>(this, ConsumerMsg);
+    	}
+
+    	private void ConsumerMsg(string msg)
+    	{
+        	Debug.WriteLine(msg);
+    	}
+	}
+}
+```
+
+##### 3.`MessageBase`及其实现类
+
+`MessageBase` 是 MVVM Light 消息总线（`Messenger`）中所有消息类型的 **基类**，用于封装消息传递时的 **公共逻辑** 和 **扩展能力**。其核心作用包括：
+
+1. **传递发送者信息**：记录消息的发送者（Sender）
+2. **支持消息取消**：允许接收者在处理前取消消息传播
+3. **类型统一化**：为所有消息提供统一的基类约束
+
+示例：
+
+```csharp
+namespace Mvvmlight.Object.ViewModel
+{
+    public class MainViewModel : ViewModelBase
+    {
+        public MainViewModel()
+        {
+
+            BtnCommand = new RelayCommand<string>(HandlerClick);
+        }
+        private string _value;
+
+        public string Value
+        {
+            get => this._value;
+            set
+            {
+                Set(ref _value, value);
+            }
+        }
+
+        public RelayCommand<string> BtnCommand { get; set; }
+
+        public void HandlerClick(string msg)
+        {
+            Value = "send success";
+            // Messenger.Default.Send<string,MainWindow>(msg);
+            // 使用NotificationMessage
+            // Messenger.Default.Send<NotificationMessage>(new NotificationMessage(this,typeof(MainWindow),msg));
+            // 泛型指定回调的参数类型
+            var notificationMessage = new NotificationMessageAction<string>(this,typeof(MainWindow),msg, HandlerCallback);
+            // 当一个泛型指定发送的消息类型，第二个泛型指定消息接受类型
+            Messenger.Default.Send<NotificationMessageAction<string>,MainWindow>(notificationMessage);
+        }
+
+        private void HandlerCallback(string param)
+        {
+            // 处理回调逻辑
+        }
+    }
+    
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            Messenger.Default.Register<string>(this, ConsumerMsg);
+            Messenger.Default.Register<NotificationMessage>(this,ConsumerMsg);
+            Messenger.Default.Register<NotificationMessageAction<string>>(this,ConsumerActionMsg);
+        }
+
+        private void ConsumerMsg(string msg)
+        {
+            Debug.WriteLine(msg);
+        }
+        
+        private void ConsumerMsg(NotificationMessage msg)
+        {
+            Debug.WriteLine(msg.Notification);
+        }
+        
+        private void ConsumerActionMsg(NotificationMessageAction<string> action)
+        {
+            // 执行回调，传参给消息发送者
+            action.Execute(111);
+        }
+    }
+}
+```
+
+### 四、SimpleIoc
+
+#### **一、SimpleIoc 的设计目标**
+
+`SimpleIoc` 是 MVVM Light 框架内置的轻量级依赖注入（DI）容器，旨在解决以下问题：
+
+1. **解耦组件依赖**：通过接口而非具体类引用服务
+2. **统一生命周期管理**：控制对象的创建和销毁策略（单例/瞬态）
+3. **简化服务定位模式**：集中管理应用中所有可注入的服务和 ViewModel
+4. **支持设计时数据**：在设计模式（如 Visual Studio XAML 设计器）中提供模拟依赖
+
+#### **二、核心功能与 API**
+
+##### **2.1 核心方法**
+
+|                    方法签名                    |                   功能描述                   |
+| :--------------------------------------------: | :------------------------------------------: |
+| `void Register<TInterface, TImplementation>()` |     注册接口与实现类的映射，默认单例模式     |
+|      `void Register<T>(Func<T> factory)`       | 通过工厂方法注册类型，支持自定义实例创建逻辑 |
+|              `T GetInstance<T>()`              |   解析已注册类型的实例，若未注册则抛出异常   |
+|        `object GetInstance(Type type)`         |             非泛型版本的类型解析             |
+|            `bool IsRegistered<T>()`            |              检查类型是否已注册              |
+|             `void Unregister<T>()`             |    注销类型，若存在已创建的实例则释放资源    |
+
+##### **2.2 属性与扩展**
+
+|          属性/方法          |                             说明                             |
+| :-------------------------: | :----------------------------------------------------------: |
+| `bool ThrowIfNotRegistered` | 是否在未注册时抛出异常（默认 `true`）。设为 `false` 则返回 `null` 或默认值 |
+|          `Reset()`          |                 清除所有注册信息和缓存的实例                 |
+|   `ContainsCreated<T>()`    |                   检查某个类型是否已实例化                   |
+
+------
+
+#### **三、典型用法与最佳实践**
+
+##### **3.1 ViewModel 注册与解析**
+
+**步骤 1：在 ViewModelLocator 中注册**（使用.Net Framework时，安装Mvvm Light会自动生成这些代码，.Net Core版本不会）
+
+```csharp
+public class ViewModelLocator
+{
+    static ViewModelLocator()
+    {
+        ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+        
+        // 注册服务
+        SimpleIoc.Default.Register<IDataService, JsonDataService>();
+        
+        // 注册 ViewModel（自动解析依赖）
+        SimpleIoc.Default.Register<MainViewModel>();
+    }
+	// 通过反射创建实例，这是单例的，若想每次都创建实例，查看GetInstance方法的重载，但创建的示例不会自动销毁
+    public MainViewModel Main => SimpleIoc.Default.GetInstance<MainViewModel>();
+}
+```
+
+**步骤 2：在 ViewModel 中注入依赖**
+
+类似于Java中的Spring，通过构造函数创建实例时，从容器中找到需要的参数，然后实例化。所以构造函数中的参数必须要在容器中注册。
+
+```csharp
+public class MainViewModel : ViewModelBase
+{
+    private readonly IDataService _dataService;
+
+    // 构造函数自动注入服务
+    public MainViewModel(IDataService dataService)
+    {
+        _dataService = dataService;
+        LoadData();
+    }
+    /// <summary>
+    /// 释放对象资源
+    /// </summary>
+    public static void Cleanup<T>() where T : ViewModelBase
+    {
+        // TODO Clear the ViewModels
+        // 每个实例重写Cleanup方法，实现自己的释放资源的逻辑
+        ServiceLocator.Current.GetInstance<T>().Cleanup();
+        SimpleIoc.Default.Unregister<T>();
+        // 重新注册目的：为了下次打开窗口的时候有对象可用
+        SimpleIoc.Default.Register<T>();
+    }
+}
+```
+
+**GetInstance 执行流程：**
+
+
+
+```mermaid
+graph TD
+    A[GetInstance<T>] --> B{Is Registered?}
+    B -->|No| C[Throw/Crash]
+    B -->|Yes| D{Has Factory?}
+    D -->|Yes| E[Invoke Factory]
+    D -->|No| F{Singleton and Created?}
+    F -->|Yes| G[Return Cached Instance]
+    F -->|No| H[Create via Activator]
+    H --> I[Cache if Singleton]
+```
+
+**步骤 3：在 视图中使用 中注入依赖**
+
+```xaml
+<Application 
+    x:Class="Mvvmlight.Object.App" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:local="clr-namespace:Mvvmlight.Object" 
+    StartupUri="/Views/MainWindow.xaml" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    d1p1:Ignorable="d" 
+    xmlns:vm="clr-namespace:Mvvmlight.Object.ViewModel" 
+    xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
+  <Application.Resources>
+    <ResourceDictionary>
+      <vm:ViewModelLocator 
+          x:Key="Locator" 
+          d:IsDataSource="True" />
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>
+```
+
+```xaml
+<Window x:Class="Mvvmlight.Object.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mvvmlight.Object.Views"
+        mc:Ignorable="d"
+        <!--绑定对应的ViewModel-->
+        DataContext="{Binding Source={StaticResource Locator},Path=Main}"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        
+    </Grid>
+</Window>
+```
+

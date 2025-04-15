@@ -1,0 +1,108 @@
+﻿<Window x:Class="MVVMDemo.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVMDemo.Views"
+        xmlns:viewModels="clr-namespace:MVVMDemo.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        FontSize="16"
+        Foreground="White"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="menuColor" Color="#FF83989C" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <viewModels:MainViewModel />
+    </Window.DataContext>
+    <Grid Background="#FF2E3C3C">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel
+            Grid.Column="0"
+            Grid.Row="0"
+            Background="#FF354444"
+            Orientation="Horizontal"
+            Name="LogWrap">
+            <Border
+                Height="60"
+                Width="60"
+                CornerRadius="60"
+                ClipToBounds="True"
+                Margin="10">
+                <Image
+                    Stretch="Fill"
+                    Source="{Binding Path=AppLog.LogUrl}">
+                    <Image.Clip>
+                        <EllipseGeometry Center="30,30" RadiusX="30" RadiusY="30" />
+                    </Image.Clip>
+                </Image>
+            </Border>
+            <TextBlock Text="{Binding Path=AppLog.LogTitle}" VerticalAlignment="Center"></TextBlock>
+        </StackPanel>
+        <Border Grid.Row="0" Grid.Column="1">
+            <DockPanel LastChildFill="False">
+                <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Name="pageTitle"
+                           Text="{Binding CheckedMenu.MenuTitle}" HorizontalAlignment="Left"
+                           Margin="10,0,0,0" />
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <Image Width="30" Margin="0,0,5,0" Height="30" Source="{Binding CurrentUser.Avatar}">
+                        <Image.Clip>
+                            <EllipseGeometry Center="15,15" RadiusX="15" RadiusY="15"></EllipseGeometry>
+                        </Image.Clip>
+                    </Image>
+                    <TextBlock Text="{Binding CurrentUser.UserName,StringFormat=你好！{0}}" VerticalAlignment="Center"
+                               Margin="0,0,20,0" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <ListBox
+            SelectionMode="Single"
+            Grid.Row="1" Grid.Column="0"
+            SelectedItem="{Binding CheckedMenu,UpdateSourceTrigger=PropertyChanged}"
+            BorderThickness="0"
+            Margin="10,20,0,0"
+            ItemsSource="{Binding MenuList}"
+            Background="#FF2E3C3C">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel
+                        Height="30"
+                        Orientation="Horizontal"
+                        Margin="0,0,0,5">
+                        <TextBlock
+                            Margin="20,0,10,0"
+                            VerticalAlignment="Center" Text="{Binding MenuIcon}"
+                            FontFamily="{StaticResource Iconfont}"
+                            HorizontalAlignment="Center" Foreground="{StaticResource menuColor}" />
+                        <TextBlock
+                            Foreground="{StaticResource menuColor}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Text="{Binding MenuTitle}">
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction
+                        Command="{Binding SelectMenuCommand}"
+                        CommandParameter="{Binding SelectedItem,RelativeSource={RelativeSource AncestorType=ListBox}}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
+        <ContentControl Grid.Row="1" Grid.Column="1">
+
+        </ContentControl>
+    </Grid>
+</Window>

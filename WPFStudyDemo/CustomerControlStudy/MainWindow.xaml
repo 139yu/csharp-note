@@ -1,0 +1,108 @@
+﻿<Window x:Class="CustomerControlStudy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CustomerControlStudy"
+        xmlns:uc="clr-namespace:CustomerControlStudy.UCControls"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <StackPanel Background="CornflowerBlue">
+        <ToggleButton Width="200" Height="200" Name="switch" Margin="0,60">
+            <ToggleButton.Style>
+                <Style TargetType="ToggleButton">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <Grid>
+                                    <Border
+                                        Name="shadowBorder"
+                                        Margin="-25"
+                                        Visibility="Collapsed"
+                                        CornerRadius="{Binding RelativeSource={RelativeSource Self},Path=ActualHeight}"
+                                        Width="{Binding RelativeSource={RelativeSource Self},Path=ActualHeight}">
+                                        <Border.Background>
+                                            <RadialGradientBrush>
+                                                <GradientStop Color="Transparent" Offset="1" />
+                                                <GradientStop Color="Aqua" Offset="0.58" />
+                                                <GradientStop Color="Transparent" Offset="8" />
+                                            </RadialGradientBrush>
+                                        </Border.Background>
+                                    </Border>
+                                    <Border
+                                        Name="outBorder"
+                                        Background="Gray"
+                                        BorderThickness="5"
+                                        BorderBrush="CadetBlue"
+                                        CornerRadius="{Binding RelativeSource={RelativeSource Self},Path=ActualHeight}"
+                                        Width="{Binding RelativeSource={RelativeSource Self},Path=ActualHeight}">
+                                        <Border
+                                            Name="innerBorder"
+                                            Margin="2"
+                                            BorderThickness="2"
+                                            BorderBrush="DodgerBlue"
+                                            Background="DodgerBlue"
+                                            CornerRadius="{Binding RelativeSource={RelativeSource Self},Path=ActualHeight}"
+                                            Width="{Binding RelativeSource={RelativeSource Self},Path=ActualHeight}">
+                                        </Border>
+                                    </Border>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation 
+                                                        Duration="0:0:0.5"
+                                                        Storyboard.TargetName="outBorder" 
+                                                        To="White"
+                                                        Storyboard.TargetProperty="Background.Color"/>
+                                                    <ColorAnimation 
+                                                        Duration="0:0:0.5"
+                                                        Storyboard.TargetName="innerBorder" 
+                                                        To="White"
+                                                        Storyboard.TargetProperty="Background.Color"/>
+                                                    <ObjectAnimationUsingKeyFrames 
+                                                        Storyboard.TargetName="shadowBorder" 
+                                                        Duration="0:0:0.3"
+                                                        Storyboard.TargetProperty="Visibility">
+                                                        <DiscreteObjectKeyFrame>
+                                                            <DiscreteObjectKeyFrame.Value>
+                                                                <Visibility>Visible</Visibility>
+                                                            </DiscreteObjectKeyFrame.Value>
+                                                        </DiscreteObjectKeyFrame>
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation Storyboard.TargetName="outBorder" Storyboard.TargetProperty="Background.Color"/>
+                                                    <ColorAnimation 
+                                                        Storyboard.TargetName="innerBorder" 
+                                                        Storyboard.TargetProperty="Background.Color"/>
+                                                    <ObjectAnimationUsingKeyFrames 
+                                                        Storyboard.TargetName="shadowBorder" 
+                                                        Duration="0:0:0.3"
+                                                        Storyboard.TargetProperty="Visibility">
+
+                                                        <DiscreteObjectKeyFrame>
+                                                            <DiscreteObjectKeyFrame.Value>
+                                                                <Visibility>Hidden</Visibility>
+                                                            </DiscreteObjectKeyFrame.Value>
+                                                        </DiscreteObjectKeyFrame>
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+    </StackPanel>
+</Window>
