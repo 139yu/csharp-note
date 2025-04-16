@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 
-namespace Mvvmlight.Object.ViewModel
+namespace Mvvmlight.Framework.ViewModel
 {
     public class SubViewModel : ViewModelBase
     {

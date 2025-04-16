@@ -2,9 +2,9 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
-using Mvvmlight.Object.Views;
+using Mvvmlight.Framework.Views;
 
-namespace Mvvmlight.Object.ViewModel
+namespace Mvvmlight.Framework.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.

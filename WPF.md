@@ -5501,7 +5501,7 @@ sequenceDiagram
 - 触发场景：
   - 键盘输入
   - 鼠标点击
-  - 焦点切换
+  - 焦点切换   
 
 ##### 2. `InvalidateRequerySuggested()`
 
@@ -6664,3 +6664,358 @@ graph TD
 </Window>
 ```
 
+# MVVM Tookit
+
+参考文档：[官方文档](https://learn.microsoft.com/zh-cn/dotnet/communitytoolkit/mvvm/)
+
+使用与MVVM Light差不多。
+
+# Prism
+
+## Prism简介
+
+#### **一、什么是 Prism？**
+
+**Prism** 是由微软 Patterns & Practices 团队开发的 **企业级框架**，用于构建 **模块化**、**可扩展** 的 XAML 应用程序（支持 WPF、MAUI、UWP、Xamarin.Forms 等）。其核心目标是帮助开发者：
+
+- **解耦代码**：通过模块化设计和依赖注入实现高内聚低耦合。
+- **统一架构**：提供标准化的解决方案处理导航、通信和复杂 UI 布局。
+- **提升可维护性**：通过清晰的分层和可测试性降低长期维护成本。
+
+------
+
+#### **二、Prism 与 MVVM Toolkit 的核心区别**
+
+|   **维度**   |             **Prism**              |         **MVVM Toolkit**         |
+| :----------: | :--------------------------------: | :------------------------------: |
+|   **定位**   |        企业级框架，功能全面        |   轻量级库，专注 MVVM 基础功能   |
+| **适用场景** |   大型复杂应用（模块化、多平台）   |  中小型项目，快速实现 MVVM 模式  |
+| **核心功能** | 模块化、导航、区域管理、事件聚合器 | 属性通知、命令绑定、简单依赖注入 |
+| **依赖注入** |      深度集成（支持多种容器）      | 需结合 `Microsoft.Extensions.DI` |
+| **学习曲线** |   较高（需理解模块、区域等概念）   | 低（开箱即用，代码生成简化开发） |
+
+------
+
+#### **三、Prism 的核心功能概览**
+
+1. **模块化开发**
+   将应用拆分为独立模块，支持按需加载和动态扩展。
+2. **依赖注入（DI）**
+   提供容器管理服务生命周期（如单例、作用域实例）。
+3. **导航系统**
+   统一管理页面跳转、参数传递和返回逻辑。
+4. **区域（Regions）**
+   动态管理 UI 布局，支持视图的灵活加载和替换。
+5. **事件聚合器**
+   实现跨组件松耦合通信（发布-订阅模式）。
+6. **对话框服务**
+   标准化模态窗口、弹出框和复杂交互。
+
+------
+
+#### 四、安装与使用
+
+##### 1.安装
+
+- 基础包
+
+  - **Prism.Core**：Prism 核心功能，不受平台影响。
+
+  - **Prism.Wpf**：WPF 平台支持。
+
+- 容器拓展包
+  - **Prism.DryIoc**：使用 DryIoc 容器
+  - **Prism.Unity**：使用 Unity 容器
+
+Prism.Wpf包中已经包含了Prism.Core，而容器拓展包中包含了Prism.Wpf，所以只需安装容器拓展包即可。
+
+**Prism.DryIoc与Prism.Unit的区别：**
+
+|     **维度**     |         **Prism.DryIoc**          |                     **Prism.Unity**                     |
+| :--------------: | :-------------------------------: | :-----------------------------------------------------: |
+|     **性能**     |       极高性能，编译时优化        |                  中等性能，运行时反射                   |
+|   **配置语法**   |         简洁（链式 API）          |                 传统（XML 或代码配置）                  |
+| **生命周期管理** | 支持 Singleton、Scoped、Transient | 支持 Singleton、PerRequest、ContainerControlledLifetime |
+|  **模块化加载**  |           自动注册模块            |                   需手动配置模块依赖                    |
+|  **社区活跃度**  |       高（现代轻量级容器）        |              中（微软早期产品，维护较少）               |
+
+##### 2.基础使用
+
+示例代码：
+
+```csharp
+namespace Prism.Study.ViewModels
+{
+    public class MainViewModel: BindableBase, INotifyDataErrorInfo
+    {
+        #region INotifyDataErrorInfo
+        private ErrorsContainer<string> _errors;
+
+        public ErrorsContainer<string> Errors
+        {
+            get
+            {
+                if (_errors == null)
+                {
+                    _errors = new ErrorsContainer<string>(RaiseErrorsChanged);
+                }
+                return _errors;
+            }
+        }
+
+        private void RaiseErrorsChanged(string args)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(args));
+        }
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return Errors.GetErrors(propertyName);
+        }
+
+        protected void AddError(string propertyName, string error)
+        {
+            if (propertyName == null)
+            {
+                return;
+            }
+
+            if (Errors.GetErrors(propertyName) == null)
+            {
+                Errors.SetErrors(propertyName,new []{error});
+            }
+        }
+        public bool HasErrors { get => Errors.HasErrors; }
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        #endregion
+        #region BindableBase与命令
+        public MainViewModel()
+        {
+            AddTextCommand = new DelegateCommand(ExecuteAddTextCommand, CanAddTextCheck);
+            // 监听某个属性变化，变化时执行CanExecuteCheck
+            AddTextCommand.ObservesProperty(() => TextValue);
+            ClearTextCommand = new DelegateCommand(ExecuteClearCommand,CanClearTextCheck);
+            // 优先级高于ObservesProperty，需要手动调用更新监听停的值HasText
+            ClearTextCommand.ObservesCanExecute(() => HasText);
+            ClearTextCommand.ObservesProperty(() => TextValue);
+            SelectionCommand = new DelegateCommand<object>(ExecuteSelectionCommand);
+            
+        }
+        private string _textValue;
+
+        public string TextValue
+        {
+            get { return _textValue; }
+            set { SetProperty(ref _textValue, value); }
+        }
+
+        public void ExecuteClearCommand()
+        {
+            TextValue = string.Empty;
+            
+            HasText = false;
+        }
+        
+        public void ExecuteAddTextCommand()
+        {
+            TextValue = new Random().Next(9999,10000).ToString();
+            HasText = true;
+        }
+
+        public bool CanAddTextCheck()
+        {
+            return string.IsNullOrEmpty(TextValue);
+        }
+
+        public bool CanClearTextCheck()
+        {
+            return !string.IsNullOrEmpty(TextValue);
+        }
+        public DelegateCommand AddTextCommand { get;}
+        public DelegateCommand ClearTextCommand { get;}
+
+        private bool _hasText;
+
+        public bool HasText
+        {
+            get
+            {   
+                return !string.IsNullOrEmpty(TextValue);
+            }
+            set
+            {
+                SetProperty(ref _hasText, value);
+            }
+        }
+        
+        
+        public DelegateCommand<object> SelectionCommand { get; }
+        /// <summary>
+        /// 默认是eventArg
+        /// 在xaml中指定接收TriggerParameterPath="Handled"，参数就就直接收eventArg的Handled属性
+        /// </summary>
+        /// <param name="arg"></param>
+        public void ExecuteSelectionCommand(object arg)
+        {
+            
+        }
+        #endregion
+    }
+}
+```
+
+```xaml
+<Window x:Class="Prism.Study.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Prism.Study.Views"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:viewModels="clr-namespace:Prism.Study.ViewModels"
+        xmlns:prims="http://www.codeplex.com/prism"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <viewModels:MainViewModel/>
+    </Window.DataContext>
+    <StackPanel>
+        <TextBox Text="{Binding TextValue}"></TextBox>
+        <Button Content="Change Value" Command="{Binding AddTextCommand}"></Button>
+        <Button Content="Clear Text" Command="{Binding ClearTextCommand}"></Button>
+        <ComboBox SelectedIndex="0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <prims:InvokeCommandAction 
+                        TriggerParameterPath="Handled"
+                        Command="{Binding SelectionCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ComboBoxItem Content="111"/>
+            <ComboBoxItem Content="222"/>
+            <ComboBoxItem Content="333"/>
+            <ComboBoxItem Content="444"/>
+        </ComboBox>
+    </StackPanel>
+</Window>
+```
+
+**Prism框架初始化**
+
+- `PrismBootstrapper`
+
+  ```csharp
+  namespace Study.PrismApp
+  {
+      public class ApplicationBootstrap: PrismBootstrapper
+      {
+          protected override void RegisterTypes(IContainerRegistry containerRegistry)
+          {
+              
+          }
+  		
+          protected override DependencyObject CreateShell()
+          {
+              // 返回主窗口
+              return Container.Resolve<MainWindow>();
+          }
+      }
+      public partial class App
+      {
+          public App()
+          {
+              // 启动应用
+              new ApplicationBootstrap().Run();
+          }
+      }
+  }
+  ```
+
+- `PrismApplication`
+
+  ```csharp
+  namespace Study.PrismApp
+  {
+      /// <summary>
+      /// Interaction logic for App.xaml
+      /// </summary>
+      public partial class App : PrismApplication
+      {
+          protected override void RegisterTypes(IContainerRegistry containerRegistry)
+          {
+              
+              // containerRegistry.Register<MainWindow>();
+          }
+  
+          protected override Window CreateShell()
+          {
+              return Container.Resolve<MainWindow>();
+          }
+  		// 在CreateShell后会执行此方法
+          protected override void InitializeShell(Window shell)
+          {
+              base.InitializeShell(shell);
+              var loginWindow = Container.Resolve<LoginWindow>();
+              if (loginWindow == null || loginWindow.ShowDialog() != true)
+              {
+                  Current.Shutdown();
+              }
+          }
+      }
+  }
+  ```
+
+  ```xaml
+  <prism:PrismApplication x:Class="Study.PrismApp.App"
+                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:local="clr-namespace:Study.PrismApp"
+                          <!--导入prism的命名空间-->
+  						<!--StartupUri="Views/MainWindow.xaml"不用写-->
+                          xmlns:prism="http://prismlibrary.com/">
+      <prism:PrismApplication.Resources>
+           
+      </prism:PrismApplication.Resources>
+  </prism:PrismApplication>
+  
+  ```
+
+----
+
+`PrismBootstrapper`和`PrismApplication`启动方式二者选其一，不过`PrismBootstrapper` 在 Prism 7 中已被标记为过时（Obsolete），未来版本可能移除。
+
+**二者区别：**
+
+1. **继承关系**：
+   - `PrismBootstrapper` 是一个独立类，需在 `App` 中手动调用。
+   - `PrismApplication` 直接继承 `Application`，深度整合到 WPF 应用生命周期。
+2. **容器抽象**：
+   - `PrismBootstrapper` 需直接操作具体容器（如 `UnityContainer`）。
+   - `PrismApplication` 通过 `IContainerRegistry` 和 `IContainerProvider` 抽象容器操作，兼容多种 DI 容器（DryIoc、Unity、Autofac）。
+3. **模块管理**：
+   - `PrismBootstrapper` 需手动配置 `IModuleCatalog`。
+   - `PrismApplication` 内置目录管理，支持从代码、配置文件或目录自动加载模块。
+4. **代码简洁性**：
+   - `PrismApplication` 减少模板代码，启动逻辑更集中。
+
+##### 3.View与ViewModel的自动绑定
+
+- 启用自动绑定
+
+  在xaml中引入Prism的命名空间，然后设置`prism:ViewModelLocator.AutoWireViewModel="True"`（默认为true，可以不用配置）。
+
+  ```xaml
+  <Window ...
+          xmlns:prism="http://prismlibrary.com/"
+          prism:ViewModelLocator.AutoWireViewModel="True">
+      <!-- View 内容 -->
+  </Window>
+  ```
+
+- 命名约定
+
+  1. 视图模型与视图位于同一程序集；
+  2. 视图模型位于 `<命名空间>.ViewModels` 子命名空间；
+  3. 视图位于 `<命名空间>.Views` 子命名空间；
+  4. 视图模型名称与视图名称对应，并以 “ViewModel” 结尾（例如，`MainWindow` 视图对应 `MainWindowViewModel` 视图模型）。
+
+  **四个条件都必须满足。**

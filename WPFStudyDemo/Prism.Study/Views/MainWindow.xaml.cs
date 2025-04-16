@@ -12,24 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Mvvmlight.Object.ViewModel;
 
-namespace Mvvmlight.Object.Views
+namespace Prism.Study.Views
 {
     /// <summary>
-    /// SubWindow.xaml 的交互逻辑
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class SubWindow : Window
+    public partial class MainWindow : Window
     {
-        public SubWindow()
+        public MainWindow()
         {
             InitializeComponent();
-            this.Closed += OnClosed;
-        }
-
-        private void OnClosed(object sender, EventArgs e)
-        {
-            ViewModelLocator.Cleanup<SubViewModel>();
         }
     }
 }

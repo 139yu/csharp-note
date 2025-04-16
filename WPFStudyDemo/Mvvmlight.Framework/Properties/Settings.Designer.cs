@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mvvmlight.Object.Properties
+namespace Mvvmlight.Framework.Properties
 {
 
 

@@ -18,7 +18,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using GalaSoft.MvvmLight.Views;
 
-namespace Mvvmlight.Object.Views
+namespace Mvvmlight.Framework.Views
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
