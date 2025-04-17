@@ -6674,7 +6674,7 @@ graph TD
 
 ## Prism简介
 
-#### **一、什么是 Prism？**
+### **一、什么是 Prism？**
 
 **Prism** 是由微软 Patterns & Practices 团队开发的 **企业级框架**，用于构建 **模块化**、**可扩展** 的 XAML 应用程序（支持 WPF、MAUI、UWP、Xamarin.Forms 等）。其核心目标是帮助开发者：
 
@@ -6684,7 +6684,7 @@ graph TD
 
 ------
 
-#### **二、Prism 与 MVVM Toolkit 的核心区别**
+### **二、Prism 与 MVVM Toolkit 的核心区别**
 
 |   **维度**   |             **Prism**              |         **MVVM Toolkit**         |
 | :----------: | :--------------------------------: | :------------------------------: |
@@ -6696,7 +6696,7 @@ graph TD
 
 ------
 
-#### **三、Prism 的核心功能概览**
+### **三、Prism 的核心功能概览**
 
 1. **模块化开发**
    将应用拆分为独立模块，支持按需加载和动态扩展。
@@ -6711,11 +6711,7 @@ graph TD
 6. **对话框服务**
    标准化模态窗口、弹出框和复杂交互。
 
-------
-
-#### 四、安装与使用
-
-##### 1.安装
+### 四、基础使用
 
 - 基础包
 
@@ -6739,7 +6735,7 @@ Prism.Wpf包中已经包含了Prism.Core，而容器拓展包中包含了Prism.W
 |  **模块化加载**  |           自动注册模块            |                   需手动配置模块依赖                    |
 |  **社区活跃度**  |       高（现代轻量级容器）        |              中（微软早期产品，维护较少）               |
 
-##### 2.基础使用
+#### 2.基础使用
 
 示例代码：
 
@@ -6899,7 +6895,7 @@ namespace Prism.Study.ViewModels
 </Window>
 ```
 
-**Prism框架初始化**
+#### **3.Prism框架初始化**
 
 - `PrismBootstrapper`
 
@@ -6997,7 +6993,7 @@ namespace Prism.Study.ViewModels
 4. **代码简洁性**：
    - `PrismApplication` 减少模板代码，启动逻辑更集中。
 
-##### 3.View与ViewModel的自动绑定
+#### 4.View与ViewModel的自动绑定
 
 - 启用自动绑定
 
@@ -7019,3 +7015,215 @@ namespace Prism.Study.ViewModels
   4. 视图模型名称与视图名称对应，并以 “ViewModel” 结尾（例如，`MainWindow` 视图对应 `MainWindowViewModel` 视图模型）。
 
   **四个条件都必须满足。**
+
+##### ViewModelLocator个性化配置
+
+- 自定义命名约定
+
+```csharp
+namespace Study.PrismApp
+{
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : PrismApplication
+    {
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            
+            // containerRegistry.Register<MainWindow>();
+        }
+
+        protected override Window CreateShell()
+        {
+            return new MainWindow();
+        }
+  
+        protected override void ConfigureViewModelLocator()
+        {
+            // 设置View类型对应的ViewModel类型，所有视图都遵循此规则
+            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(ViewTypeToViewModelTypeResolver);
+        }
+        /// <summary>
+        /// 返回视图类型对应的ViewModel类型
+        /// </summary>
+        /// <param name="viewType">视图类型</param>
+        /// <returns>ViewModel</returns>
+        public Type ViewTypeToViewModelTypeResolver(Type viewType)
+        {
+            // 匹配逻辑
+            return null;
+        }
+    }
+}
+```
+
+- 特例配置
+
+```csharp
+namespace Study.PrismApp
+{
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : PrismApplication
+    {
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            
+            // containerRegistry.Register<MainWindow>();
+        }
+
+        protected override Window CreateShell()
+        {
+            return new MainWindow();
+        }
+  
+        protected override void ConfigureViewModelLocator()
+        {	
+            // 有以下三种方式制定：
+            // 通过泛型指定
+            //ViewModelLocationProvider.Register<MainWindow, MainWindowViewModel>();
+            // 通过工厂方法指定
+            ViewModelLocationProvider.Register(typeof(MainWindow).ToString(), () => new MainWindowViewModel());
+            //ViewModelLocationProvider.Register(typeof (MainWindow).ToString(), typeof (MainWindow));
+        }
+      
+    }
+}
+```
+
+#### 5.自动注入
+
+同MVVM Light，在创建实例时，如果构造函数有参数，会在容器找查找对应的参数对象，然后将参数对象实例化，最后在创建目标示例：
+
+```csharp
+namespace Study.PrismApp
+{
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : PrismApplication
+    {
+         protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            // 直接注入某个实例类型
+            // containerRegistry.Register(typeof(BusinessServiceImpl));
+            // 注入实例接口及其实现类
+            // containerRegistry.Register(typeof(IBusinessService), typeof(BusinessServiceImpl));
+            // containerRegistry.Register<IBusinessService,BusinessServiceImpl>();
+        }
+
+        protected override Window CreateShell()
+        {
+            return new MainWindow();
+        }
+       
+    }
+}
+```
+
+## 跨模块交互
+
+### 一、事件聚合器
+
+事件聚合器是 Prism 框架中实现 **松耦合通信** 的核心工具，允许不同模块或组件通过事件进行交互，而无需直接引用彼此。
+
+#### **1.核心组件**
+
+|    **类型/接口**    |                           **作用**                           |
+| :-----------------: | :----------------------------------------------------------: |
+| `IEventAggregator`  |              事件聚合器入口，用于获取/发布事件               |
+|  `PubSubEvent<T>`   | 泛型事件基类，可携带任意类型参数（如 `T` 为 `string` 或自定义 DTO） |
+| `SubscriptionToken` |                 订阅事件的凭证，用于取消订阅                 |
+
+#### **2. 定义事件类型**
+
+```csharp
+// 接收/发布string类型的消息
+public class SaveEvent: PubSubEvent<string>
+{
+        
+}
+```
+
+#### **3. 订阅与发布事件**
+
+```csharp
+namespace Study.PrismApp.ViewModel
+{
+    public class MainWindowViewModel: BindableBase
+    {
+        private string _textValue = "1234";
+        private SubscriptionToken _token;
+        
+        public string TextValue
+        {
+            get { return _textValue; }
+            set
+            {
+                SetProperty(ref _textValue, value);
+            }
+        }
+        private IEventAggregator _eventAggregator;
+        // 从ioc容器注入事件聚合器
+        public MainWindowViewModel(IEventAggregator eventAggregator)
+        {
+            _eventAggregator = eventAggregator;
+            SaveCommand = new DelegateCommand(ExecuteSaveCommand);
+            // 订阅事件，并指定处理方法
+            _token = _eventAggregator.GetEvent<SaveEvent>().Subscribe(ConsumerEvent);
+        }
+        public DelegateCommand SaveCommand { get; set; }
+
+        public void ExecuteSaveCommand()
+        {
+            // 发布事件
+            _eventAggregator.GetEvent<SaveEvent>().Publish(_textValue);
+        }
+
+        public void ConsumerEvent(string s)
+        {
+            Console.WriteLine(s);
+        }
+        public void Destroy()
+        {
+            // 显式取消订阅，避免内存泄漏
+            _eventAggregator.GetEvent<SaveEvent>().Unsubscribe(_token);
+        }
+    }
+}
+```
+
+#### 4.发布事件方法参数说明
+
+`PubSubEvent`中`Subscribe`方法重写非常多，包含有泛型与无泛型，如下是参数最多的一个：
+
+```csharp
+public class PubSubEvent : EventBase
+{
+    public virtual SubscriptionToken Subscribe(Action<TPayload> action, ThreadOption threadOption, bool keepSubscriberReferenceAlive, Predicate<TPayload> filter)
+    {
+    	// other code    
+    }
+}
+```
+
+1. `Action<TPayload> action`：定义事件触发时执行的回调逻辑，接收事件负载数据 `TPayload`
+
+2. `ThreadOption threadOption`：指定回调逻辑的执行线程。
+
+   此参数是一个枚举类，选项如下：
+
+   |             **值**              |                           **行为**                           |
+   | :-----------------------------: | :----------------------------------------------------------: |
+   | `ThreadOption.PublisherThread`  | 在发布事件的线程执行（默认值），若事件在 UI 线程发布，则回调也在 UI 线程运行。 |
+   |     `ThreadOption.UIThread`     |       强制在 UI 线程执行，自动通过 `Dispatcher` 调度。       |
+   | `ThreadOption.BackgroundThread` |      在线程池线程执行，适合非 UI 操作（如写入数据库）。      |
+
+3. `bool keepSubscriberReferenceAlive`：控制订阅者的生命周期管理。
+
+   - `false`（默认）：使用弱引用，订阅者被垃圾回收后自动取消订阅，避免内存泄漏。
+   - `true`：保持强引用，需手动调用 `Unsubscribe` 取消订阅，否则订阅者无法被回收。
+
+4. `Predicate<TPayload> filter`：通过条件过滤事件负载，仅当 `filter` 返回 `true` 时触发回调。
