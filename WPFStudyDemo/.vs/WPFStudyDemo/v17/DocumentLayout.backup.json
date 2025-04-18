@@ -3,27 +3,20 @@
   "WorkspaceRootPath": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E881C44B-E17E-4ABB-B9BA-CCC0B6A3A458}|Mvvmlight.Object\\Mvvmlight.Object.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\mvvmlight.object\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{E881C44B-E17E-4ABB-B9BA-CCC0B6A3A458}|Mvvmlight.Object\\Mvvmlight.Object.csproj|solutionrelative:mvvmlight.object\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{0BB9AE87-AD94-4797-A592-11C58444008A}|Study.Prism02\\Study.Prism02.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\study.prism02\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BB9AE87-AD94-4797-A592-11C58444008A}|Study.Prism02\\Study.Prism02.csproj|solutionrelative:study.prism02\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E881C44B-E17E-4ABB-B9BA-CCC0B6A3A458}|Mvvmlight.Object\\Mvvmlight.Object.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\mvvmlight.object\\views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E881C44B-E17E-4ABB-B9BA-CCC0B6A3A458}|Mvvmlight.Object\\Mvvmlight.Object.csproj|solutionrelative:mvvmlight.object\\views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0BB9AE87-AD94-4797-A592-11C58444008A}|Study.Prism02\\Study.Prism02.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\study.prism02\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BB9AE87-AD94-4797-A592-11C58444008A}|Study.Prism02\\Study.Prism02.csproj|solutionrelative:study.prism02\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u6C89\u9ED8\u7684\u9C7C\u513F\\AppData\\Local\\Temp\\.vsdbgsrc\\3714f74b82eacc6cf8dcf1e32980b0908d4f8b447d25d4eb08ff1424a7b57c02\\ResourcePart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0BB9AE87-AD94-4797-A592-11C58444008A}|Study.Prism02\\Study.Prism02.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\study.prism02\\views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BB9AE87-AD94-4797-A592-11C58444008A}|Study.Prism02\\Study.Prism02.csproj|solutionrelative:study.prism02\\views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E881C44B-E17E-4ABB-B9BA-CCC0B6A3A458}|Mvvmlight.Object\\Mvvmlight.Object.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\mvvmlight.object\\viewmodel\\viewmodellocator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E881C44B-E17E-4ABB-B9BA-CCC0B6A3A458}|Mvvmlight.Object\\Mvvmlight.Object.csproj|solutionrelative:mvvmlight.object\\viewmodel\\viewmodellocator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E881C44B-E17E-4ABB-B9BA-CCC0B6A3A458}|Mvvmlight.Object\\Mvvmlight.Object.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\mvvmlight.object\\viewmodel\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E881C44B-E17E-4ABB-B9BA-CCC0B6A3A458}|Mvvmlight.Object\\Mvvmlight.Object.csproj|solutionrelative:mvvmlight.object\\viewmodel\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E881C44B-E17E-4ABB-B9BA-CCC0B6A3A458}|Mvvmlight.Object\\Mvvmlight.Object.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\mvvmlight.object\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{E881C44B-E17E-4ABB-B9BA-CCC0B6A3A458}|Mvvmlight.Object\\Mvvmlight.Object.csproj|solutionrelative:mvvmlight.object\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{0BB9AE87-AD94-4797-A592-11C58444008A}|Study.Prism02\\Study.Prism02.csproj|g:\\code\\githubcode\\csharp-note\\wpfstudydemo\\study.prism02\\views\\dialogview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BB9AE87-AD94-4797-A592-11C58444008A}|Study.Prism02\\Study.Prism02.csproj|solutionrelative:study.prism02\\views\\dialogview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,22 +26,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MainViewModel.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Mvvmlight.Object\\ViewModel\\MainViewModel.cs",
-              "RelativeDocumentMoniker": "Mvvmlight.Object\\ViewModel\\MainViewModel.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Mvvmlight.Object\\ViewModel\\MainViewModel.cs",
-              "RelativeToolTip": "Mvvmlight.Object\\ViewModel\\MainViewModel.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAiwDUAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T08:41:27.241Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
@@ -59,63 +38,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ResourcePart.cs",
-              "DocumentMoniker": "C:\\Users\\\u6C89\u9ED8\u7684\u9C7C\u513F\\AppData\\Local\\Temp\\.vsdbgsrc\\3714f74b82eacc6cf8dcf1e32980b0908d4f8b447d25d4eb08ff1424a7b57c02\\ResourcePart.cs",
-              "ToolTip": "C:\\Users\\\u6C89\u9ED8\u7684\u9C7C\u513F\\AppData\\Local\\Temp\\.vsdbgsrc\\3714f74b82eacc6cf8dcf1e32980b0908d4f8b447d25d4eb08ff1424a7b57c02\\ResourcePart.cs [\u53EA\u8BFB]",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAUwCsAAAAEAAAAAQAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T12:40:44.134Z",
-              "EditorCaption": " [\u53EA\u8BFB]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Mvvmlight.Object\\Views\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "Mvvmlight.Object\\Views\\MainWindow.xaml.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Mvvmlight.Object\\Views\\MainWindow.xaml.cs",
-              "RelativeToolTip": "Mvvmlight.Object\\Views\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAABYAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T12:38:33.189Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Mvvmlight.Object\\Views\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "Mvvmlight.Object\\Views\\MainWindow.xaml",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Mvvmlight.Object\\Views\\MainWindow.xaml",
-              "RelativeToolTip": "Mvvmlight.Object\\Views\\MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-15T12:24:19.066Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "App.xaml",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Mvvmlight.Object\\App.xaml",
-              "RelativeDocumentMoniker": "Mvvmlight.Object\\App.xaml",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Mvvmlight.Object\\App.xaml*",
-              "RelativeToolTip": "Mvvmlight.Object\\App.xaml*",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-15T12:25:52.461Z",
+              "Title": "MainWindowViewModel.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Study.Prism02\\ViewModels\\MainWindowViewModel.cs",
+              "RelativeDocumentMoniker": "Study.Prism02\\ViewModels\\MainWindowViewModel.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Study.Prism02\\ViewModels\\MainWindowViewModel.cs*",
+              "RelativeToolTip": "Study.Prism02\\ViewModels\\MainWindowViewModel.cs*",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAQwBkAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T01:56:38.076Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Study.Prism02\\Views\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "Study.Prism02\\Views\\MainWindow.xaml.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Study.Prism02\\Views\\MainWindow.xaml.cs",
+              "RelativeToolTip": "Study.Prism02\\Views\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T01:56:36.917Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ViewModelLocator.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Mvvmlight.Object\\ViewModel\\ViewModelLocator.cs",
-              "RelativeDocumentMoniker": "Mvvmlight.Object\\ViewModel\\ViewModelLocator.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Mvvmlight.Object\\ViewModel\\ViewModelLocator.cs",
-              "RelativeToolTip": "Mvvmlight.Object\\ViewModel\\ViewModelLocator.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
+              "Title": "DialogView.xaml.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Study.Prism02\\Views\\DialogView.xaml.cs",
+              "RelativeDocumentMoniker": "Study.Prism02\\Views\\DialogView.xaml.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Study.Prism02\\Views\\DialogView.xaml.cs",
+              "RelativeToolTip": "Study.Prism02\\Views\\DialogView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T08:41:33.013Z",
+              "WhenOpened": "2025-04-18T01:56:35.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Study.Prism02\\App.xaml.cs",
+              "RelativeDocumentMoniker": "Study.Prism02\\App.xaml.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\WPFStudyDemo\\Study.Prism02\\App.xaml.cs",
+              "RelativeToolTip": "Study.Prism02\\App.xaml.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAxwBYAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T01:56:29.287Z",
               "EditorCaption": ""
             }
           ]

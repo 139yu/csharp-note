@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using Prism.Ioc;
-using Prism.Mvvm;
 using Prism.Unity;
-using Study.PrismApp.Views;
+using Study.CompositeCommand.Views;
 
-namespace Study.PrismApp
+namespace Study.CompositeCommand
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -14,13 +18,12 @@ namespace Study.PrismApp
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterDialog<DialogContentWindow>("DialogContent");
+            
         }
 
         protected override Window CreateShell()
         {
             return Container.Resolve<MainWindow>();
         }
-    
     }
 }

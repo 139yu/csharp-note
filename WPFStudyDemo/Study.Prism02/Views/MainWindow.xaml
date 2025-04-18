@@ -1,15 +1,13 @@
-﻿<Window x:Class="Study.PrismApp.Views.MainWindow"
+﻿<Window x:Class="Study.Prism02.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Study.PrismApp"
-        prism:ViewModelLocator.AutoWireViewModel="True"
-        xmlns:prism="http://prismlibrary.com/"
+        xmlns:local="clr-namespace:Study.Prism02"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
         <TextBlock Text="{Binding TextValue}"></TextBlock>
-        <Button Content="Show Dialog" Command="{Binding  ShowDialogCommand}"></Button>
+        <Button Command="{Binding ShowDialogCommand}" Content="Show Dialog"></Button>
     </StackPanel>
 </Window>
