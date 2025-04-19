@@ -1,0 +1,8 @@
+﻿<m:ModuleCatalog xmlns="http://prismlibrary.com/"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:m="clr-namespace:Prism.Modularity;assembly=Prism.Wpf">
+    <m:ModuleInfo
+        ModuleType="Study.PrismModule.Sub.SubModule, Study.PrismModule.Sub"
+        ModuleName="SubModule"
+        InitializationMode="OnDemand" />
+</m:ModuleCatalog>

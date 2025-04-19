@@ -7881,3 +7881,378 @@ public void OnNavigatedTo(NavigationContext navigationContext)
 }
 ```
 
+### 二、Module
+
+Prism 的模块化设计是其框架的核心特性之一，通过将应用程序拆分为独立的功能模块（Module），实现代码解耦、按需加载和动态扩展。
+
+#### **1. 模块化的核心概念**
+
+- **模块 (Module)**
+  独立的功能单元，包含视图、服务、业务逻辑等，可独立开发和测试。
+- **模块目录 (Module Catalog)**
+  定义应用程序中所有模块的元数据（如模块类型、加载顺序、依赖关系）。
+- **模块管理器 (ModuleManager)**
+  负责加载、初始化模块，并解决模块间的依赖关系。
+
+#### **2. 实现模块化的步骤**
+
+##### **(1) 定义模块**
+
+创建两个项目，如下：
+
+![image-20250419093446409](assets/image-20250419093446409.png)
+
+`PrismModule.Sub`创建为**用户自定义类库**或者**用户自定义控件库**。创建之后安装`Prism`。
+
+添加一个类，实现`IModule`接口：
+
+```csharp
+namespace Study.PrismModule.Sub
+{
+    public class SubModule: IModule
+    {
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            // 注册当前项目的视图，提供给其他模块
+            containerRegistry.RegisterForNavigation<ViewA,ViewAViewModel>();
+        }
+
+        public void OnInitialized(IContainerProvider containerProvider)
+        {
+        }
+    }
+}
+```
+
+##### **(2) 配置模块目录**
+
+在`PrismModule`中配置模块加载方式（需要导入`PrismModule.Sub`依赖）：
+
+```C#
+namespace Study.PrismModule
+{
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : PrismApplication
+    {
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<ViewB,ViewBViewModel>();
+        }
+
+        protected override Window CreateShell()
+        {
+            return Container.Resolve<MainWindow>();
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            // 添加模块
+            moduleCatalog.AddModule<Sub.SubModule>();
+        }
+    }
+}
+```
+
+#### 3.按需加载
+
+##### (1)通过代码方式
+
+```csharp
+namespace Study.PrismModule
+{
+    public partial class App : PrismApplication
+    {
+       	// other code
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            // SubModule模块名称
+            // InitializationMode默认值WhenAvailable
+            moduleCatalog.AddModule<SubModule>("SubModule", InitializationMode.OnDemand);
+        }
+    }
+}
+```
+
+使用时需要先加载模块，否则无法显示：
+
+```csharp
+namespace Study.PrismModule.ViewModels
+{
+    public class MainWindowViewModel: BindableBase
+    {
+        public DelegateCommand<string> ChangeViewCommand { get; private set; }
+        public IRegionManager _regionManager;
+        public IModuleManager _moduleManager;
+        public MainWindowViewModel(IRegionManager regionManager,IModuleManager moduleManager)
+        {
+            _moduleManager = moduleManager;
+            _regionManager = regionManager;
+            ChangeViewCommand = new DelegateCommand<string>(ExecuteChangeView);
+        }
+        
+        public void ExecuteChangeView(string viewName)
+        {
+            // 加载模块，对应ConfigureModuleCatalog中的模块名称
+            _moduleManager.LoadModule("SubModule");
+            _regionManager.RequestNavigate("MainContent", viewName);
+        }
+    }
+}
+```
+
+##### (2)通过特性
+
+```c#
+[Module(ModuleName = "SubModule", OnDemand = true)]
+public class SubModule: IModule
+{
+    public void RegisterTypes(IContainerRegistry containerRegistry)
+    {
+        containerRegistry.RegisterForNavigation<ViewA,ViewAViewModel>();
+  
+        public void OnInitialized(IContainerProvider containerProvider)
+    {
+    }
+}
+    
+namespace Study.PrismModule
+{
+    public partial class App : PrismApplication
+    {
+       	// other code
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            moduleCatalog.AddModule<SubModule>(InitializationMode.OnDemand);
+        }
+    }
+}
+```
+
+##### (3)通过`App.config`
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+        <section name="modules" type="Prism.Modularity.ModulesConfigurationSection, Prism.Wpf" />
+    </configSections>
+    <modules>
+        <!--assemblyFile：程序集名称-->
+        <!--moduleType：通过typeof(SubModule).AssemblyQualifiedName获取-->
+        <!--moduleName：模块名称-->
+        <!--startupLoaded：是否在启动时加载，false则按需加载-->
+        <module assemblyFile="Study.PrismModule.Sub"
+                moduleType="Study.PrismModule.Sub.SubModule, Study.PrismModule.Sub, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+                moduleName="SubModule"
+                startupLoaded="false"
+        />
+    </modules>
+</configuration>
+```
+
+```csharp
+namespace Study.PrismModule
+{
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : PrismApplication
+    {
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<ViewB,ViewBViewModel>();
+        }
+
+        protected override Window CreateShell()
+        {
+            return Container.Resolve<MainWindow>();
+        }
+
+       
+        protected override IModuleCatalog CreateModuleCatalog()
+        {
+            // 自动读取App.config文件
+            return new ConfigurationModuleCatalog();
+        }
+    }
+}
+```
+
+##### (4)通过xaml
+
+1. 添加xaml文件，并修改文件属性为**Resource**：
+
+   ```xaml
+   <m:ModuleCatalog xmlns="http://prismlibrary.com/"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:m="clr-namespace:Prism.Modularity;assembly=Prism.Wpf">
+       <m:ModuleInfo
+           ModuleType="Study.PrismModule.Sub.SubModule, Study.PrismModule.Sub"
+           ModuleName="SubModule"
+           InitializationMode="OnDemand" />
+   </m:ModuleCatalog>
+   ```
+
+2. 修改`App.xaml.cx`
+
+   ```csharp
+   namespace StudyPrism.Module
+   {
+       public partial class App : PrismApplication
+       {
+          // other code
+           
+           protected override IModuleCatalog CreateModuleCatalog()
+           {	
+               // uri：对应xaml文件路径	
+               return new XamlModuleCatalog(new Uri("pack://application:,,,/StudyPrism.Module;component/ModuleConfig/ModulesCatalog.xaml"));
+           }
+       }
+   }
+   ```
+
+   ##### (5)通过目录扫描
+
+   1. 修改`App.xaml.cs`代码
+
+      ```csharp
+      namespace StudyPrism.Module
+      {
+          public partial class App : PrismApplication
+          {
+              // other code
+              protected override IModuleCatalog CreateModuleCatalog()
+              {
+                  // 扫描当前运行目录下的字目录
+                  return new DirectoryModuleCatalog(){ModulePath = ".\\Modules" };
+              }
+          }
+      }
+      ```
+
+   2. 在项目代码编译成`xx.exe`文件的目录下添加`Modules`目录，将`Study.PrismModule.Sub.dll`移动此处。
+
+   3. 即使在`StudyPrism.Module`项目中删除`Study.PrismModule.Sub`的引用，项目也可以使用ViewA页面。
+
+# EFCore
+
+## 一、类库介绍
+
+### 1. `Microsoft.EntityFrameworkCore`
+
+- **作用**：EF Core 的核心功能包，提供 ORM 基础功能。
+- 包含：
+  - `DbContext` 基类、实体映射、查询、变更跟踪等核心 API。
+  - 支持 LINQ 查询、事务、数据库连接管理。
+- **依赖项**：必须安装，所有 EF Core 项目的基础。
+
+### 2. `Microsoft.EntityFrameworkCore.SqlServer`
+
+- **作用**：SQL Server 数据库提供程序，用于连接和操作 SQL Server/Azure SQL 数据库。
+- 包含：
+  - SQL Server 特有的数据类型映射（如 `DateTime2`、`HierarchyId`）。
+  - 针对 SQL Server 的查询优化和迁移生成。
+  - 支持内存优化表、序列等 SQL Server 特性。
+- **依赖项**：使用 SQL Server 时必须安装。
+
+### 3. `Microsoft.EntityFrameworkCore.Tools`
+
+- **作用**：提供 EF Core 的 **命令行工具**，用于开发阶段的操作。
+- 功能：
+  - 在 NuGet 包管理器控制台中启用命令（如 `Add-Migration`, `Update-Database`）。
+  - 生成迁移脚本、DbContext 脚手架代码。
+  - 查看数据库上下文模型信息。
+- **依赖项**：仅开发环境需要，生产环境无需安装。
+
+### 4. `Microsoft.EntityFrameworkCore.SqlServer.Design`
+
+- 历史说明：
+  - **旧版本**（EF Core 1.x/2.x）：此包用于设计时组件（如逆向工程生成 `DbContext` 和实体时所需）。
+  - **新版本**（EF Core 3.0+）：功能已合并到 `Microsoft.EntityFrameworkCore.Tools` 和 `Microsoft.EntityFrameworkCore.SqlServer` 中，**不再需要单独安装**。
+- **现状**：如果你使用的是 EF Core 3.0+，可忽略此包，直接通过 `Scaffold-DbContext` 命令生成代码。
+
+## 二、`DBFirst`
+
+在 Entity Framework Core (EF Core) 中，**Database First（数据库优先）** 是一种从现有数据库逆向生成实体类（Model）和 `DbContext` 的开发模式。
+
+### **1. Database First 的核心原理**
+
+- **逆向工程**：通过数据库表结构生成 C# 实体类和 `DbContext`。
+- **工具支持**：使用 `Scaffold-DbContext` 命令行工具（或 EF Core Power Tools 图形工具）。
+- **适用场景**：已有数据库，需快速生成代码模型；维护旧项目时与数据库同步。
+
+### **2. 使用 EF Core 实现 Database First**
+
+#### **(1) 安装必备 NuGet 包**
+
+`Microsoft.EntityFrameworkCore.Design`、`Microsoft.EntityFrameworkCore.SqlServer`、
+
+(2)使用脚手架生成代码
+
+```bash
+# 基本命令格式
+Scaffold-DbContext "Server=服务器;Database=数据库名;User Id=用户名;Password=密码;" 
+    Microsoft.EntityFrameworkCore.SqlServer 
+    -OutputDir Models 
+    -ContextDir Data 
+    -Context MyDbContext 
+    -Force
+```
+
+- 关键参数：
+  - `-OutputDir`：实体类输出目录（如 `Models`）。
+  - `-ContextDir`：DbContext 输出目录（如 `Data`）。
+  - `-Context`：自定义 DbContext 类名（默认生成 `DbContext`）。
+  - `-Force`：覆盖已存在的文件。
+  - `-Schemas`：指定生成特定 Schema 的表（如 `dbo`）。
+  - `-Tables`：指定生成特定表（如 `Users,Orders`）。
+
+## 三、CodeFirst
+
+Entity Framework Core (EF Core) 的 **Code First** 是一种以代码为中心的方法，允许开发者通过编写 **C# 实体类** 和 **DbContext** 来定义数据库模型，然后自动生成或更新数据库结构。
+
+### **1. Code First 的核心思想**
+
+- **代码驱动数据库**：通过 C# 类定义数据模型，EF Core 将其映射到数据库表结构。
+- **迁移（Migrations）**：通过迁移工具跟踪模型变化，生成 SQL 脚本同步数据库。
+- **无数据库依赖**：无需预先手动创建数据库，适合敏捷开发和快速迭代。
+
+### 2.迁移
+
+#### (1)安装必要包
+
+在开始迁移前，确保已安装：`Microsoft.EntityFrameworkCore.Tools`、`Microsoft.EntityFrameworkCore.SqlServer`
+
+#### (2)迁移命令
+
+- 创建迁移
+
+  ```bash
+  Add-Migration <迁移名称> [-OutputDir <输出目录>] [-Context <DbContext类型>]
+  ```
+
+  **参数说明**：
+
+  - `迁移名称`：描述性名称，如"AddProductTable"
+  - `-OutputDir`：可选，指定迁移文件存放目录
+  - `-Context`：可选，当项目中有多个DbContext时指定
+
+- 更新数据库
+
+  ```bash
+  Update-Database [-Migration <目标迁移>] [-Context <DbContext类型>]
+  ```
+
+  **参数说明**：
+
+  - `-Migration`：回滚或升级到特定迁移版本
+
+- 移除最后迁移
+
+  ```bash
+  Remove-Migration [-Force] [-Context <DbContext类型>]
+  ```
+
+  **注意**：只能在迁移尚未应用到数据库时使用
