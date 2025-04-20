@@ -1,0 +1,9 @@
+﻿<dryIoc:PrismApplication x:Class="SmartParking.Client.Start.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SmartParking.Client.Start"
+             xmlns:dryIoc="http://prismlibrary.com/">
+    <dryIoc:PrismApplication.Resources>
+         
+    </dryIoc:PrismApplication.Resources>
+</dryIoc:PrismApplication>

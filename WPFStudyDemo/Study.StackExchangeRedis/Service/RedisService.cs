@@ -32,5 +32,10 @@ namespace Study.StackExchangeRedis.Service
         {
             return await db.StringSetAsync(key, value, expiry);
         }
+
+        public string GetHash(string key,string field)
+        {
+            return db.HashGet(key, field);
+        }
     }
 }

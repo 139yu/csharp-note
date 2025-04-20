@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SamrtParking.Server.IService\SamrtParking.Server.IService.csproj" />
+    <ProjectReference Include="..\SmartParking.Server.DBConfig\SmartParking.Server.DBConfig.csproj" />
+    <ProjectReference Include="..\SmartParking.Server.IDBConfig\SmartParking.Server.IDBConfig.csproj" />
+    <ProjectReference Include="..\SmartParking.Server.Service\SmartParking.Server.Service.csproj" />
+  </ItemGroup>
+
+</Project>
