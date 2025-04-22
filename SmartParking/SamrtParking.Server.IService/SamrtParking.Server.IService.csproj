@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartParking.Server.Common\SmartParking.Server.Common.csproj" />
+    <ProjectReference Include="..\SmartParking.Server.Models\SmartParking.Server.Models.csproj" />
+  </ItemGroup>
+
 </Project>

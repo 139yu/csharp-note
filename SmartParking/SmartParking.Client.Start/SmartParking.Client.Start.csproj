@@ -29,7 +29,19 @@
 
     <ItemGroup>
       <None Remove="Images\login_back.jpg" />
+      <ProjectReference Include="..\SamrtParking.Client.IDAL\SamrtParking.Client.IDAL.csproj" />
+      <ProjectReference Include="..\SmarkParking.Client.Controls\SmarkParking.Client.Controls.csproj" />
       <ProjectReference Include="..\SmartParking.Client.Assets\SmartParking.Client.Assets.csproj" />
+      <ProjectReference Include="..\SmartParking.Client.BLL\SmartParking.Client.BLL.csproj" />
+      <ProjectReference Include="..\SmartParking.Client.Commons\SmartParking.Client.Commons.csproj" />
+      <ProjectReference Include="..\SmartParking.Client.DAL\SmartParking.Client.DAL.csproj" />
+      <ProjectReference Include="..\SmartParking.Client.IBLL\SmartParking.Client.IBLL.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Logging">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\5.0.17\Microsoft.Extensions.Logging.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

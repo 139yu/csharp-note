@@ -118,7 +118,7 @@ namespace SmartParking.Server.Service.Impl
 
         public void Commit()
         {
-            throw new NotImplementedException();
+            this.dbContext.SaveChanges();
         }
 
         #endregion

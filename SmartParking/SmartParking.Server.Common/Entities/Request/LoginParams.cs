@@ -1,6 +1,6 @@
-﻿namespace SmartParking.Server.Start.Models
+﻿namespace SmartParking.Server.Common.Entities.Request
 {
-    public class LoginParamsModel
+    public class LoginParams
     {
         public string Username { get; set; }
         public string Password { get; set; }

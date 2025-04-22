@@ -19,7 +19,7 @@ namespace SmartParking.Client.Start.Base
         public static readonly DependencyProperty AttachProperty = DependencyProperty.RegisterAttached("Attach",
             typeof(string),
             typeof(PasswordHelper),
-            new FrameworkPropertyMetadata(default(string ), new PropertyChangedCallback(OnAttachChanged)));
+            new FrameworkPropertyMetadata( new PropertyChangedCallback(OnAttachChanged)));
         
         public static string GetAttach(DependencyObject d)
         {
@@ -33,13 +33,13 @@ namespace SmartParking.Client.Start.Base
         private static bool _isUpdating = false; 
         private static void OnPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PasswordBox pb = d as PasswordBox;
+            /*PasswordBox pb = d as PasswordBox;
             pb.PasswordChanged -= Pb_PasswordChanged;
             if (!_isUpdating)
             {
                 pb.Password = e.NewValue.ToString();
             }
-            pb.PasswordChanged += Pb_PasswordChanged;
+            pb.PasswordChanged += Pb_PasswordChanged;*/
         }
 
         private static void OnAttachChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

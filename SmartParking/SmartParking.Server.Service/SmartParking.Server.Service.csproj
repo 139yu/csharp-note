@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SamrtParking.Server.IService\SamrtParking.Server.IService.csproj" />
+    <ProjectReference Include="..\SmartParking.Server.Common\SmartParking.Server.Common.csproj" />
     <ProjectReference Include="..\SmartParking.Server.IDBConfig\SmartParking.Server.IDBConfig.csproj" />
   </ItemGroup>
 
