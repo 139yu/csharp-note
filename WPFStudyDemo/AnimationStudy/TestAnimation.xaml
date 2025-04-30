@@ -1,0 +1,21 @@
+﻿<Window x:Class="AnimationStudy.TestAnimation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:AnimationStudy"
+        mc:Ignorable="d"
+        Title="TestAnimation" Height="450" Width="800">
+    <Grid>
+        <Border Width="200" Height="200" CornerRadius="100" BorderThickness="1" BorderBrush="Aquamarine">
+            <Canvas>
+                <Grid>
+                    <Grid.RenderTransform>
+                        <TranslateTransform Y="50"/>
+                    </Grid.RenderTransform>
+                    <Path Data="M0,5A80,40 0,0,1 83,5A80,40 0,0,0 155,5A80,40 0,0,1 230,5A80,40 0,0,0 300,5L300,200L0,200Z" Fill="#4C0b3d90"></Path>
+                </Grid>
+            </Canvas>
+        </Border>
+    </Grid>
+</Window>

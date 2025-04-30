@@ -1,0 +1,101 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{16B074DC-FDAA-48B0-B67C-C5FC30FFE9FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BLL", "BLL", "{7A8B95D8-D146-4314-9A2B-3B8CC20D57A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{29C0C77D-E866-4DF9-BB50-32818D9F402E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Client.Start", "SmartParking.Client.Start\SmartParking.Client.Start.csproj", "{3CF29FB5-2AAA-49C6-AE3F-1627B0A8D7E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Start", "Start", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Client.Assets", "SmartParking.Client.Assets\SmartParking.Client.Assets.csproj", "{3D927340-3F6D-482A-9A2E-2120A4B36B7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Client.DAL", "SmartParking.Client.DAL\SmartParking.Client.DAL.csproj", "{6930E115-4856-458A-9116-09D384CF80BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamrtParking.Client.IDAL", "SamrtParking.Client.IDAL\SamrtParking.Client.IDAL.csproj", "{46E92788-2E4D-4316-A30B-8E6A4BE0178F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmarkParking.Client.Controls", "SmarkParking.Client.Controls\SmarkParking.Client.Controls.csproj", "{5C75B27C-67A8-4D55-8A48-D201EDB94435}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Client.Commons", "SmartParking.Client.Commons\SmartParking.Client.Commons.csproj", "{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Client.IBLL", "SmartParking.Client.IBLL\SmartParking.Client.IBLL.csproj", "{CF0FF466-4B71-4014-B405-D62A5B76E3CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Client.BLL", "SmartParking.Client.BLL\SmartParking.Client.BLL.csproj", "{1E078295-19EF-49F4-85F8-83F401B67949}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Client.UpgradeApp", "SmartParking.Client.UpgradeApp\SmartParking.Client.UpgradeApp.csproj", "{377B7280-BCD0-4E23-A28C-E83DBEF19770}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{4EC987A3-D356-487B-BB28-995E11EB061B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Client.SystemModule", "SmartParking.Client.SystemModule\SmartParking.Client.SystemModule.csproj", "{71B14A54-B4E2-429C-8DB6-C043731D595C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CF29FB5-2AAA-49C6-AE3F-1627B0A8D7E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CF29FB5-2AAA-49C6-AE3F-1627B0A8D7E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CF29FB5-2AAA-49C6-AE3F-1627B0A8D7E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CF29FB5-2AAA-49C6-AE3F-1627B0A8D7E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D927340-3F6D-482A-9A2E-2120A4B36B7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D927340-3F6D-482A-9A2E-2120A4B36B7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D927340-3F6D-482A-9A2E-2120A4B36B7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D927340-3F6D-482A-9A2E-2120A4B36B7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6930E115-4856-458A-9116-09D384CF80BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6930E115-4856-458A-9116-09D384CF80BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6930E115-4856-458A-9116-09D384CF80BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6930E115-4856-458A-9116-09D384CF80BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46E92788-2E4D-4316-A30B-8E6A4BE0178F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46E92788-2E4D-4316-A30B-8E6A4BE0178F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46E92788-2E4D-4316-A30B-8E6A4BE0178F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46E92788-2E4D-4316-A30B-8E6A4BE0178F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C75B27C-67A8-4D55-8A48-D201EDB94435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C75B27C-67A8-4D55-8A48-D201EDB94435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C75B27C-67A8-4D55-8A48-D201EDB94435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C75B27C-67A8-4D55-8A48-D201EDB94435}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF0FF466-4B71-4014-B405-D62A5B76E3CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF0FF466-4B71-4014-B405-D62A5B76E3CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF0FF466-4B71-4014-B405-D62A5B76E3CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF0FF466-4B71-4014-B405-D62A5B76E3CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E078295-19EF-49F4-85F8-83F401B67949}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E078295-19EF-49F4-85F8-83F401B67949}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E078295-19EF-49F4-85F8-83F401B67949}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E078295-19EF-49F4-85F8-83F401B67949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{377B7280-BCD0-4E23-A28C-E83DBEF19770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{377B7280-BCD0-4E23-A28C-E83DBEF19770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{377B7280-BCD0-4E23-A28C-E83DBEF19770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{377B7280-BCD0-4E23-A28C-E83DBEF19770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71B14A54-B4E2-429C-8DB6-C043731D595C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71B14A54-B4E2-429C-8DB6-C043731D595C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71B14A54-B4E2-429C-8DB6-C043731D595C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71B14A54-B4E2-429C-8DB6-C043731D595C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3CF29FB5-2AAA-49C6-AE3F-1627B0A8D7E3} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{3D927340-3F6D-482A-9A2E-2120A4B36B7E} = {16B074DC-FDAA-48B0-B67C-C5FC30FFE9FF}
+		{6930E115-4856-458A-9116-09D384CF80BB} = {29C0C77D-E866-4DF9-BB50-32818D9F402E}
+		{46E92788-2E4D-4316-A30B-8E6A4BE0178F} = {29C0C77D-E866-4DF9-BB50-32818D9F402E}
+		{5C75B27C-67A8-4D55-8A48-D201EDB94435} = {16B074DC-FDAA-48B0-B67C-C5FC30FFE9FF}
+		{0C91E063-7341-42DB-9E07-40FBA8FEDBFC} = {16B074DC-FDAA-48B0-B67C-C5FC30FFE9FF}
+		{CF0FF466-4B71-4014-B405-D62A5B76E3CA} = {7A8B95D8-D146-4314-9A2B-3B8CC20D57A7}
+		{1E078295-19EF-49F4-85F8-83F401B67949} = {7A8B95D8-D146-4314-9A2B-3B8CC20D57A7}
+		{377B7280-BCD0-4E23-A28C-E83DBEF19770} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{71B14A54-B4E2-429C-8DB6-C043731D595C} = {4EC987A3-D356-487B-BB28-995E11EB061B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC944B9D-F217-418C-974E-0EBFA53F9615}
+	EndGlobalSection
+EndGlobal

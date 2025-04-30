@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SmartParking.Client.Assets\SmartParking.Client.Assets.csproj" />
+      <ProjectReference Include="..\SmartParking.Client.IBLL\SmartParking.Client.IBLL.csproj" />
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="xcopy $(TargetPath) $(SolutionDir)SmartParking.Client.Start\bin\Debug\net5.0-windows\Modules\$(TargetFileName) /i /s /y" />
+    </Target>
+
+</Project>

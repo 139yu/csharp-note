@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\login_back.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\login_back.jpg" />
+    <None Remove="Images\tom.jpg" />
+    <Resource Include="Images\tom.jpg" />
+    <None Remove="Fonts\iconfont.ttf" />
+    <Resource Include="Fonts\iconfont.ttf" />
+  </ItemGroup>
+
+</Project>
