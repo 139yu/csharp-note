@@ -18,7 +18,8 @@
                 <ResourceDictionary>
                     <ControlTemplate TargetType="ToggleButton" x:Key="ArrowButtonTemplate">
                         <Grid Background="Transparent" x:Name="arrow" RenderTransformOrigin="0.5,0.5">
-                            <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}"  FontFamily="{StaticResource Iconfont}" Text="&#xe6e5;"/>
+                            <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                        FontFamily="{StaticResource Iconfont}" Text="&#xe6e5;"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
@@ -84,6 +85,7 @@
                                 </Border>
                                 <ToggleButton Template="{StaticResource ArrowButtonTemplate}"
                                               ClickMode="Press"
+
                                               x:Name="expander"
                                               IsChecked="{Binding IsExpanded,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                               Grid.Column="1" Grid.Row="0"/>
@@ -104,6 +106,9 @@
                                     <Setter TargetName="bd" Property="Background" Value="#F7F9FA"/>
                                     <Setter Property="Foreground" Value="#0b3d90"/>
                                     <Setter Property="Foreground" Value="#0b3d90" TargetName="expander"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter Property="Foreground" Value="#fff" TargetName="expander"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

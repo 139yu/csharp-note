@@ -3,24 +3,68 @@
   "WorkspaceRootPath": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\views\\menutreeview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\views\\menutreeview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\viewmodels\\addmenudialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\viewmodels\\addmenudialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\viewmodels\\menutreeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\viewmodels\\menutreeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\views\\menumanagerview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\views\\menumanagerview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\viewmodels\\menumanagerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\viewmodels\\menumanagerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\viewmodels\\addfiledialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\viewmodels\\addfiledialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\views\\addfiledialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\views\\addfiledialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\viewmodels\\adduserdialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\viewmodels\\adduserdialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\views\\addmenudialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\views\\addmenudialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\models\\menuitemmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\models\\menuitemmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.Start\\obj\\Debug\\net5.0-windows\\App.g.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SmartParking.Client.Start\\obj\\Debug\\net5.0-windows\\App.g.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}|SmartParking.Client.Commons\\SmartParking.Client.Commons.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.commons\\iservices\\ihttpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}|SmartParking.Client.Commons\\SmartParking.Client.Commons.csproj|solutionrelative:smartparking.client.commons\\iservices\\ihttpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}|SmartParking.Client.Commons\\SmartParking.Client.Commons.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.commons\\entity\\response\\menuentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}|SmartParking.Client.Commons\\SmartParking.Client.Commons.csproj|solutionrelative:smartparking.client.commons\\entity\\response\\menuentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6930E115-4856-458A-9116-09D384CF80BB}|SmartParking.Client.DAL\\SmartParking.Client.DAL.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.dal\\menudal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6930E115-4856-458A-9116-09D384CF80BB}|SmartParking.Client.DAL\\SmartParking.Client.DAL.csproj|solutionrelative:smartparking.client.dal\\menudal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{46E92788-2E4D-4316-A30B-8E6A4BE0178F}|SamrtParking.Client.IDAL\\SamrtParking.Client.IDAL.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\samrtparking.client.idal\\imenudal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{46E92788-2E4D-4316-A30B-8E6A4BE0178F}|SamrtParking.Client.IDAL\\SamrtParking.Client.IDAL.csproj|solutionrelative:samrtparking.client.idal\\imenudal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\viewmodels\\menutreeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\viewmodels\\menutreeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D927340-3F6D-482A-9A2E-2120A4B36B7E}|SmartParking.Client.Assets\\SmartParking.Client.Assets.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.assets\\fonts\\iconfont.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D927340-3F6D-482A-9A2E-2120A4B36B7E}|SmartParking.Client.Assets\\SmartParking.Client.Assets.csproj|solutionrelative:smartparking.client.assets\\fonts\\iconfont.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\sysmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\sysmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.systemmodule\\viewmodels\\usermanagerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71B14A54-B4E2-429C-8DB6-C043731D595C}|SmartParking.Client.SystemModule\\SmartParking.Client.SystemModule.csproj|solutionrelative:smartparking.client.systemmodule\\viewmodels\\usermanagerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}|SmartParking.Client.Commons\\SmartParking.Client.Commons.csproj|g:\\code\\githubcode\\csharp-note\\smartparking\\client\\smartparking.client.commons\\services\\httpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}|SmartParking.Client.Commons\\SmartParking.Client.Commons.csproj|solutionrelative:smartparking.client.commons\\services\\httpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +74,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,65 +86,204 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "App.g.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.Start\\obj\\Debug\\net5.0-windows\\App.g.cs",
-              "RelativeDocumentMoniker": "SmartParking.Client.Start\\obj\\Debug\\net5.0-windows\\App.g.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.Start\\obj\\Debug\\net5.0-windows\\App.g.cs",
-              "RelativeToolTip": "SmartParking.Client.Start\\obj\\Debug\\net5.0-windows\\App.g.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAA1wDoAAAAMAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "AddUserDialogViewModel.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\AddUserDialogViewModel.cs",
+              "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\ViewModels\\AddUserDialogViewModel.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\AddUserDialogViewModel.cs",
+              "RelativeToolTip": "SmartParking.Client.SystemModule\\ViewModels\\AddUserDialogViewModel.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T08:04:06.832Z",
+              "WhenOpened": "2025-05-14T14:18:27.014Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MenuTreeView.xaml",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\Views\\MenuTreeView.xaml",
-              "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\Views\\MenuTreeView.xaml",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\Views\\MenuTreeView.xaml",
-              "RelativeToolTip": "SmartParking.Client.SystemModule\\Views\\MenuTreeView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-28T14:09:10.422Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "MenuItemModel.cs",
               "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\Models\\MenuItemModel.cs",
               "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\Models\\MenuItemModel.cs",
               "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\Models\\MenuItemModel.cs",
               "RelativeToolTip": "SmartParking.Client.SystemModule\\Models\\MenuItemModel.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAywCUAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-28T14:02:28.373Z",
+              "WhenOpened": "2025-05-14T14:08:58.694Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "MenuEntity.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.Commons\\Entity\\Response\\MenuEntity.cs",
-              "RelativeDocumentMoniker": "SmartParking.Client.Commons\\Entity\\Response\\MenuEntity.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.Commons\\Entity\\Response\\MenuEntity.cs",
-              "RelativeToolTip": "SmartParking.Client.Commons\\Entity\\Response\\MenuEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAIAAAAAAAAAA==",
+              "Title": "AddFileDialog.xaml",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\Views\\AddFileDialog.xaml",
+              "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\Views\\AddFileDialog.xaml",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\Views\\AddFileDialog.xaml",
+              "RelativeToolTip": "SmartParking.Client.SystemModule\\Views\\AddFileDialog.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-14T14:03:35.798Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AddMenuDialog.xaml",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\Views\\AddMenuDialog.xaml",
+              "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\Views\\AddMenuDialog.xaml",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\Views\\AddMenuDialog.xaml",
+              "RelativeToolTip": "SmartParking.Client.SystemModule\\Views\\AddMenuDialog.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-12T13:33:42.416Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MenuManagerViewModel.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\MenuManagerViewModel.cs",
+              "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\ViewModels\\MenuManagerViewModel.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\MenuManagerViewModel.cs",
+              "RelativeToolTip": "SmartParking.Client.SystemModule\\ViewModels\\MenuManagerViewModel.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAxwFsAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-28T14:01:02.494Z"
+              "WhenOpened": "2025-05-10T06:36:19.725Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "MenuManagerView.xaml",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\Views\\MenuManagerView.xaml",
+              "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\Views\\MenuManagerView.xaml",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\Views\\MenuManagerView.xaml",
+              "RelativeToolTip": "SmartParking.Client.SystemModule\\Views\\MenuManagerView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-10T06:32:50.915Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AddMenuDialogViewModel.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\AddMenuDialogViewModel.cs",
+              "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\ViewModels\\AddMenuDialogViewModel.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\AddMenuDialogViewModel.cs",
+              "RelativeToolTip": "SmartParking.Client.SystemModule\\ViewModels\\AddMenuDialogViewModel.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAIAzwEgAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T13:33:38.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AddFileDialogViewModel.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\AddFileDialogViewModel.cs",
+              "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\ViewModels\\AddFileDialogViewModel.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\AddFileDialogViewModel.cs",
+              "RelativeToolTip": "SmartParking.Client.SystemModule\\ViewModels\\AddFileDialogViewModel.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAiwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:18:37.943Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IHttpService.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.Commons\\IServices\\IHttpService.cs",
+              "RelativeDocumentMoniker": "SmartParking.Client.Commons\\IServices\\IHttpService.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.Commons\\IServices\\IHttpService.cs",
+              "RelativeToolTip": "SmartParking.Client.Commons\\IServices\\IHttpService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAcwBAAAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:12:35.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "MenuTreeViewModel.cs",
               "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\MenuTreeViewModel.cs",
               "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\ViewModels\\MenuTreeViewModel.cs",
               "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\MenuTreeViewModel.cs",
               "RelativeToolTip": "SmartParking.Client.SystemModule\\ViewModels\\MenuTreeViewModel.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAAwCoAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-28T14:00:37.84Z",
+              "WhenOpened": "2025-05-14T14:04:45.211Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IMenuDal.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SamrtParking.Client.IDAL\\IMenuDal.cs",
+              "RelativeDocumentMoniker": "SamrtParking.Client.IDAL\\IMenuDal.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SamrtParking.Client.IDAL\\IMenuDal.cs",
+              "RelativeToolTip": "SamrtParking.Client.IDAL\\IMenuDal.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:11:32.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MenuDal.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.DAL\\MenuDal.cs",
+              "RelativeDocumentMoniker": "SmartParking.Client.DAL\\MenuDal.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.DAL\\MenuDal.cs",
+              "RelativeToolTip": "SmartParking.Client.DAL\\MenuDal.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAcwBYAAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:11:38.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "UserManagerViewModel.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\UserManagerViewModel.cs",
+              "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\ViewModels\\UserManagerViewModel.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\ViewModels\\UserManagerViewModel.cs",
+              "RelativeToolTip": "SmartParking.Client.SystemModule\\ViewModels\\UserManagerViewModel.cs",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAAwE4AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-10T06:36:25.642Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "HttpService.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.Commons\\Services\\HttpService.cs",
+              "RelativeDocumentMoniker": "SmartParking.Client.Commons\\Services\\HttpService.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.Commons\\Services\\HttpService.cs",
+              "RelativeToolTip": "SmartParking.Client.Commons\\Services\\HttpService.cs",
+              "ViewState": "AgIAAK8AAAAAAAAAAAA1wNAAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-10T06:37:52.317Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "SysModule.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\SysModule.cs",
+              "RelativeDocumentMoniker": "SmartParking.Client.SystemModule\\SysModule.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.SystemModule\\SysModule.cs",
+              "RelativeToolTip": "SmartParking.Client.SystemModule\\SysModule.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T13:51:23.966Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Iconfont.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.Assets\\Fonts\\Iconfont.cs",
+              "RelativeDocumentMoniker": "SmartParking.Client.Assets\\Fonts\\Iconfont.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SmartParking\\Client\\SmartParking.Client.Assets\\Fonts\\Iconfont.cs",
+              "RelativeToolTip": "SmartParking.Client.Assets\\Fonts\\Iconfont.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T03:03:30.314Z",
               "EditorCaption": ""
             }
           ]

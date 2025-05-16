@@ -36,6 +36,11 @@ namespace SmartParking.Server.Service.Impl
             return rootMenus;
         }
 
+        public void addMenu(MenuModel menuModel)
+        {
+            this.Insert(menuModel);
+        }
+
         private void GetMenuTree(MenuModel parent, Dictionary<int,List<MenuModel>> rootChildren)
         {
             if (rootChildren.TryGetValue(parent.MenuId,out var children))
@@ -48,7 +53,7 @@ namespace SmartParking.Server.Service.Impl
             }
             else
             {
-                parent.Children = new List<MenuModel>();
+                parent.Children = null;
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -9,11 +10,13 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Timeout;
 using SmartParking.Client.Commons.Config;
+using SmartParking.Client.Commons.Entity.Request;
 using SmartParking.Client.Commons.Helper;
 using SmartParking.Client.Commons.IServices;
 
@@ -156,62 +159,224 @@ namespace SmartParking.Client.Commons.Services
                 JsonException => "JSON解析错误",
                 _ => "未知错误"
             };
+            _logger.LogError($"{errorType}: {ex.Message}");
+        }
+
+        private string BuilderUri(string uri, Dictionary<string, string> querys)
+        {
+            if (querys?.Count > 0)
+            {
+                var fullUri = _httpClient.BaseAddress != null
+                    ? new Uri(_httpClient.BaseAddress, uri)
+                    : new Uri(uri);
+
+                var uriBuilder = new UriBuilder(fullUri);
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                foreach (var kvp in querys)
+                {
+                    if (!string.IsNullOrEmpty(kvp.Value))
+                    {
+                        query[kvp.Key] = kvp.Value;
+                    }
+                }
+
+                uriBuilder.Query = query.ToString();
+                uri = uriBuilder.ToString();
+            }
+
+            return uri;
+        }
+
+        private string BuilderUri<T>(string uri, T request)
+        {
+            if (request != null)
+            {
+                var fullUri = _httpClient.BaseAddress != null
+                    ? new Uri(_httpClient.BaseAddress, uri)
+                    : new Uri(uri);
+                var uriBuilder = new UriBuilder(fullUri);
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                var type = request.GetType();
+                foreach (var propertyInfo in type.GetProperties())
+                {
+                    var value = propertyInfo.GetValue(request);
+                    if (value != null)
+                    {
+                        var propertyName = propertyInfo.Name;
+                        query[propertyName] = value.ToString();
+                    }
+                }
+                uriBuilder.Query = query.ToString();
+                uri = uriBuilder.ToString();
+            }
+
+            return uri;
         }
 
         #endregion
 
 
-        public async Task<TResponse> SendAsync<TResponse>(HttpRequestMessage request, CancellationToken ct = default)
+        public async Task<TResponse> SendAsync<TResponse>(Func<HttpRequestMessage> requestFactory,
+            CancellationToken ct = default)
         {
-            using (request)
+            try
             {
-                try
+                var response = await _retryPolicy.ExecuteAsync(async () =>
                 {
-                    LogRequest(request);
-                    var response = await _retryPolicy.ExecuteAsync(async () =>
+                    var request = requestFactory();
+                    try
                     {
-                        return await _httpClient.SendAsync(request, ct);
-                    });
-                    response.EnsureSuccessStatusCode();
-                    return await ProcessResponse<TResponse>(response);
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError(e, e.Message);
-                    HandleException(e, request);
-                    return default;
-                }
+                        LogRequest(request);
+                        var response = await _httpClient.SendAsync(request, ct);
+                        response.EnsureSuccessStatusCode();
+                        return response;
+                    }
+                    finally
+                    {
+                        if (request.Options.TryGetValue<IDisposable>(
+                                new HttpRequestOptionsKey<IDisposable>("AttachedResources"), out var resources))
+                        {
+                            resources.Dispose();
+                        }
+
+                        request.Dispose();
+                    }
+                });
+                return await ProcessResponse<TResponse>(response);
             }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                HandleException(e, null);
+            }
+
+            return default;
         }
 
         #region 通用工具方法
 
-        public Task<TResponse> GetAsync<TResponse>(string uri, CancellationToken ct = default)
+        public Task<TResponse> GetAsync<TResponse>(string uri, Dictionary<string, string> querys = null,
+            CancellationToken ct = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            return SendAsync<TResponse>(request, ct);
+            uri = BuilderUri(uri, querys);
+            return SendAsync<TResponse>(() => new HttpRequestMessage(HttpMethod.Get, uri), ct);
+        }
+
+        public Task<TResponse> GetAsync<TResponse, TRequest>(string uri, TRequest request,
+            CancellationToken ct = default)
+        {
+            uri = BuilderUri(uri, request);
+
+            return SendAsync<TResponse>(() => new HttpRequestMessage(HttpMethod.Get, uri), ct);
         }
 
         public Task<TResponse> PostAsync<TResponse, TRequest>(string uri, TRequest requestData,
             CancellationToken ct = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, uri)
+            return SendAsync<TResponse>(() => new HttpRequestMessage(HttpMethod.Post, uri)
             {
                 Content = SerializeJsonContent(requestData)
-            };
-            return SendAsync<TResponse>(request, ct);
+            }, ct);
+        }
+
+        public Task<TResponse> PostAsync<TResponse>(string uri, CancellationToken ct = default)
+        {
+            return SendAsync<TResponse>(() => new HttpRequestMessage(HttpMethod.Post, uri), ct);
         }
 
         public Task<TResponse> PostFormAsync<TResponse>(string uri, Dictionary<string, string> formData,
             CancellationToken ct = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, uri)
+            return SendAsync<TResponse>(() => new HttpRequestMessage(HttpMethod.Post, uri)
             {
                 Content = new FormUrlEncodedContent(formData)
+            }, ct);
+        }
+
+        public Task<TResponse> PostFileAsync<TResponse>(
+            string uri,
+            string filepath,
+            Dictionary<string, string> metadata = default,
+            Action<double> progressCallback = default,
+            CancellationToken ct = default)
+        {
+            if (!File.Exists(filepath))
+            {
+                _logger.LogError($"文件不存在：{filepath}");
+                throw new Exception($"文件不存在：{filepath}");
+            }
+
+            Func<HttpRequestMessage> request = () =>
+            {
+                var filestream = File.OpenRead(filepath);
+
+                var filename = Path.GetFileName(filepath);
+                var totalLength = filestream.Length;
+                var content = new MultipartFormDataContent();
+                var fileContent = new ProgressStreamContent(filestream, bytesRead =>
+                {
+                    var progress = (double)bytesRead / totalLength * 100;
+                    progressCallback?.Invoke(progress);
+                });
+                fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+                content.Add(fileContent, "file", filename);
+                if (metadata != null)
+                {
+                    foreach (var (key, value) in metadata)
+                    {
+                        content.Add(new StringContent(value), key);
+                    }
+                }
+
+                return new HttpRequestMessage(HttpMethod.Post, uri)
+                {
+                    Content = content
+                };
             };
+
+
             return SendAsync<TResponse>(request, ct);
         }
 
         #endregion
+    }
+
+    public class ProgressStreamContent : StreamContent
+    {
+        private readonly Stream _stream;
+        private readonly Action<long> _progressAction;
+
+        public ProgressStreamContent(Stream stream, Action<long> progressAction) : base(stream)
+        {
+            _stream = stream;
+            _progressAction = progressAction;
+        }
+
+        public ProgressStreamContent(Stream content) : base(content)
+        {
+        }
+
+        public ProgressStreamContent(Stream content, int bufferSize) : base(content, bufferSize)
+        {
+        }
+
+        protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
+        {
+            var buffer = new byte[1024];
+            var totalRead = 0;
+            int bytesRead;
+            while ((bytesRead = await _stream.ReadAsync(buffer)) > 0)
+            {
+                await stream.WriteAsync(buffer.AsMemory(0, bytesRead));
+                totalRead += bytesRead;
+                _progressAction.Invoke(totalRead);
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _stream?.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

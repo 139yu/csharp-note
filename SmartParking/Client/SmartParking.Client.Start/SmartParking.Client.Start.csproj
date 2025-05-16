@@ -33,7 +33,7 @@
     <ItemGroup>
       <None Remove="Images\login_back.jpg" />
       <ProjectReference Include="..\SamrtParking.Client.IDAL\SamrtParking.Client.IDAL.csproj" />
-      <ProjectReference Include="..\SmarkParking.Client.Controls\SmarkParking.Client.Controls.csproj" />
+      <ProjectReference Include="..\SmartParking.Client.Controls\SmartParking.Client.Controls.csproj" />
       <ProjectReference Include="..\SmartParking.Client.Assets\SmartParking.Client.Assets.csproj" />
       <ProjectReference Include="..\SmartParking.Client.BLL\SmartParking.Client.BLL.csproj" />
       <ProjectReference Include="..\SmartParking.Client.Commons\SmartParking.Client.Commons.csproj" />

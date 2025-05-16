@@ -14,9 +14,14 @@ namespace SmartParking.Server.Service.Impl
         {
         }
 
-        public List<UpgradeFileModel> GetAllUpgradeFiles()
+        public List<UpgradeFileModel> GetUpgradeFiles(string keyword)
         {
             var queryable = this.Query<UpgradeFileModel>(f => f.State == 0);
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                queryable = from f in queryable where f.FileName.Contains(keyword) select f;
+
+            }
             if (queryable != null)
             {
                 return queryable.ToList();
@@ -33,6 +38,16 @@ namespace SmartParking.Server.Service.Impl
                 return query.FirstOrDefault();
             }
             return null;
+        }
+
+        public void DeleteFile(int fileId)
+        {
+            this.Delete<UpgradeFileModel>(fileId);
+        }
+
+        public void saveFile(UpgradeFileModel fileModel)
+        {
+            this.Insert(fileModel);
         }
     }
 }

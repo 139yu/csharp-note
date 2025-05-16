@@ -8,5 +8,6 @@ namespace SamrtParking.Server.IService.Service
         List<MenuModel> GetAllMenu();
 
         List<MenuModel> GetMenuTree();
+        void addMenu(MenuModel menuModel);
     }
 }

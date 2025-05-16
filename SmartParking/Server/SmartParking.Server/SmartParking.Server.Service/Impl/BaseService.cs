@@ -26,6 +26,10 @@ namespace SmartParking.Server.Service.Impl
 
         public IQueryable<T> Query<T>(Expression<Func<T, bool>> funcWhere) where T : class
         {
+            if (funcWhere == null)
+            {
+                return dbContext.Set<T>().AsQueryable();
+            }
             return dbContext.Set<T>().Where(funcWhere);
         }
 

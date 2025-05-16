@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using SamrtParking.Server.IService.Service;
 using SmartParking.Server.Common.Configs;
+using SmartParking.Server.Common.Entities.Request;
 using SmartParking.Server.Common.Entities.Response;
 using SmartParking.Server.Common.Heplers;
 using SmartParking.Server.Models;
@@ -57,6 +59,26 @@ namespace SmartParking.Server.Service.Impl
                 IsDeleted = 0
             };
             Insert(userModel);
+        }
+
+        public List<UserEntity> GetUserList(QueryUser queryUser, ref int totalCount)
+        {
+            var queryable = this.Query<UserModel>(u => u.IsDeleted == 0);
+            if (!string.IsNullOrEmpty(queryUser.Username))
+            {
+                queryable = queryable.Where(u => u.Username.Contains(queryUser.Username));
+            }
+            
+            int pageIndex = queryUser.PageIndex;
+            int pageSize = queryUser.PageSize;
+            totalCount = queryable.Count();
+            return queryable.Skip((pageIndex - 1) * pageSize).Take(pageSize).Select(u => new UserEntity()
+            {
+                UserId = u.UserId,
+                Username = u.Username,
+                RealName = u.RealName,
+                Birthday = u.Birthday
+            }).ToList();
         }
 
 

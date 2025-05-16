@@ -17,5 +17,10 @@ namespace SmartParking.Client.DAL
         {
             return _httpService.GetAsync<ResponseResult<List<MenuEntity>>>("/api/menu/getMenuTree");
         }
+
+        public Task<ResponseResult> addMenu(MenuEntity menuEntity)
+        {
+            return _httpService.PostAsync<ResponseResult, MenuEntity>("/api/menu/addMenu", menuEntity);
+        }
     }
 }

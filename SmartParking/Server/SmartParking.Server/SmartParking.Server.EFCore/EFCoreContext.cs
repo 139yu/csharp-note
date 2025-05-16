@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq.Expressions;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
@@ -25,16 +26,18 @@ namespace SmartParking.Server.EFCore
             ValueConverter<string, long> timeValueConverter = new ValueConverter<string, long>(
                 (str) => (DateTime.ParseExact(str, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture).Ticks -
                           621355968000000000) / 10000000,
-                (time) => (new DateTime(time * 10000000 + 621355968000000000)).ToString("yyyy-MM-dd HH:mm:ss")
+                (time) => new DateTime(time * 10000000 + 621355968000000000).ToString("yyyy-MM-dd HH:mm:ss")
             );
             modelBuilder.Entity<UpgradeFileModel>().Property(m => m.UploadTime)
                 .HasConversion(timeValueConverter)
                 ;
-            ValueConverter<string, string> CodeUnicodeConverter = new ValueConverter<string, string>(str => UnicodeToCode(str),str => CodeToUniCode(str) );
+            ValueConverter<string, string> CodeUnicodeConverter =
+                new ValueConverter<string, string>(str => UnicodeToCode(str), str => CodeToUniCode(str));
             modelBuilder.Entity<MenuModel>()
                 .Property(m => m.MenuIcon).HasConversion(CodeUnicodeConverter)
                 ;
         }
+
         /// <summary>
         /// 16进制转Unicorn
         /// </summary>
@@ -46,11 +49,12 @@ namespace SmartParking.Server.EFCore
             {
                 return string.Empty;
             }
-        
+
             int code = Convert.ToInt32(str, 16);
 
             return char.ConvertFromUtf32(code);
         }
+
         /// <summary>
         /// Unicode转16进制
         /// </summary>
@@ -63,9 +67,16 @@ namespace SmartParking.Server.EFCore
                 return string.Empty;
             }
 
-            var code = char.ConvertToUtf32(str,0);
-            return char.ConvertFromUtf32(code);
+            StringBuilder sb = new StringBuilder();
+            foreach (var c in str)
+            {
+                int code = Convert.ToInt32(c);
+                sb.Append(code.ToString("x"));
+            }
+
+            return sb.ToString();
         }
+
         public DbSet<UserModel> Users { get; set; }
 
         public DbSet<UpgradeFileModel> UpgradeFiles { get; set; }

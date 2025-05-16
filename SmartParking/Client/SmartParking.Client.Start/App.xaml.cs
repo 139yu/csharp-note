@@ -35,7 +35,7 @@ namespace SmartParking.Client.Start
         {
             containerRegistry.RegisterSingleton(typeof(ILogger<>), typeof(NLogLoggerAdapter<>));
 
-            containerRegistry.RegisterSingleton<ITokenProvider, TokenProvider>();
+            containerRegistry.RegisterSingleton<IUserTokenProvider, UserUserTokenProvider>();
             containerRegistry.RegisterSingleton<IHttpService>(c =>
             {
                 var tokenAuthenticationHandler = Container.Resolve<TokenAuthenticationHandler>();
@@ -49,20 +49,22 @@ namespace SmartParking.Client.Start
 
             #region BLL
 
-            containerRegistry.RegisterSingleton<ILoginBll, LoginBll>();
+            containerRegistry.RegisterSingleton<IUserBll, UserBll>();
             containerRegistry.RegisterSingleton<IFileBll, FileBll>();
             containerRegistry.RegisterSingleton<IMenuBll, MenuBll>();
             #endregion
 
             #region DAL
 
-            containerRegistry.RegisterSingleton<ILoginDal, LoginDal>();
+            containerRegistry.RegisterSingleton<IUserDal, UserDal>();
             containerRegistry.RegisterSingleton<IFileDal, FileDal>();
             containerRegistry.RegisterSingleton<IMenuDal, MenuDal>();
             containerRegistry.RegisterSingleton<ILocalDataAccess, LocalDataAccess>();
 
             #endregion
-
+            
+            containerRegistry.RegisterDialogWindow<DialogWindow>();
+            
             containerRegistry.Register(typeof(Dispatcher), c => Application.Current.Dispatcher);
         }
 

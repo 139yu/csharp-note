@@ -7,5 +7,6 @@ namespace SamrtParking.Client.IDAL
     public interface IMenuDal
     {
         Task<ResponseResult<List<MenuEntity>>> GetMenuTree();
+        Task<ResponseResult> addMenu(MenuEntity menuEntity);
     }
 }

@@ -26,5 +26,12 @@ namespace SmartParking.Server.Start.Controllers
 
             return Ok(ResponseEntity<List<MenuModel>>.Success(menuModels));
         }
+        [HttpPost]
+        [Route("addMenu")]
+        public IActionResult AddMenu([FromBody] MenuModel menuModel)
+        {
+            _menuService.addMenu(menuModel);
+            return Ok(ResponseEntity.Success());
+        }
     }
 }

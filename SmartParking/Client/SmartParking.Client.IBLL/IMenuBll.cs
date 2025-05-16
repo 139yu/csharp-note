@@ -7,5 +7,6 @@ namespace SmartParking.Client.IBLL
     public interface IMenuBll
     {
         Task<ResponseResult<List<MenuEntity>>> GetMenuTree();
+        Task<ResponseResult> addMenu(MenuEntity menuEntity);
     }
 }

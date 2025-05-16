@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Client.DAL", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamrtParking.Client.IDAL", "SamrtParking.Client.IDAL\SamrtParking.Client.IDAL.csproj", "{46E92788-2E4D-4316-A30B-8E6A4BE0178F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmarkParking.Client.Controls", "SmarkParking.Client.Controls\SmarkParking.Client.Controls.csproj", "{5C75B27C-67A8-4D55-8A48-D201EDB94435}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Client.Controls", "SmartParking.Client.Controls\SmartParking.Client.Controls.csproj", "{5C75B27C-67A8-4D55-8A48-D201EDB94435}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Client.Commons", "SmartParking.Client.Commons\SmartParking.Client.Commons.csproj", "{0C91E063-7341-42DB-9E07-40FBA8FEDBFC}"
 EndProject

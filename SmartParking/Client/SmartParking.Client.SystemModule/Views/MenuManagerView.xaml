@@ -1,0 +1,178 @@
+﻿<UserControl x:Class="SmartParking.Client.SystemModule.Views.MenuManagerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SmartParking.Client.SystemModule.Views"
+             xmlns:controls="clr-namespace:SmartParking.Client.Controls;assembly=SmartParking.Client.Controls"
+             mc:Ignorable="d"
+             FontSize="14"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/SmartParking.Client.Assets;component/Styles/BaseResource.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/SmartParking.Client.Assets;component/Styles/ButtonStyle.xaml">
+                </ResourceDictionary>
+                <ResourceDictionary>
+                     <ControlTemplate x:Key="ExpanderButtonTemplate" TargetType="ToggleButton">
+                         <Border Background="#FF0ABEFF" CornerRadius="3" Width="15" Height="15">
+                             <!--使用水平垂直居中，让path出于正中心-->
+                             <Path Data="M0 4 8 4M4 0 4 8" Stroke="White" StrokeThickness="1" Name="path"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                         </Border>
+                         <ControlTemplate.Triggers>
+                             <Trigger Property="IsChecked" Value="True">
+                                 <Setter Property="Data" Value="M0 0 8 0" TargetName="path"/>
+                             </Trigger>
+                         </ControlTemplate.Triggers>
+                     </ControlTemplate>
+                    <ControlTemplate x:Key="ItemRowTemplate" TargetType="RadioButton">
+                        <Grid Background="Transparent" Name="wrapper">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition SharedSizeGroup="column1"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+                            <ToggleButton Grid.Column="0" 
+                                          IsChecked="{Binding IsExpanded}"
+                                          Width="15" Height="15" Visibility="Visible"
+                                          Template="{StaticResource ExpanderButtonTemplate}"
+                                          Name="expanderBox"/>
+                            <TextBlock VerticalAlignment="Center" Grid.Column="1" Text="{Binding MenuTitle}"/>
+                            <TextBlock VerticalAlignment="Center" Grid.Column="2" Text="{Binding TargetView}"/>
+                            <TextBlock VerticalAlignment="Center" Grid.Column="3" Text="{Binding MenuIcon}" FontFamily="{StaticResource Iconfont}"/>
+                            <StackPanel Grid.Column="4" Orientation="Horizontal" Name="operate_panel">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Hyperlink Command="{Binding EditCommand}">编辑</Hyperlink>
+                                </TextBlock>
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0">
+                                    <Hyperlink Command="{Binding DeleteCommand}">删除</Hyperlink>
+                                </TextBlock>
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Hyperlink Command="{Binding AddCommand}">添加</Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Children}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="expanderBox"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding MenuId}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="operate_panel"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsChecked}" Value="True">
+                                <Setter Property="Background" TargetName="wrapper" Value="#08000000"></Setter>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="wrapper" Value="#08000000"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                    <DataTemplate x:Key="MenuTreeTemplate">
+                        <Grid Name="root" Background="Transparent">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <!-- <Path Grid.Row="0" Data="M0 0 0 35 M0 17.5 15 17.5" Stroke="#777" StrokeThickness="1" -->
+                            <!--       Name="path" SnapsToDevicePixels="True" /> -->
+                            <Border VerticalAlignment="Center" 
+                                    HorizontalAlignment="Left"
+                                    Name="hor_line"
+                                    Grid.Row="0" Height="1" Width="20" 
+                                    BorderThickness="0,0,0,1" BorderBrush="#666"/>
+                            <Grid 
+                                  Grid.RowSpan="2" >
+                                <Border 
+                                    Width="1"
+                                    Name="vt_line"
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="#666" 
+                                    BorderThickness="1,0,0,0"/>
+                            </Grid>
+                            <!--每个节点的位置-->
+                            <RadioButton Grid.Row="0"
+                                         IsChecked="{Binding IsChecked}"
+                                         Height="35"
+                                         GroupName="item"
+                                         Template="{StaticResource ItemRowTemplate}"
+                                         Name="item" />
+                            <!--子节点位置-->
+                            <ItemsControl Grid.Row="1"
+                                          Name="children"
+                                          Visibility="Collapsed"
+                                          ItemTemplate="{DynamicResource MenuTreeTemplate}"
+                                          Margin="30,0,0,0"
+                                          ItemsSource="{Binding Children}" />
+                        </Grid>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsLastChild}" Value="True">
+                                <!-- <Setter TargetName="path" Property="Data" Value="M0,0 0,17.5M0,17.5 15,17.5"></Setter> -->
+                                <Setter TargetName="vt_line" Property="Height" Value="17.5"/>
+                                <Setter TargetName="vt_line" Property="VerticalAlignment" Value="Top"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding MenuId}" Value="0">
+                                <!-- <Setter TargetName="path" Property="Visibility" Value="Collapsed"></Setter> -->
+                                <Setter TargetName="vt_line" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="hor_line" Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                                <Setter TargetName="children" Property="Visibility" Value="Visible"></Setter>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Border DockPanel.Dock="Bottom" BorderThickness="0,0,0,1" BorderBrush="#ccc" />
+            <controls:Input DockPanel.Dock="Left"
+                            CornerRadius="4"
+                            
+                            Height="30"
+                            Width="250"
+                            Icon="&#xe8ef;"
+                            IconFontFamily="{StaticResource Iconfont}" />
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+                <Button  Content="刷新" Style="{StaticResource PrimaryButton}"
+                        Margin="0,0,10,0" />
+                <Button  Content="添加" Style="{StaticResource WarringButton}" />
+            </StackPanel>
+        </DockPanel>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height=" 50" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" SharedSizeGroup="column1" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center" Text="菜单名称" Grid.Column="1" />
+                <TextBlock VerticalAlignment="Center" Text="目标视图" Grid.Column="2" />
+                <TextBlock VerticalAlignment="Center" Text="图标" Grid.Column="3" />
+                <TextBlock VerticalAlignment="Center" Text="操作" Grid.Column="4" />
+            </Grid>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding MenuTree}" ItemTemplate="{StaticResource MenuTreeTemplate}" />
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -8,6 +8,7 @@ namespace SmartParking.Client.Commons.Entity.Response
         public string FileName { get; set; }
         public string FileMd5 { get; set; }
         public long FileLen { get; set; }
+        public string OutputDir { get; set; }
         public string UploadTime { get; set; }
         public int State { get; set; }
     }

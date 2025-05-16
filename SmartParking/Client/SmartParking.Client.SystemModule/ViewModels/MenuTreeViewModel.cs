@@ -57,7 +57,8 @@ namespace SmartParking.Client.SystemModule.ViewModels
             Task.Run(async () =>
             {
                 var res = await _menuBll.GetMenuTree();
-                if (res.Code == 200)
+               
+                if (res != null && res.Code == 200)
                 {
                     MainDispatcher.Invoke(() => { MenuTree = FillMenu(res.Data); });
                 }

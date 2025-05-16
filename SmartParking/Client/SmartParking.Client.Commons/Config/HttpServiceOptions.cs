@@ -8,6 +8,6 @@ namespace SmartParking.Client.Commons.Config
         public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(30);
         public int RetryCount { get; set; } = 3;
         public int CircuitBreakerSeconds { get; set; } = 30;
-        public int CircuitBreakerOpenInterval { get; set; } = 3;
+        public int CircuitBreakerOpenInterval { get; set; } = 15;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,16 @@ namespace SmartParking.Server.Start.Controllers
             }
 
             return Ok(ResponseEntity.Success());
+        }
+
+        [HttpGet]
+        [Route("getUserList")]
+        [Authorize]
+        public IActionResult GetUserList([FromQuery] QueryUser queryUser)
+        {
+            int totalCount = 0;
+            List<UserEntity> userList = _userService.GetUserList(queryUser,ref totalCount);
+            return Ok(ResponseEntity<List<UserEntity>>.Success(userList));
         }
     }
 }

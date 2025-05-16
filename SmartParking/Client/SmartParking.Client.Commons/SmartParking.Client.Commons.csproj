@@ -12,7 +12,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Entity\Request\" />
+      <Reference Include="PresentationCore">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\5.0.17\PresentationCore.dll</HintPath>
+      </Reference>
+      <Reference Include="PresentationFramework">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\5.0.17\PresentationFramework.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

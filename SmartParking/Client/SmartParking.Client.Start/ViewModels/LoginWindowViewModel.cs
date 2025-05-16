@@ -26,13 +26,13 @@ namespace SmartParking.Client.Start.ViewModels
         // 登录前检查版本是否要更新，服务端有文件，记录文件信息（文件名称、大小、md5）
         // 客户端拿到文件信息进行比对
         // 如果需要更新，将服务器文件下载到本地进行覆盖
-        public LoginWindowViewModel(ILoginBll loginBll, ITokenProvider tokenProvider, IFileBll fileBll,
+        public LoginWindowViewModel(IUserBll userBll, IUserTokenProvider userTokenProvider, IFileBll fileBll,
             ILogger<LoginWindowViewModel> logger,IEventAggregator ea)
         {
             _logger = logger;
-            _loginBll = loginBll;
-            _tokenProvider = tokenProvider;
-            Console.WriteLine(_tokenProvider.GetHashCode());
+            _userBll = userBll;
+            _userTokenProvider = userTokenProvider;
+            Console.WriteLine(_userTokenProvider.GetHashCode());
             _ea = ea;
             LoginCommand = new DelegateCommand<object>(ExecuteLogin);
             _fileBll = fileBll;
@@ -79,8 +79,8 @@ namespace SmartParking.Client.Start.ViewModels
 
         #endregion
 
-        private ITokenProvider _tokenProvider;
-        private ILoginBll _loginBll;
+        private IUserTokenProvider _userTokenProvider;
+        private IUserBll _userBll;
 
         private IFileBll _fileBll;
         private IEventAggregator _ea;
@@ -109,7 +109,7 @@ namespace SmartParking.Client.Start.ViewModels
                                 }).ToList();
 
                         var serverRes = await _fileBll.GetServerFiles();
-                        if (serverRes.Code == 200)
+                        if (serverRes != null && serverRes.Code == 200)
                         {
                             var upgradeFiles = new List<UpgradeFileModel>();
                             var serverFiles = serverRes.Data;
@@ -138,6 +138,10 @@ namespace SmartParking.Client.Start.ViewModels
                                 });
                                 _ea.GetEvent<WindowCloseEvent>().Publish();
                             }
+                        }
+                        else
+                        {
+                            throw new Exception("请求失败");
                         }
                     }
                 }
@@ -168,6 +172,7 @@ namespace SmartParking.Client.Start.ViewModels
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 ErrorMessage = "请输入账号或密码！";
+                return;
             }
 
             LoadingTrigger();
@@ -176,22 +181,25 @@ namespace SmartParking.Client.Start.ViewModels
             {
                 try
                 {
-                    var result = await _loginBll.Login(LoginModel);
+                    var result = await _userBll.Login(LoginModel);
                     if (result == null || result.Code != 200)
                     {
                         MainDispatcher.Invoke(() =>
                         {
-                            ErrorMessage = result.Msg ?? "登录失败";
+                            ErrorMessage = result == null ? "登录失败" : result.Msg;
                         });
                         return;
                     }
 
+                    var loginResponse = result.Data;
                     MainDispatcher.Invoke(() =>
                     {
+                        _userTokenProvider.CurrentUser = loginResponse.User;
                         var window = sender as Window;
                         window.DialogResult = true;
                     });
-                    _tokenProvider.BearerToken = result.Data.Token;
+                    
+                    _userTokenProvider.BearerToken = loginResponse.Token;
                 }
                 catch (Exception e)
                 {

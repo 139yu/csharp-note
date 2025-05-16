@@ -17,5 +17,10 @@ namespace SmartParking.Client.BLL
         {
             return _menuDal.GetMenuTree();
         }
+
+        public Task<ResponseResult> addMenu(MenuEntity menuEntity)
+        {
+            return _menuDal.addMenu(menuEntity);
+        }
     }
 }

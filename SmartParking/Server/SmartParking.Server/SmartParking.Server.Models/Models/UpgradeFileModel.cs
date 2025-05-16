@@ -16,9 +16,11 @@ namespace SmartParking.Server.Models
         public string? FileMd5 { get; set; }
         [Column("file_len")]
         public long? FileLen { get; set; }
+        [Column("output_dir")]
+        public string? OutputDir { get; set; }
         [Column("upload_time")]
-        public string UploadTime { get; set; }
-        [Column("state")]
-        public int? State { get; set; }
+        public string? UploadTime { get; set; }
+
+        [Column("state")] public int? State { get; set; } = 0;
     }
 }

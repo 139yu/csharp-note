@@ -9,20 +9,20 @@ namespace SmartParking.Client.Commons.Config
     public class TokenAuthenticationHandler: DelegatingHandler
     {
         private string BearerToken;
-        private readonly ITokenProvider _tokenProvider;
+        private readonly IUserTokenProvider _userTokenProvider;
 
-        public TokenAuthenticationHandler(ITokenProvider tokenProvider)
+        public TokenAuthenticationHandler(IUserTokenProvider userTokenProvider)
         {
-            _tokenProvider = tokenProvider;
+            _userTokenProvider = userTokenProvider;
         }
 
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken ct)
         {
-            if (!string.IsNullOrEmpty(_tokenProvider.BearerToken))
+            if (!string.IsNullOrEmpty(_userTokenProvider.BearerToken))
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _tokenProvider.BearerToken);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _userTokenProvider.BearerToken);
             }
             return await base.SendAsync(request, ct);
         }

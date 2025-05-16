@@ -37,5 +37,9 @@
             Width="100" 
             Height="50" 
             Content="Click"/>
+        
+        <Border HorizontalAlignment="Right" VerticalAlignment="Top" Background="CornflowerBlue" Width="15" Height="15" Margin="20">
+            <Path VerticalAlignment="Center" HorizontalAlignment="Center" Data="M0,4 8,4M 4,0 4,8" Stroke="#fff"></Path>
+        </Border>
     </Grid>
 </Window>

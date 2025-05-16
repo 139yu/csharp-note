@@ -5,10 +5,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        xmlns:local="clr-namespace:SmartParking.Client.Start.ViewModels"
         xmlns:helper="clr-namespace:SmartParking.Client.Start.Base"
-        xmlns:uc="clr-namespace:SmarkParking.Client.Controls;assembly=SmarkParking.Client.Controls"
+        xmlns:uc="clr-namespace:SmartParking.Client.Controls;assembly=SmartParking.Client.Controls"
         xmlns:valueConverter="clr-namespace:SmartParking.Client.Start.ValueConverter"
+        xmlns:commons="clr-namespace:SmartParking.Client.Commons.ValueConverter;assembly=SmartParking.Client.Commons"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -18,7 +18,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <valueConverter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                    <commons:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
                     <valueConverter:BooleanToBlurConverter x:Key="BooleanToBlurConverter" />
                     <Style TargetType="CheckBox" x:Key="ShowPwdStyle">
                         <Setter Property="Template">
@@ -204,9 +204,13 @@
                            FontWeight="Normal"
                            Foreground="#0b3d90"
                            Margin="0,10,0,5" Text="账号" />
-                <TextBox Text="{Binding LoginModel.Username,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2"
+                <!--<TextBox Text="{Binding LoginModel.Username,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2"
                          Height="26"
-                         Style="{StaticResource UsernameBoxBorderStyle}" />
+                         Style="{StaticResource UsernameBoxBorderStyle}" />-->
+                <uc:Input 
+                    Text="{Binding LoginModel.Username,UpdateSourceTrigger=PropertyChanged}" 
+                    Grid.Row="2" BorderThickness="0,0,0,1" 
+                    BorderBrush="#ccc" PlaceHolder="手机号/账号/邮箱"/>
                 <TextBlock Grid.Row="3"
                            FontWeight="Normal"
                            Foreground="#0b3d90"

@@ -10,6 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\SmartParking.Client.Controls\SmartParking.Client.Controls.csproj" />
       <ProjectReference Include="..\SmartParking.Client.Assets\SmartParking.Client.Assets.csproj" />
       <ProjectReference Include="..\SmartParking.Client.IBLL\SmartParking.Client.IBLL.csproj" />
     </ItemGroup>
