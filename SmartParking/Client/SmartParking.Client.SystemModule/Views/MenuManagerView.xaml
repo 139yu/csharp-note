@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:SmartParking.Client.SystemModule.Views"
              xmlns:controls="clr-namespace:SmartParking.Client.Controls;assembly=SmartParking.Client.Controls"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              FontSize="14"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -17,115 +18,18 @@
                     Source="pack://application:,,,/SmartParking.Client.Assets;component/Styles/ButtonStyle.xaml">
                 </ResourceDictionary>
                 <ResourceDictionary>
-                     <ControlTemplate x:Key="ExpanderButtonTemplate" TargetType="ToggleButton">
-                         <Border Background="#FF0ABEFF" CornerRadius="3" Width="15" Height="15">
-                             <!--使用水平垂直居中，让path出于正中心-->
-                             <Path Data="M0 4 8 4M4 0 4 8" Stroke="White" StrokeThickness="1" Name="path"
-                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                         </Border>
-                         <ControlTemplate.Triggers>
-                             <Trigger Property="IsChecked" Value="True">
-                                 <Setter Property="Data" Value="M0 0 8 0" TargetName="path"/>
-                             </Trigger>
-                         </ControlTemplate.Triggers>
-                     </ControlTemplate>
-                    <ControlTemplate x:Key="ItemRowTemplate" TargetType="RadioButton">
-                        <Grid Background="Transparent" Name="wrapper">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition SharedSizeGroup="column1"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="150"/>
-                            </Grid.ColumnDefinitions>
-                            <ToggleButton Grid.Column="0" 
-                                          IsChecked="{Binding IsExpanded}"
-                                          Width="15" Height="15" Visibility="Visible"
-                                          Template="{StaticResource ExpanderButtonTemplate}"
-                                          Name="expanderBox"/>
-                            <TextBlock VerticalAlignment="Center" Grid.Column="1" Text="{Binding MenuTitle}"/>
-                            <TextBlock VerticalAlignment="Center" Grid.Column="2" Text="{Binding TargetView}"/>
-                            <TextBlock VerticalAlignment="Center" Grid.Column="3" Text="{Binding MenuIcon}" FontFamily="{StaticResource Iconfont}"/>
-                            <StackPanel Grid.Column="4" Orientation="Horizontal" Name="operate_panel">
-                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <Hyperlink Command="{Binding EditCommand}">编辑</Hyperlink>
-                                </TextBlock>
-                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0">
-                                    <Hyperlink Command="{Binding DeleteCommand}">删除</Hyperlink>
-                                </TextBlock>
-                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <Hyperlink Command="{Binding AddCommand}">添加</Hyperlink>
-                                </TextBlock>
-                            </StackPanel>
-                        </Grid>
+                    <ControlTemplate x:Key="ExpanderButtonTemplate" TargetType="ToggleButton">
+                        <Border Background="#FF0ABEFF" CornerRadius="3" Width="15" Height="15">
+                            <!--使用水平垂直居中，让path出于正中心-->
+                            <Path Data="M0 4 8 4M4 0 4 8" Stroke="White" StrokeThickness="1" Name="path"
+                                  VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </Border>
                         <ControlTemplate.Triggers>
-                            <DataTrigger Binding="{Binding Children}" Value="{x:Null}">
-                                <Setter Property="Visibility" Value="Collapsed" TargetName="expanderBox"></Setter>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding MenuId}" Value="0">
-                                <Setter Property="Visibility" Value="Collapsed" TargetName="operate_panel"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsChecked}" Value="True">
-                                <Setter Property="Background" TargetName="wrapper" Value="#08000000"></Setter>
-                            </DataTrigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" TargetName="wrapper" Value="#08000000"></Setter>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Data" Value="M0 0 8 0" TargetName="path" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
-                    <DataTemplate x:Key="MenuTreeTemplate">
-                        <Grid Name="root" Background="Transparent">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="35" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <!-- <Path Grid.Row="0" Data="M0 0 0 35 M0 17.5 15 17.5" Stroke="#777" StrokeThickness="1" -->
-                            <!--       Name="path" SnapsToDevicePixels="True" /> -->
-                            <Border VerticalAlignment="Center" 
-                                    HorizontalAlignment="Left"
-                                    Name="hor_line"
-                                    Grid.Row="0" Height="1" Width="20" 
-                                    BorderThickness="0,0,0,1" BorderBrush="#666"/>
-                            <Grid 
-                                  Grid.RowSpan="2" >
-                                <Border 
-                                    Width="1"
-                                    Name="vt_line"
-                                    HorizontalAlignment="Left"
-                                    BorderBrush="#666" 
-                                    BorderThickness="1,0,0,0"/>
-                            </Grid>
-                            <!--每个节点的位置-->
-                            <RadioButton Grid.Row="0"
-                                         IsChecked="{Binding IsChecked}"
-                                         Height="35"
-                                         GroupName="item"
-                                         Template="{StaticResource ItemRowTemplate}"
-                                         Name="item" />
-                            <!--子节点位置-->
-                            <ItemsControl Grid.Row="1"
-                                          Name="children"
-                                          Visibility="Collapsed"
-                                          ItemTemplate="{DynamicResource MenuTreeTemplate}"
-                                          Margin="30,0,0,0"
-                                          ItemsSource="{Binding Children}" />
-                        </Grid>
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding IsLastChild}" Value="True">
-                                <!-- <Setter TargetName="path" Property="Data" Value="M0,0 0,17.5M0,17.5 15,17.5"></Setter> -->
-                                <Setter TargetName="vt_line" Property="Height" Value="17.5"/>
-                                <Setter TargetName="vt_line" Property="VerticalAlignment" Value="Top"></Setter>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding MenuId}" Value="0">
-                                <!-- <Setter TargetName="path" Property="Visibility" Value="Collapsed"></Setter> -->
-                                <Setter TargetName="vt_line" Property="Visibility" Value="Collapsed"/>
-                                <Setter TargetName="hor_line" Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-                                <Setter TargetName="children" Property="Visibility" Value="Visible"></Setter>
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
-                    </DataTemplate>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -139,16 +43,16 @@
             <Border DockPanel.Dock="Bottom" BorderThickness="0,0,0,1" BorderBrush="#ccc" />
             <controls:Input DockPanel.Dock="Left"
                             CornerRadius="4"
-                            
+
                             Height="30"
                             Width="250"
                             Icon="&#xe8ef;"
                             IconFontFamily="{StaticResource Iconfont}" />
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right"
                         VerticalAlignment="Center">
-                <Button  Content="刷新" Style="{StaticResource PrimaryButton}"
+                <Button Content="刷新" Command="{Binding RefreshCommand}" Style="{StaticResource PrimaryButton}"
                         Margin="0,0,10,0" />
-                <Button  Content="添加" Style="{StaticResource WarringButton}" />
+                <Button Content="添加" Style="{StaticResource WarringButton}" />
             </StackPanel>
         </DockPanel>
         <Grid Grid.Row="1">
@@ -171,7 +75,142 @@
                 <TextBlock VerticalAlignment="Center" Text="操作" Grid.Column="4" />
             </Grid>
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding MenuTree}" ItemTemplate="{StaticResource MenuTreeTemplate}" />
+                <!-- <ItemsControl ItemsSource="{Binding MenuTree}" ItemTemplate="{StaticResource MenuTreeTemplate}" /> -->
+                <TreeView ItemsSource="{Binding MenuTree}">
+                    <TreeView.Resources>
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TreeViewItem">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" MinHeight="30"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition MaxWidth="30"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Row="0"
+                                                    Name="hor_line"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Left"
+                                                    BorderThickness="0,0,0,1"
+                                                    BorderBrush="#666"
+                                                    Width="15" Height="1" />
+                                            <Grid Grid.Row="0" Grid.RowSpan="2">
+                                                <Border Name="ver_line"
+                                                        BorderBrush="#666"
+                                                        HorizontalAlignment="Left"
+                                                        Width="1"
+                                                        BorderThickness="1,0,0,0" />
+                                            </Grid>
+                                            <Border Grid.Column="0" Grid.Row="0" 
+                                                    Grid.ColumnSpan="2" Name="wrapper" 
+                                                    SnapsToDevicePixels="True"
+                                                    AllowDrop="True"
+                                                    Background="Transparent">
+                                                <b:Interaction.Triggers>
+                                                    <b:EventTrigger EventName="MouseMove">
+                                                        <b:InvokeCommandAction Command="{Binding MouseMoveCommand }" 
+                                                                               PassEventArgsToCommand="True"/>
+                                                    </b:EventTrigger>
+                                                    <b:EventTrigger EventName="Drop">
+                                                        <b:InvokeCommandAction Command="{Binding DropCommand}" 
+                                                                               PassEventArgsToCommand="True"/>
+                                                    </b:EventTrigger>
+                                                    <b:EventTrigger EventName="DragOver">
+                                                        <b:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding DragOverCommand}"></b:InvokeCommandAction>
+                                                    </b:EventTrigger>
+                                                    <b:EventTrigger EventName="DragLeave">
+                                                        <b:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding DragLeaveCommand}"></b:InvokeCommandAction>
+                                                    </b:EventTrigger>
+                                                </b:Interaction.Triggers>
+                                                <ContentPresenter x:Name="PART_Header"
+                                                                  SnapsToDevicePixels="True"
+                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                  ContentSource="Header" />
+                                            </Border>
+                                            <ItemsPresenter
+                                                Grid.Column="0"
+                                                Grid.Row="1" 
+                                                Grid.ColumnSpan="2"
+                                                x:Name="ItemsHost" 
+                                                Visibility="Collapsed"
+                                                Margin="20,0,0,0" />
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" SourceName="PART_Header" Value="True">
+                                                <Setter TargetName="wrapper" Property="Background" Value="#80CCCCCC"></Setter>
+                                            </Trigger>
+                                            <DataTrigger Binding="{Binding MenuId}" Value="0">
+                                                <Setter TargetName="ver_line" Property="Visibility" Value="Collapsed"/>
+                                                <Setter TargetName="hor_line" Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsLastChild}" Value="True">
+                                                <Setter TargetName="ver_line" Property="Height" Value="15"/>
+                                                <Setter TargetName="ver_line" Property="VerticalAlignment" Value="Top"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                                                <Setter TargetName="ItemsHost" Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TreeView.Resources>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" SharedSizeGroup="column1" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="150" />
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Grid.Column="0"
+                                              VerticalAlignment="Center"
+                                              Name="expander_btn"
+                                              IsChecked="{Binding IsExpanded}"
+                                              Template="{StaticResource ExpanderButtonTemplate}" />
+                                <TextBlock VerticalAlignment="Center" Grid.Column="1" Text="{Binding MenuTitle}" />
+                                <TextBlock Grid.Column="2" Text="{Binding TargetView}" />
+                                <TextBlock Grid.Column="3" Text="{Binding MenuIcon}"
+                                           FontFamily="{StaticResource Iconfont}" />
+                                <StackPanel Grid.Column="4" Orientation="Horizontal" Name="operate_panel">
+                                    <TextBlock Margin="0,0,5,0" x:Name="edit_btn" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Hyperlink Command="{Binding EditCommand}">编辑</Hyperlink>
+                                    </TextBlock>
+                                    <TextBlock x:Name="del_btn" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                               Margin="0,0,5,0">
+                                        <Hyperlink Command="{Binding DeleteCommand}">删除</Hyperlink>
+                                    </TextBlock>
+                                    <TextBlock x:Name="add_btn" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Hyperlink Command="{Binding AddCommand}">添加</Hyperlink>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                            <HierarchicalDataTemplate.Triggers>
+                                
+                                <DataTrigger Binding="{Binding Children.Count}" Value="0">
+                                    <Setter TargetName="expander_btn" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Children}" Value="{x:Null}">
+                                    <Setter TargetName="expander_btn" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding MenuId}" Value="0">
+                                    <Setter TargetName="del_btn" Property="Visibility" Value="Collapsed"/>
+                                    <Setter TargetName="edit_btn" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </HierarchicalDataTemplate.Triggers>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
             </ScrollViewer>
         </Grid>
     </Grid>

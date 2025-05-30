@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using SmartParking.Client.SystemModule.Enum;
 
 namespace SmartParking.Client.SystemModule.Models
 {
@@ -23,8 +24,9 @@ namespace SmartParking.Client.SystemModule.Models
             get => _menuIcon;
             set => SetProperty(ref _menuIcon, value);
         }
+
         public string TargetView { get; set; }
-        public bool IsLastChild { get; set; }
+        public MenuItemModel ParentMenu { get; set; }
         public ObservableCollection<MenuItemModel> Children { get; set; }
         private IRegionManager _regionManager;
 
@@ -33,6 +35,17 @@ namespace SmartParking.Client.SystemModule.Models
             _regionManager = regionManager;
         }
 
+        public MouseLocationEnum MouseLocation { get; set; }
+
+        #region 页面控制属性
+
+        private bool _isLastChild = false;
+
+        public bool IsLastChild
+        {
+            get => _isLastChild;
+            set => SetProperty(ref _isLastChild, value);
+        }
 
         private bool _isExpanded = false;
 
@@ -57,6 +70,10 @@ namespace SmartParking.Client.SystemModule.Models
             get => _isChecked;
             set => SetProperty(ref _isChecked, value);
         }
+
+        #endregion
+
+
         #region Command
 
         private ICommand _openViewCommand;
@@ -84,6 +101,12 @@ namespace SmartParking.Client.SystemModule.Models
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+
+
+        public ICommand MouseMoveCommand { get; set; }
+        public ICommand DropCommand { get; set; }
+        public ICommand DragOverCommand { get; set; }
+        public ICommand DragLeaveCommand { get; set; }
         #endregion
     }
 }

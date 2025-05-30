@@ -1,0 +1,129 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|g:\\code\\githubcode\\csharp-note\\serialporttools\\serialporttools\\views\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|solutionrelative:serialporttools\\views\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|g:\\code\\githubcode\\csharp-note\\serialporttools\\serialporttools\\views\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|solutionrelative:serialporttools\\views\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|g:\\code\\githubcode\\csharp-note\\serialporttools\\serialporttools\\helper\\faker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|solutionrelative:serialporttools\\helper\\faker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|g:\\code\\githubcode\\csharp-note\\serialporttools\\serialporttools\\helper\\messagehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|solutionrelative:serialporttools\\helper\\messagehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|g:\\code\\githubcode\\csharp-note\\serialporttools\\serialporttools\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|solutionrelative:serialporttools\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|g:\\code\\githubcode\\csharp-note\\serialporttools\\serialporttools\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{134861F1-6F64-4922-BAE8-DA1864B712B7}|SerialPortTools\\SerialPortTools.csproj|solutionrelative:serialporttools\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MessageHelper.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\Helper\\MessageHelper.cs",
+              "RelativeDocumentMoniker": "SerialPortTools\\Helper\\MessageHelper.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\Helper\\MessageHelper.cs",
+              "RelativeToolTip": "SerialPortTools\\Helper\\MessageHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T07:49:04.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FrmMain.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\Views\\FrmMain.cs",
+              "RelativeDocumentMoniker": "SerialPortTools\\Views\\FrmMain.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\Views\\FrmMain.cs",
+              "RelativeToolTip": "SerialPortTools\\Views\\FrmMain.cs",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAAALkAAABtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T07:09:23.608Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Faker.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\Helper\\Faker.cs",
+              "RelativeDocumentMoniker": "SerialPortTools\\Helper\\Faker.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\Helper\\Faker.cs",
+              "RelativeToolTip": "SerialPortTools\\Helper\\Faker.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T07:07:13.459Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "App.config",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\App.config",
+              "RelativeDocumentMoniker": "SerialPortTools\\App.config",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\App.config",
+              "RelativeToolTip": "SerialPortTools\\App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-05-21T07:06:43.138Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FrmMain.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\Views\\FrmMain.cs",
+              "RelativeDocumentMoniker": "SerialPortTools\\Views\\FrmMain.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\Views\\FrmMain.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "SerialPortTools\\Views\\FrmMain.cs [\u8BBE\u8BA1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T02:35:32.143Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\Program.cs",
+              "RelativeDocumentMoniker": "SerialPortTools\\Program.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\SerialPortTools\\SerialPortTools\\Program.cs",
+              "RelativeToolTip": "SerialPortTools\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T02:34:25.214Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

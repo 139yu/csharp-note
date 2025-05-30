@@ -27,7 +27,7 @@ namespace SmartParking.Server.Start.Controllers
             var userLoginEntity = _userService.Login(loginParams.Username, loginParams.Password);
             if (userLoginEntity == null)
             {
-                return Unauthorized(ResponseEntity.Failed("账号或密码错误"));
+                return Ok(ResponseEntity.Failed(401,"用户名或密码错误"));
             }
 
             return Ok(ResponseEntity<UserLoginEntity>.Success(userLoginEntity));
