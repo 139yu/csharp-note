@@ -15,7 +15,7 @@ namespace Modbus.Communication.Component
         /// </summary>
         /// <param name="timeout">超时时间</param>
         /// <returns></returns>
-        public Result Open(int timeout);
+        public ModBudResult Open(int timeout);
 
         /// <summary>
         /// 关闭连接
@@ -29,6 +29,6 @@ namespace Modbus.Communication.Component
         /// <param name="receiveLen"></param>
         /// <param name="errorLen"></param>
         /// <returns></returns>
-        public Result<byte> SendAndReceive(List<byte> requestBytes,int receiveLen,int errorLen);
+        public ModBudResult<byte> SendAndReceive(List<byte> requestBytes,int receiveLen,int errorLen);
     }
 }

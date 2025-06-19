@@ -26,7 +26,7 @@ namespace Modbus.Communication.Component
             Port = port;
         }
 
-        public Result Open(int timeout)
+        public ModBudResult Open(int timeout)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -38,7 +38,7 @@ namespace Modbus.Communication.Component
                     bool zeroData = _socket.Available == 0;
                     if (_socket.Connected && !(poolRead && zeroData))
                     {
-                        return Result.Success();
+                        return ModBudResult.Success();
                     }
                 }
 
@@ -82,7 +82,7 @@ namespace Modbus.Communication.Component
                 throw new Exception("网络连接失败");
             }
 
-            return Result.Success();
+            return ModBudResult.Success();
         }
 
         public void Close()
@@ -91,10 +91,35 @@ namespace Modbus.Communication.Component
             _socket?.Dispose();
         }
 
-        public Result<byte> SendAndReceive(List<byte> requestBytes, int receiveLen, int errorLen)
+        public ModBudResult<byte> SendAndReceive(List<byte> requestBytes, int receiveLen, int errorLen)
         {
-            
-            return null;
+            try
+            {
+                _socket.Send(requestBytes.ToArray(),0,requestBytes.Count,SocketFlags.None);
+                byte[] headerBytes = new byte[6];
+                int count = _socket.Receive(headerBytes, 0, headerBytes.Length, SocketFlags.None);
+                if (count == 0)
+                {
+                    throw new Exception("未接收到响应数据");
+                }
+
+                int pduLen = BitConverter.ToInt16(new[] { headerBytes[5], headerBytes[4] });
+                byte[] pduBytes = new byte[pduLen];
+                var pduCount = _socket.Receive(pduBytes, 0, pduBytes.Length, SocketFlags.None);
+                if (pduCount == 0)
+                {
+                    throw new Exception("未接收到响应数据");
+                }
+
+                List<byte> data = new List<byte>();
+                data.AddRange(headerBytes);
+                data.AddRange(pduBytes);
+                return ModBudResult<byte>.Success(data);
+            }
+            catch (Exception e)
+            {
+                return ModBudResult<byte>.Failed(e.Message);
+            }
         }
     }
 }

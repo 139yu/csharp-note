@@ -20,7 +20,7 @@ namespace Modbus.Communication.Component
 
         public int ConnectTimeout { get; set; } = 50;
 
-        public Result Open(int timeout)
+        public ModBudResult Open(int timeout)
         {
             try
             {
@@ -57,17 +57,17 @@ namespace Modbus.Communication.Component
             }
             catch (Exception e)
             {
-                return Result.Failed(e.Message);
+                return ModBudResult.Failed(e.Message);
             }
 
-            return Result.Success();
+            return ModBudResult.Success();
         }
 
         public void Close()
         {
         }
 
-        public Result<byte> SendAndReceive(List<byte> requestBytes, int receiveLen, int errorLen)
+        public ModBudResult<byte> SendAndReceive(List<byte> requestBytes, int receiveLen, int errorLen)
         {
             _serialPort.Write(requestBytes.ToArray(), 0, requestBytes.Count);
             List<byte> response = new List<byte>();
@@ -82,15 +82,15 @@ namespace Modbus.Communication.Component
             {
                 if (response.Count != errorLen)
                 {
-                    return Result<byte>.Failed("接收报文超时", response);
+                    return ModBudResult<byte>.Failed("接收报文超时", response);
                 }
             }
             catch (Exception e)
             {
-                return Result<byte>.Failed(e.Message, response);
+                return ModBudResult<byte>.Failed(e.Message, response);
             }
 
-            return Result<byte>.Success(response);
+            return ModBudResult<byte>.Success(response);
         }
     }
 }

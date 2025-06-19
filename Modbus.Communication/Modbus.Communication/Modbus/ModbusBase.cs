@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using Modbus.Communication.Common;
 using Modbus.Communication.Component;
 
@@ -7,7 +10,7 @@ namespace Modbus.Communication.Modbus
 {
     public abstract class ModbusBase
     {
-        public EndianType EndianType { get; set; }
+        public EndianType EndianType { get; set; } = EndianType.BA;
         public ICommunicationUnit CommunicationUnit { get; set; }
 
         protected static Dictionary<int, string> Errors = new Dictionary<int, string>
@@ -85,9 +88,35 @@ namespace Modbus.Communication.Modbus
         /// <param name="start">起始地址</param>
         /// <param name="count">读寄存器数量</param>
         /// <returns></returns>
-        public virtual Result<bool> ReadCoils(byte slave, byte funcCode, ushort start, ushort count)
+        public virtual ModBudResult<bool> ReadCoils(byte slave, byte funcCode, ushort start, ushort count)
         {
-            return null;
+            
+            ushort resLen = (ushort)(Math.Ceiling(count * 1.0 / 8) + 5);
+            List<bool> data = new List<bool>();
+            try
+            {
+                List<byte> bytes = this.Read(slave, funcCode, start, count, resLen);
+                int sum = 0;
+                for (var i = 0; i < bytes.Count; i++)
+                {
+                    var temp = bytes[i];
+                    for (int j = 0; j < 8; j++)
+                    {
+                        data.Add((temp & (1 << j)) == 0);
+                        sum++;
+                        if (sum == count)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return ModBudResult<bool>.Failed(e.Message);
+            }
+
+            return ModBudResult<bool>.Success(data);
         }
 
         /// <summary>
@@ -98,9 +127,34 @@ namespace Modbus.Communication.Modbus
         /// <param name="start">起始地址</param>
         /// <param name="count">读寄存器数量</param>
         /// <returns></returns>
-        public virtual Result<T> ReadRegisters<T>(byte slave, byte funcCode, ushort start, ushort count)
+        public virtual ModBudResult<T> ReadRegisters<T>(byte slave, byte funcCode, ushort start, ushort count)
         {
-            return null;
+            //当前类型字节数
+            Type type = typeof(T);
+            // 字节数
+            int len = Marshal.SizeOf(type);
+            //寄存器个数
+            int registerCount = count * len / 2;
+
+            List<T> data = new List<T>();
+            try
+            {
+                //120:当前通信库中规定的一个一次性请求数量，这个值只要小于125就行
+                for (ushort i = 0; i < registerCount; i += 120)
+                {
+                    start += i;
+                    // 寄存器数量
+                    var realCount = (ushort)Math.Min(registerCount - i, 120);
+                    var bytes = this.Read(slave, funcCode, start, realCount, (ushort)(realCount * 2 + 5));
+                    data.AddRange(BytesToTargetValue<T>(bytes));
+                }
+            }
+            catch (Exception e)
+            {
+                return ModBudResult<T>.Failed(e.Message);
+            }
+
+            return ModBudResult<T>.Success(data);
         }
 
         /// <summary>
@@ -110,14 +164,63 @@ namespace Modbus.Communication.Modbus
         /// <param name="start">起始地址</param>
         /// <param name="data">写入数据</param>
         /// <returns></returns>
-        public virtual Result<bool> WriteCoils(byte slave, ushort start, List<bool> data)
+        public virtual ModBudResult<bool> WriteCoils(byte slave, ushort start, List<bool> data)
         {
-            return null;
+            try
+            {
+                var writePud = this.CreateWritePUD(slave, (byte)FuncEnum.WriteMultiCoil, start, (ushort)data.Count,
+                    (byte)Math.Ceiling(data.Count * 1.0 / 8));
+                var valueBytes = new List<byte>();
+                int index = 0;
+                for (var i = 0; i < data.Count; i++)
+                {
+                    // 8位为一个字节，设置初始值
+                    if (i % 8 == 0)
+                    {
+                        valueBytes.Add(0x00);
+                    }
+
+                    index = valueBytes.Count - 1;
+                    if (data[i])
+                    {
+                        var temp = (byte)(1 << (i % 8));
+                        // 异或操作，有一个为1，则返回1
+                        valueBytes[index] |= temp;
+                    }
+                }
+                writePud.AddRange(valueBytes);
+                Write(writePud);
+            }
+            catch (Exception e)
+            {
+                return ModBudResult<bool>.Failed(e.Message);
+            }
+            return ModBudResult<bool>.Success();
         }
 
-        public virtual Result<bool> WriteRegisters<T>(byte slave,ushort start,List<T> data)
+        public virtual ModBudResult<bool> WriteRegisters<T>(byte slave, ushort start, List<T> data)
         {
-            return null;
+            try
+            {
+                Type targetType = typeof(T);
+                var len = Marshal.SizeOf(targetType);
+                // len / 2 一个寄存器两个字节
+                var writePud = this.CreateWritePUD(slave, (byte)FuncEnum.WriteMultiHoldingRegister, start, (ushort)(data.Count * len / 2), (byte)(len * data.Count));
+                for (var i = 0; i < data.Count; i++)
+                {
+                    dynamic item = data[i];
+                    List<byte> valueTemp = new List<byte>(BitConverter.GetBytes(item));
+                    var realBytes = this.SwitchEndianType(valueTemp);
+                    writePud.AddRange(realBytes);
+                }
+
+                Write(writePud);
+            }
+            catch (Exception e)
+            {
+                ModBudResult<bool>.Failed(e.Message);
+            }
+            return ModBudResult<bool>.Success();
         }
 
         protected virtual List<byte> Read(byte slave, byte funcCode, ushort start, ushort count, ushort respLen)
@@ -127,8 +230,8 @@ namespace Modbus.Communication.Modbus
 
         protected virtual void Write(List<byte> writePud)
         {
-            
         }
+
         #endregion
 
         /// <summary>
@@ -151,7 +254,7 @@ namespace Modbus.Communication.Modbus
                 case EndianType.HGFEDCBA:
                     for (int i = bytes.Count; i > 0; i--)
                     {
-                        temp.Add(bytes[i]);
+                        temp.Add(bytes[i - 1]);
                     }
 
                     break;
@@ -192,6 +295,34 @@ namespace Modbus.Communication.Modbus
             }
 
             return temp;
+        }
+
+
+        protected List<T> BytesToTargetValue<T>(List<byte> dataBytes)
+        {
+            List<T> result = new List<T>();
+            //当前类型字节数
+            Type type = typeof(T);
+            // 字节数
+            int len = Marshal.SizeOf(type);
+            Type tBitConverter = typeof(BitConverter);
+
+            MethodInfo[] mis = tBitConverter.GetMethods(
+                BindingFlags.Public | BindingFlags.Static);
+            MethodInfo method = mis.FirstOrDefault(
+                mi => mi.ReturnType == typeof(T)
+                      && mi.GetParameters().Length == 2) as MethodInfo;
+            if (method == null)
+                throw new Exception("转换数据类型出错：未找到匹配的数据类型转换方法");
+
+            for (int k = 0; k < dataBytes.Count; k += len)
+            {
+                List<byte> dataTemp = dataBytes.GetRange(k, len);
+                dataTemp = this.SwitchEndianType(dataTemp);
+                result.Add((T)method.Invoke(tBitConverter, new object[] { dataTemp.ToArray(), 0 }));
+            }
+
+            return result;
         }
     }
 }
