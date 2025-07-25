@@ -3324,6 +3324,7 @@ transform.Freeze(); // 变为不可修改，减少内存开销
 |  `BlurRadius`   |    `double`     |     `5`     |       模糊半径（像素，范围 0-100），值越大边缘越模糊。       |
 |    `Opacity`    |    `double`     |    `1.0`    |            不透明度（0.0 完全透明，1.0 不透明）。            |
 | `RenderingBias` | `RenderingBias` |  `Quality`  | 渲染质量模式： `Quality`（高质量，性能消耗高）或 `Performance`（快速渲染）。 |
+|  `BlurRadius`   |     double      |      5      | 模糊半径，值越大，阴影越模糊、扩散越广，高值影响渲染性能（建议保持 ≤30） |
 
 **示例**：
 

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:shellExample="clr-namespace:Xamarin.Demo.ShellExample;assembly=Xamarin.Demo"
+             x:Class="Xamarin.Demo.ShellExample.ShellApp">
+    <FlyoutItem Title="分组">
+        <Tab Title="用户信息" Route="user_info">
+            <ShellContent Title="用户中心" Route="user_center" ContentTemplate="{DataTemplate shellExample:UserCenterPage}"/>
+            <ShellContent Title="用户详情" Route="user_detail" ContentTemplate="{DataTemplate shellExample:DetailsPage}"/>
+        </Tab>
+        <Tab Title="购物" Route="shopping">
+            <ShellContent Title="商品列表" Route="items" ContentTemplate="{DataTemplate shellExample:ItemsPage}"/>
+        </Tab>
+        <ShellContent Title="demo01" ContentTemplate="{DataTemplate shellExample:Demo01Page}" Route="demo_01"/>
+    </FlyoutItem>
+    <ShellContent Title="demo01" ContentTemplate="{DataTemplate shellExample:Demo01Page}" Route="demo_01"/>
+</Shell>

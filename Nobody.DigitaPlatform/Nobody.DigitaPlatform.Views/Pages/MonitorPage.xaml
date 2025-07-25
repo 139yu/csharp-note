@@ -1,0 +1,804 @@
+﻿<UserControl x:Class="Nobody.DigitaPlatform.Views.Pages.MonitorPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Nobody.DigitaPlatform.Views.Pages"
+             mc:Ignorable="d"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:components="clr-namespace:Nobody.DigitaPlatform.Components;assembly=Nobody.DigitaPlatform.Components"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:converter="clr-namespace:Nobody.DigitaPlatform.Common.Converter;assembly=Nobody.DigitaPlatform.Common"
+             FontSize="14"
+             d:DesignHeight="750" d:DesignWidth="1300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <converter:DeviceConverter  x:Key="DeviceConverter"/>
+                    <BooleanToVisibilityConverter  x:Key="b2v"/>
+                </ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Nobody.DigitaPlatform.Assets;component/Styles/ButtonStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary>
+                    <Style TargetType="GroupBox" x:Key="GroupBoxStyle">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="GroupBox">
+                                    <Grid>
+                                        <Border Background="#55FFFFFF" CornerRadius="6"
+                                                BorderBrush="#080fc6f8" BorderThickness="1" />
+                                        <StackPanel Margin="10,10,0,0" Grid.Row="0" VerticalAlignment="Top"
+                                                    Orientation="Horizontal">
+                                            <Border Height="10"
+                                                    Width="3"
+                                                    CornerRadius="2"
+                                                    Background="LightSkyBlue" />
+                                            <TextBlock
+                                                Margin="5,0"
+                                                FontSize="12"
+                                                Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},
+                           Path=Header}" />
+                                            <Border Height="10"
+                                                    Width="3"
+                                                    Margin="0,0,3,0"
+                                                    CornerRadius="2"
+                                                    Background="SkyBlue">
+                                            </Border>
+                                            <Border Height="10"
+                                                    Width="3"
+                                                    Margin="0,0,3,0"
+                                                    CornerRadius="2"
+                                                    Background="LightSkyBlue">
+                                            </Border>
+                                            <Border Height="10"
+                                                    Width="3"
+                                                    Margin="0,0,3,0"
+                                                    CornerRadius="2"
+                                                    Background="LightBlue">
+                                            </Border>
+                                        </StackPanel>
+                                        <ContentPresenter />
+                                        <Path
+                                            Data="M0,10 0,6A6 6 0 0 1 6 0L 10 0"
+                                            Stroke="#b4fee7"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Left"
+                                            Margin="1" />
+                                        <Path
+                                            Data="M0,10 6,10A6 6 0 0 0 10 4L 10 0"
+                                            Stroke="#b4fee7"
+                                            VerticalAlignment="Bottom"
+                                            HorizontalAlignment="Right" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="UserControl.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Duration="1:0:1"
+                                                   Storyboard.TargetName="txt_date"
+                                                   Storyboard.TargetProperty="DataContext"
+                                                   RepeatBehavior="Forever">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static system:DateTime.Now}" />
+                        <DiscreteObjectKeyFrame KeyTime="1:0:0" Value="{x:Static system:DateTime.Now}" />
+                    </ObjectAnimationUsingKeyFrames>
+                    <ObjectAnimationUsingKeyFrames Duration="0:0:2"
+                                                   Storyboard.TargetProperty="DataContext"
+                                                   Storyboard.TargetName="txt_time"
+                                                   RepeatBehavior="Forever">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static system:DateTime.Now}" />
+                        <DiscreteObjectKeyFrame KeyTime="0:0:1" Value="{x:Static system:DateTime.Now}" />
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Grid Margin="50,10,10,10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="250" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#1116a1ff" Offset="0" />
+                        <GradientStop Color="Transparent" Offset="1" />
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="2*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" BorderThickness="0,0,0,1">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush>
+                            <GradientStop Color="AliceBlue" Offset="0" />
+                            <GradientStop Color="LightBlue" Offset="0.3" />
+                            <GradientStop Color="SkyBlue" Offset="0.8" />
+                            <GradientStop Color="#fff" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" BorderThickness="0,0,0,1">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush>
+                            <GradientStop Color="AliceBlue" Offset="0" />
+                            <GradientStop Color="LightBlue" Offset="0.3" />
+                            <GradientStop Color="SkyBlue" Offset="0.8" />
+                            <GradientStop Color="#fff" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                </Border>
+                <Border Grid.Row="0" CornerRadius="1" Grid.Column="1"
+                        VerticalAlignment="Center"
+                        BorderThickness="2,0,2,0" Height="8"
+                        BorderBrush="SkyBlue">
+                </Border>
+                <Border Grid.Row="0" Margin="5,0" CornerRadius="1" Grid.Column="1"
+                        VerticalAlignment="Center"
+                        BorderThickness="2,0,2,0" Height="12"
+                        BorderBrush="SkyBlue">
+                </Border>
+                <Border Grid.Row="0" Margin="10,0" CornerRadius="1" Grid.Column="1"
+                        VerticalAlignment="Center"
+                        BorderThickness="2,0,2,0" Height="14"
+                        BorderBrush="SkyBlue">
+                </Border>
+                <Border Grid.Row="0" VerticalAlignment="Center" Margin="20,0" CornerRadius="3" Grid.Column="1">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="SkyBlue" Offset="0" />
+                            <GradientStop Color="#fff" Offset="0.4" />
+                            <GradientStop Color="AliceBlue" Offset="0.6" />
+                            <GradientStop Color="SkyBlue" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <TextBlock FontSize="12"
+                               Name="txt_date"
+                               DataContext="{x:Static system:DateTime.Now}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" Text="{Binding Now,StringFormat='yyyy-MM-dd',Mode=OneWay}" />
+                </Border>
+                <TextBlock HorizontalAlignment="Center" DataContext="{x:Static system:DateTime.Now}"
+                           Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Name="txt_time">
+                    <Run Text="{Binding Now,Mode=OneWay,StringFormat='HH:mm:ss'}" FontSize="30"
+                         FontFamily="{StaticResource DigitalDisplay}" />
+                    <Run Text="   "></Run>
+                    <Run Text="{Binding Now,Mode=OneWay,StringFormat='dddd',ConverterCulture=zh-CN}" />
+                </TextBlock>
+            </Grid>
+            <Grid Grid.Row="1">
+                <UniformGrid Columns="1">
+                    <GroupBox Margin="0,0,0,10" Style="{StaticResource GroupBoxStyle}" Header="环境监测">
+                        <UniformGrid Columns="3" Margin="0,35,0,0">
+                            <Grid Margin="10,0,10,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1.5*" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" CornerRadius="4">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#FF75D8DA" Offset="0" />
+                                            <GradientStop Color="#8f75D8DA" Offset="0.3" />
+                                            <GradientStop Color="#2F75D8DA" Offset="0.6" />
+                                            <GradientStop Color="#0075D8DA" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <StackPanel>
+                                        <TextBlock Text="21.5"
+                                                   Margin="0,10,0,0"
+                                                   FontWeight="ExtraBlack"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" Foreground="#FF34D6E2" />
+                                        <TextBlock Text="°C" FontSize="12" Margin="10" Foreground="#FF34D6E2"
+                                                   HorizontalAlignment="Center">
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                <TextBlock Grid.Row="1"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center"
+                                           Text="车间温度"
+                                           Foreground="#7f000000" />
+                            </Grid>
+                            <Grid Margin="10,0,10,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1.5*" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" CornerRadius="4">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#FF676EE2" Offset="0" />
+                                            <GradientStop Color="#8F676EE2" Offset="0.3" />
+                                            <GradientStop Color="#2F676EE2" Offset="0.6" />
+                                            <GradientStop Color="#00676EE2" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <StackPanel>
+                                        <TextBlock Text="60"
+                                                   Margin="0,10,0,0"
+                                                   FontWeight="ExtraBlack"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" Foreground="#FF5651E8" />
+                                        <TextBlock Text="%" FontSize="12"
+                                                   Margin="10"
+                                                   Foreground="#FF5651E8"
+                                                   HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </Border>
+                                <TextBlock Grid.Row="1"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center"
+                                           Text="车间湿度"
+                                           Foreground="#7f000000" />
+                            </Grid>
+                            <Grid Margin="10,0,10,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1.5*" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" CornerRadius="4">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#FFD67AEC" Offset="0" />
+                                            <GradientStop Color="#8fD67AEC" Offset="0.3" />
+                                            <GradientStop Color="#2FD67AEC" Offset="0.6" />
+                                            <GradientStop Color="#0FD67AEC" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <StackPanel>
+                                        <TextBlock Text="21.5"
+                                                   Margin="0,10,0,0"
+                                                   FontWeight="ExtraBlack"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" Foreground="#FF8E5ADE" />
+                                        <TextBlock Text="μg/m³" FontSize="12" Margin="10" Foreground="#FF8E5ADE"
+                                                   HorizontalAlignment="Center">
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                <TextBlock Grid.Row="1"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center"
+                                           Text="PM2.5"
+                                           Foreground="#7f000000" />
+                            </Grid>
+                        </UniformGrid>
+                    </GroupBox>
+                    <GroupBox Margin="0,0,0,10" Style="{StaticResource GroupBoxStyle}"
+                              Header="7日能耗-耗电量">
+                        <lvc:CartesianChart Margin="0,35,0,0">
+                            <lvc:CartesianChart.Series>
+                                <lvc:LineSeries Values="21,12,42,62,12,32,51" Title="耗电量" PointGeometrySize="0">
+                                    <lvc:LineSeries.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#FF7CC8E8" Offset="0" />
+                                            <GradientStop Color="#8F7CC8E8" Offset="0.6" />
+                                            <GradientStop Color="#0F7CC8E8" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </lvc:LineSeries.Fill>
+                                </lvc:LineSeries>
+                            </lvc:CartesianChart.Series>
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Labels="一日,二日,三日,四日,五日,六日,七日">
+                                    <lvc:Axis.Separator>
+                                        <lvc:Separator Step="1" StrokeThickness="0">
+                                            <lvc:Separator.Stroke>
+                                                <SolidColorBrush Color="#404F56" />
+                                            </lvc:Separator.Stroke>
+                                        </lvc:Separator>
+                                    </lvc:Axis.Separator>
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisX>
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis ShowLabels="False" MinValue="0" MaxValue="100">
+                                    <lvc:Axis.Separator>
+                                        <lvc:Separator Step="50" StrokeThickness="0" />
+                                    </lvc:Axis.Separator>
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+                    </GroupBox>
+                    <GroupBox Margin="0,0,0,10" Style="{StaticResource GroupBoxStyle}" Header="7日能耗-用气量">
+                        <lvc:CartesianChart Margin="0,35,0,0">
+                            <lvc:CartesianChart.Series>
+                                <lvc:ColumnSeries Values="12,32,15,42,13,43,23" MaxColumnWidth="10" Title="用气量">
+                                    <lvc:ColumnSeries.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="#FF7A67D6" />
+                                            <GradientStop Offset="0.7" Color="#8F7A67D6" />
+                                            <GradientStop Offset="1" Color="#0F7A67D6" />
+                                        </LinearGradientBrush>
+                                    </lvc:ColumnSeries.Fill>
+                                </lvc:ColumnSeries>
+                            </lvc:CartesianChart.Series>
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Labels="一日,二日,三日,四日,五日,六日,七日">
+                                    <lvc:Axis.Separator>
+                                        <lvc:Separator Step="1" StrokeThickness="0"></lvc:Separator>
+                                    </lvc:Axis.Separator>
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisX>
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis MinValue="0" ShowLabels="False">
+                                    <lvc:Axis.Separator>
+                                        <lvc:Separator StrokeThickness="0"></lvc:Separator>
+                                    </lvc:Axis.Separator>
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+                    </GroupBox>
+                    <GroupBox Style="{StaticResource GroupBoxStyle}" Header="7日能耗-泄漏量">
+                        <lvc:CartesianChart Margin="0,35,0,0">
+                            <lvc:CartesianChart.Series>
+                                <lvc:LineSeries Values="21,12,42,62,12,32,51" Title="耗电量" PointGeometrySize="0">
+                                    <lvc:LineSeries.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#FF7CC8E8" Offset="0" />
+                                            <GradientStop Color="#8F7CC8E8" Offset="0.6" />
+                                            <GradientStop Color="#0F7CC8E8" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </lvc:LineSeries.Fill>
+                                </lvc:LineSeries>
+                            </lvc:CartesianChart.Series>
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Labels="一日,二日,三日,四日,五日,六日,七日">
+                                    <lvc:Axis.Separator>
+                                        <lvc:Separator Step="1" StrokeThickness="0">
+                                            <lvc:Separator.Stroke>
+                                                <SolidColorBrush Color="#404F56" />
+                                            </lvc:Separator.Stroke>
+                                        </lvc:Separator>
+                                    </lvc:Axis.Separator>
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisX>
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis ShowLabels="False" MinValue="0" MaxValue="100">
+                                    <lvc:Axis.Separator>
+                                        <lvc:Separator Step="50" StrokeThickness="0" />
+                                    </lvc:Axis.Separator>
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+                    </GroupBox>
+                </UniformGrid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="200" />
+                </Grid.RowDefinitions>
+                <ItemsControl Grid.Row="0" ItemsSource="{Binding DeviceList}">
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                            <Setter Property="Canvas.ZIndex" Value="{Binding Z}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ContentControl
+                                RenderTransformOrigin="0.5,0.5"
+                                Visibility="{Binding IsVisible,Converter={StaticResource b2v} }"
+                                Content="{Binding Path=DeviceType, Converter={StaticResource DeviceConverter}}"
+                                Width="{Binding Width }"
+                                Height="{Binding Height}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Grid Grid.Row="1">
+                    <GroupBox Header="设备运行状态" Style="{StaticResource GroupBoxStyle}">
+                        <Grid Margin="10,35,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.2*" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <UniformGrid Grid.Column="0" Margin="0,0,10,0" Columns="3" Rows="2">
+                                <Border Margin="5,10" Padding="10" Background="#fff" CornerRadius="5">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="1.5*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Row="0" Grid.Column="0"
+                                                Grid.RowSpan="2"
+                                                Height="35" Width="35 "
+                                                Background="#FFBBDEDE"
+                                                CornerRadius="5">
+                                            <TextBlock Text="&#xeb34;" HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" FontSize="20"
+                                                       FontWeight="Bold"
+                                                       FontFamily="{StaticResource Iconfont}"
+                                                       Foreground="#FF2BCDE2" />
+                                        </Border>
+                                        <TextBlock Grid.Row="0"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Grid.Column="1" Text="总设备量"
+                                                   Foreground="#8f000000"
+                                                   FontSize="12">
+                                        </TextBlock>
+                                        <TextBlock Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" Text="20" />
+                                    </Grid>
+                                </Border>
+                                <Border Margin="5,10" Padding="10" Background="#fff" CornerRadius="5">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="1.4*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Grid.RowSpan="2"
+                                            Width="35" Height="35"
+                                            Background="#FF8EB2E2"
+                                            CornerRadius="5" Padding="5">
+                                            <TextBlock Text="&#xe617;" HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" FontSize="20"
+                                                       FontWeight="Bold"
+                                                       FontFamily="{StaticResource Iconfont}"
+                                                       Foreground="#FF4F9DE6" />
+                                        </Border>
+                                        <TextBlock Grid.Row="0"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Grid.Column="1" Text="正在报警"
+                                                   Foreground="#8f000000"
+                                                   FontSize="12" />
+                                        <TextBlock Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" Text="2" />
+                                    </Grid>
+                                </Border>
+                                <Border Margin="5,10" Padding="10" Background="#fff" CornerRadius="5">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="1.4*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Row="0"
+                                                Height="35" Width="35 " Grid.Column="0" Grid.RowSpan="2"
+                                                Background="#FFA1D4A1" CornerRadius="5" Padding="5">
+                                            <TextBlock Text="&#xe613;" HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" FontSize="20"
+                                                       FontWeight="Bold"
+                                                       FontFamily="{StaticResource Iconfont}"
+                                                       Foreground="#FF79D23F" />
+                                        </Border>
+                                        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   Grid.Column="1" Text="总运行时长" Foreground="#8f000000" FontSize="12" />
+                                        <TextBlock Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" Text="50" />
+                                    </Grid>
+                                </Border>
+                                <Border Margin="5,10" Padding="10" Background="#fff" CornerRadius="5">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="1.4*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Row="0"
+                                                Height="35" Width="35 " Grid.Column="0" Grid.RowSpan="2"
+                                                Background="#FFE98FEA" CornerRadius="5" Padding="5">
+                                            <TextBlock Text="&#xe66f;" HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" FontSize="20"
+                                                       FontWeight="Bold"
+                                                       FontFamily="{StaticResource Iconfont}"
+                                                       Foreground="#FF9A68E6" />
+                                        </Border>
+                                        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   Grid.Column="1" Text="已停机" Foreground="#8f000000" FontSize="12" />
+                                        <TextBlock Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" Text="20" />
+                                    </Grid>
+                                </Border>
+                                <Border Margin="5,10" Padding="10" Background="#fff" CornerRadius="5">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="1.4*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Row="0"
+                                                Height="35" Width="35 " Grid.Column="0" Grid.RowSpan="2"
+                                                Background="#FFDBECA4" CornerRadius="5" Padding="5">
+                                            <TextBlock Text="&#xe631;" HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" FontSize="20"
+                                                       FontWeight="Bold"
+                                                       FontFamily="{StaticResource Iconfont}"
+                                                       Foreground="#FF8CC54B" />
+                                        </Border>
+                                        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   Grid.Column="1"
+                                                   Text="设备运转率" Foreground="#8f000000" FontSize="12" />
+                                        <TextBlock Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" Text="20" />
+                                    </Grid>
+                                </Border>
+                                <Border Margin="5,10" Padding="10" Background="#fff" CornerRadius="5">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="1.4*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Row="0"
+                                                Height="35" Width="35 " Grid.Column="0" Grid.RowSpan="2"
+                                                Background="#FFA3D0DE" CornerRadius="5" Padding="5">
+                                            <TextBlock Text="&#xeb34;" HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" FontSize="20"
+                                                       FontWeight="Bold"
+                                                       FontFamily="{StaticResource Iconfont}"
+                                                       Foreground="#FF43C7D8" />
+                                        </Border>
+                                        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   Grid.Column="1" Text="总设备量" Foreground="#8f000000" FontSize="12" />
+                                        <TextBlock Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" Text="20" />
+                                    </Grid>
+                                </Border>
+                            </UniformGrid>
+                            <lvc:CartesianChart Grid.Column="1">
+                                <lvc:CartesianChart.Series>
+                                    <lvc:LineSeries Values="56,48,81,91,58,21,63" PointGeometrySize="0" Title="运转率">
+                                        <lvc:LineSeries.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Offset="0" Color="#FF61CAD8" />
+                                                <GradientStop Offset="0.6" Color="#FF9EDAE2" />
+                                                <GradientStop Offset="1" Color="#FFF7F7F7" />
+                                            </LinearGradientBrush>
+                                        </lvc:LineSeries.Fill>
+                                    </lvc:LineSeries>
+                                </lvc:CartesianChart.Series>
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Labels="11/22,11/23,11/24,11/25,11/25,11/27,11/28" ShowLabels="True"
+                                              LabelsRotation="0">
+                                        <lvc:Axis.Separator>
+                                            <lvc:Separator Step="1" StrokeThickness="0"></lvc:Separator>
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis ShowLabels="True" MinValue="0" MaxValue="100">
+                                        <lvc:Axis.Separator>
+                                            <lvc:Separator Step="20" StrokeThickness="0"></lvc:Separator>
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150" />
+                <RowDefinition Height="160" />
+                <RowDefinition Height="200" />
+                <RowDefinition Height="200" />
+            </Grid.RowDefinitions>
+            <Border Background="#FFAC9CE6" CornerRadius="5" Padding="10">
+                <StackPanel>
+                    <TextBlock Foreground="#FFFAF1DF" Margin="0,0,0,10" HorizontalAlignment="Center">
+                        <Run Text="Admin" FontSize="20"></Run>
+                        <Run Text="[管理员]" FontSize="12" Foreground="#FFcccccc" />
+                    </TextBlock>
+                    <TextBlock Margin="0,0,0,10" Text="信息技术部" FontSize="12" Foreground="#FFcccccc"
+                               HorizontalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Center">
+                        <Hyperlink TextDecorations="None" Foreground="#FFFAF1DF" FontSize="12">修改密码</Hyperlink>
+                        <Run Text="  "></Run>
+                        <Hyperlink TextDecorations="None" Foreground="#FFFAF1DF" FontSize="12">退出登录</Hyperlink>
+                    </TextBlock>
+                    <Button Command="{Binding EditComponentCommand }" Margin="0,10,0,0" Width="150" Style="{StaticResource PrimaryButton}">
+                        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="&#xe601;" FontFamily="{StaticResource Iconfont}"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="组态编辑"></TextBlock>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Border>
+            <GroupBox Grid.Row="1" Margin="0,10,0,10" Style="{StaticResource GroupBoxStyle}" Header="管道信息">
+                <UniformGrid Columns="2" Margin="0,35,0,10">
+                    <components:Meter
+                        Height="90"
+                        Width="90"
+                        Value="11.32"
+                        Unit="MPa"
+                        Header="母管压力"
+                        Foreground="#FF53DECE" />
+                    <components:Meter
+                        Height="90"
+                        Width="90"
+                        Value="11.32"
+                        Unit="Nm³/min"
+                        Header="瞬时流量"
+                        Foreground="#FF53DECE" />
+                </UniformGrid>
+            </GroupBox>
+            <GroupBox Grid.Row="2" Margin="0,0,0,10" Style="{StaticResource GroupBoxStyle}" Header="用气排行">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="0,10,10,0" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                        <Border VerticalAlignment="Center" Margin="0,0,5,0" Width="15" Height="15"
+                                Background="#FF42A1DE" />
+                        <TextBlock Text="计划" Foreground="#888"></TextBlock>
+                        <Border VerticalAlignment="Center" Margin="10,0,5,0" Width="15" Height="15"
+                                Background="#FFD4DC50" />
+                        <TextBlock Text="计划" Foreground="#888"></TextBlock>
+                    </StackPanel>
+                    <ItemsControl Grid.Row="1" Margin="0,5,0,0" ItemsSource="{Binding RankingItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="1" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="10,0,10,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="25" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="2" Margin="0,0,20,0" Name="bor" />
+                                    <TextBlock Grid.Column="0" FontSize="12" Foreground="#888" Text="{Binding Label}" />
+                                    <Border Grid.Column="1"
+                                            BorderThickness="2"
+                                            Height="1"
+                                            VerticalAlignment="Center"
+                                            BorderBrush="#FF42A1DE" />
+                                    <Polygon Grid.Column="1"
+                                             HorizontalAlignment="Right"
+                                             VerticalAlignment="Center"
+                                             Points="4,0 0,6 4,12 8,12 8,0"
+                                             Fill="#FF42A1DE" />
+                                    <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="3,0,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Border Background="#FF42A1DE" Height="4">
+                                                <Border.Width>
+                                                    <MultiBinding>
+                                                        <MultiBinding.Converter>
+                                                            <converter:RankingValueConverter />
+                                                        </MultiBinding.Converter>
+                                                        <Binding Path="PlanValue" />
+                                                        <Binding ElementName="bor" Path="ActualWidth" />
+                                                    </MultiBinding>
+                                                </Border.Width>
+                                            </Border>
+                                            <TextBlock Text="{Binding PlanValue}" Margin="10,0,0,0" Foreground="#888"
+                                                       FontSize="10" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Border Background="#FFD4DC50" Height="4">
+                                                <Border.Width>
+                                                    <MultiBinding>
+                                                        <MultiBinding.Converter>
+                                                            <converter:RankingValueConverter />
+                                                        </MultiBinding.Converter>
+                                                        <Binding Path="PlanValue" />
+                                                        <Binding ElementName="bor" Path="ActualWidth" />
+                                                    </MultiBinding>
+                                                </Border.Width>
+                                            </Border>
+                                            <TextBlock Text="{Binding ActualValue}" Margin="10,0,0,0" Foreground="#888"
+                                                       FontSize="10" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Border BorderBrush="#EEE" BorderThickness="0,0,0,1" VerticalAlignment="Top"
+                                Grid.ColumnSpan="2" Margin="0,5,0,0" />
+                        <UniformGrid Grid.Column="1" VerticalAlignment="Center" Rows="1">
+                            <TextBlock HorizontalAlignment="Center" Foreground="#888" FontSize="12" Text="0" />
+                            <TextBlock HorizontalAlignment="Center" Foreground="#888" FontSize="12" Text="48" />
+                            <TextBlock HorizontalAlignment="Center" Foreground="#888" FontSize="12" Text="96" />
+                            <TextBlock HorizontalAlignment="Center" Foreground="#888" FontSize="12" Text="144" />
+                            <TextBlock HorizontalAlignment="Center" Foreground="#888" FontSize="12" Text="192" />
+                            <TextBlock HorizontalAlignment="Center" Foreground="#888" FontSize="12" Text="240" />
+                        </UniformGrid>
+                    </Grid>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="3" Style="{StaticResource GroupBoxStyle}" Header="设备提醒">
+                <ScrollViewer Margin="10,35,0,0" VerticalScrollBarVisibility="Hidden">
+                    <ItemsControl ItemsSource="{Binding WaringItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" Height="6" Width="6"
+                                            CornerRadius="3"
+                                            Background="#FF42A1DE"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Center">
+                                    </Border>
+                                    <Line Grid.Column="0" X1="0" Y1="0" X2="0"
+                                          Stroke="#FF42A1DE"
+                                          HorizontalAlignment="Center"
+                                          StrokeThickness="1"
+                                          Y2="{Binding RelativeSource={RelativeSource Self},Path=ActualHeight}" />
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Foreground="#666" FontSize="12">
+                                            <Run Text="{Binding DeviceName}" />
+                                            <Run Text="{Binding Message}" />
+                                        </TextBlock>
+                                        <TextBlock Foreground="#ccc" Margin="0,5,0,7" FontSize="10"
+                                                   Text="{Binding DateTime}" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</UserControl>

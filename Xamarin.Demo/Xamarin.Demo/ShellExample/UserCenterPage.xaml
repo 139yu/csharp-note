@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Demo.ShellExample.UserCenterPage">
+      <StackLayout>
+          <Label Text="这是用户中心页" />
+          <Button Text="go user register" Clicked="Button_OnClicked" BackgroundColor="DodgerBlue"/>
+            <Button Text="go sys user register" Clicked="GoSysUserReg" BackgroundColor="DodgerBlue"/>
+      </StackLayout>
+</ContentPage>

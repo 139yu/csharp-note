@@ -11,9 +11,31 @@
         <models:ViewTestMode/>
     </Window.DataContext>
     <Grid>
-        <StackPanel Orientation="Vertical">
+        <!--<StackPanel Orientation="Vertical">
             <TextBox Text="{Binding Value,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Name="oneWayText"></TextBox>
             <Button Content="Click Me" Click="ButtonBase_OnClick"></Button>
-        </StackPanel>
+        </StackPanel>-->
+        <Viewbox Width="400" Height="400">
+            <Grid>
+                <Path 
+                    Width="380"
+                    Height="380"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="M2,189A189,189 0 1 1 189,378"
+                    StrokeThickness="4" Stroke="CadetBlue" RenderTransformOrigin="0.5,0.5">
+                    <Path.RenderTransform>
+                        <RotateTransform Angle="-45"></RotateTransform>
+                    </Path.RenderTransform>
+                </Path>
+                <Path 
+                    Data="M20 187A167,167 0 1 1 167 334"
+                    StrokeThickness="40" Stroke="CadetBlue" RenderTransformOrigin="0.5,0.5">
+                    <Path.RenderTransform>
+                        <RotateTransform Angle="-45"></RotateTransform>
+                    </Path.RenderTransform>
+                </Path>
+            </Grid>
+        </Viewbox>
     </Grid>
 </Window>

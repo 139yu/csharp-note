@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Demo.EssentialsExample.Views.DeviceAPIPage">
+    <StackLayout>
+        <StackLayout>
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span>Model：</Span>
+                        <Span Text="{Binding CurrentDevice.Model}"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span>Manufacturer：</Span>
+                        <Span Text="{Binding CurrentDevice.Manufacturer}"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span>Name：</Span>
+                        <Span Text="{Binding CurrentDevice.Name}"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span>Version：</Span>
+                        <Span Text="{Binding CurrentDevice.Version}"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span>DevicePlatform：</Span>
+                        <Span Text="{Binding CurrentDevice.DevicePlatform}"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span>DeviceIdiom：</Span>
+                        <Span Text="{Binding CurrentDevice.DeviceIdiom}"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span>DeviceType：</Span>
+                        <Span Text="{Binding CurrentDevice.DeviceType}"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+        <CollectionView HeightRequest="100" ItemsSource="{Binding ContactList}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Name}"/>
+                                    <Span Text="---"></Span>
+                                    <Span Text="{Binding Phone}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="当前网络状态："></Span>
+                    <Span Text="{Binding NetworkStatus}"></Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Lat："></Span>
+                    <Span Text="{Binding Lat}"></Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Lng："></Span>
+                    <Span Text="{Binding Lng}"></Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="当前地址："></Span>
+                    <Span Text="{Binding Address}"></Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="X Speed："></Span>
+                    <Span Text="{Binding XSpeed}"></Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Y Speed："></Span>
+                    <Span Text="{Binding YSpeed}"></Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Z Speed："></Span>
+                    <Span Text="{Binding ZSpeed}"></Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Button Text="Open Browser" Clicked="Button_OnClicked"></Button>
+    </StackLayout>
+</ContentPage>

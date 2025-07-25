@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+      <TargetFramework>net6.0-windows</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="System.IO.Ports" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nobody.DigitaPlatform.Common\Nobody.DigitaPlatform.Common.csproj" />
+    <ProjectReference Include="..\Nobody.DigitaPlatform.DataAccess\Nobody.DigitaPlatform.DataAccess.csproj" />
+    <ProjectReference Include="..\Nobody.DigitaPlatform.Models\Nobody.DigitaPlatform.Models.csproj" />
+  </ItemGroup>
+
+</Project>

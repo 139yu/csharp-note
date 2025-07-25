@@ -1,0 +1,105 @@
+﻿<local:BaseComponent x:Class="Nobody.DigitaPlatform.Components.RAJoints"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:local="clr-namespace:Nobody.DigitaPlatform.Components"
+                     mc:Ignorable="d"
+                     x:Name="root"
+                     d:DesignHeight="50" d:DesignWidth="50">
+    <local:BaseComponent.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <BooleanToVisibilityConverter x:Key="b2v" />
+                </ResourceDictionary>
+                <ResourceDictionary
+                    Source="pack://application:,,,/Nobody.DigitaPlatform.Assets;component/Styles/ButtonStyle.xaml">
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </local:BaseComponent.Resources>
+    <Grid>
+        <Grid RenderTransformOrigin="0.5,0.5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="0.3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.3*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="0.3*" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.RenderTransform>
+                <RotateTransform Angle="{Binding 
+                    Path=RotateAngle,
+                    RelativeSource={RelativeSource AncestorType=local:BaseComponent}}"></RotateTransform>
+            </Grid.RenderTransform>
+            <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Background="#AAA" CornerRadius="2"/>
+            <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Background="#FF28C9E8"/>
+            <Path Grid.Row="1" Grid.Column="3" Data="M0 5,0 0A5 5 0 0 1 5 5z" Fill="#FF28C9E8" Stretch="Fill" />
+            <Border Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" Background="#FF28C9E8"/>
+            <Border Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Background="#aaa" CornerRadius="2"/>
+        </Grid>
+        <!--Anchor锚点-->
+        <Grid Visibility="{Binding ElementName=root,Path=IsSelected,Converter={StaticResource b2v}}">
+            <Rectangle StrokeDashArray="3,3" Stroke="#666" RadiusX="5" RadiusY="5" />
+            <Ellipse VerticalAlignment="Bottom"
+             HorizontalAlignment="Center"
+             Margin="0,0,0,-5"
+             Cursor="SizeNS"
+             MouseLeftButtonDown="Ellipse_OnMouseLeftButtonDown"
+             MouseLeftButtonUp="Ellipse_OnMouseLeftButtonUp"
+             MouseMove="Ellipse_OnMouseMove"
+             Width="10" Height="10" Stroke="#666" Fill="#FFF">
+
+            </Ellipse>
+            <Ellipse VerticalAlignment="Center"
+             HorizontalAlignment="Right"
+             Margin="0,0,-5,0"
+             Cursor="SizeWE"
+             MouseLeftButtonDown="Ellipse_OnMouseLeftButtonDown"
+             MouseLeftButtonUp="Ellipse_OnMouseLeftButtonUp"
+             MouseMove="Ellipse_OnMouseMove"
+             Width="10" Height="10" Stroke="#666" Fill="#FFF" />
+            <Ellipse VerticalAlignment="Bottom"
+             HorizontalAlignment="Right"
+             Margin="0,0,-5,-5"
+             Cursor="SizeNWSE"
+             MouseLeftButtonDown="Ellipse_OnMouseLeftButtonDown"
+             MouseLeftButtonUp="Ellipse_OnMouseLeftButtonUp"
+             MouseMove="Ellipse_OnMouseMove"
+             Width="10" Height="10" Stroke="#666" Fill="#FFF" />
+        </Grid>
+        <Button Visibility="{Binding ElementName=root,Path=IsSelected,Converter={StaticResource b2v}}"
+                Click="ButtonBase_OnClick"
+                Margin="0,-10,-10,0" Style="{StaticResource ControlButtonStyle}"
+                HorizontalAlignment="Right"
+                Background="Transparent"
+                VerticalAlignment="Top">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" Width="20" Height="20" Background="#80000000">
+                        <TextBlock Text="&#xeca0;"
+                                   FontSize="12"
+                                   Name="icon"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="#fff"
+                                   FontFamily="{StaticResource Iconfont}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="icon" Property="Foreground" Value="Red"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+</local:BaseComponent>

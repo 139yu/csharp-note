@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Demo.View.ListViewPage">
+    <!--<ListView ItemsSource="{Binding Items}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <SwipeView>
+                        ~1~左滑显示内容@1@
+                        <SwipeView.LeftItems>
+                            <SwipeItem Text="删除" BackgroundColor="Orange" />
+                            <SwipeItem Text="编辑" BackgroundColor="GreenYellow"></SwipeItem>
+                        </SwipeView.LeftItems>
+                        ~1~右滑显示内容@1@
+                        <SwipeView.RightItems>
+                            <SwipeItem Text="更新" BackgroundColor="Aqua" />
+                            <SwipeItem Text="保存" BackgroundColor="CadetBlue" />
+                        </SwipeView.RightItems>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="{Binding Name}" />
+                            <Label Grid.Column="1" Text="{Binding Description}" />
+                        </Grid>
+                    </SwipeView>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>-->
+    <Grid>
+        <!--<CarouselView Loop="True" PeekAreaInsets="10,0,10,0" IndicatorView="iv" ItemsSource="{Binding Items}">
+            <CarouselView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="20"></LinearItemsLayout>
+            </CarouselView.ItemsLayout>
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Image Source="{Binding Name}"></Image>
+                        <Label
+                            HorizontalOptions="Center"
+                            Text="{Binding Description }">
+                        </Label>
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+        ~1~显示小圆点@1@
+        <IndicatorView x:Name="iv" VerticalOptions="End" IndicatorColor="Gray" SelectedIndicatorColor="IndianRed"></IndicatorView>-->
+        <TableView>
+            <TableRoot>
+                <TableSection Title="数字">
+                    <TextCell Text="1234" Detail="456"></TextCell>
+                    <TextCell Text="1234" Detail="456"></TextCell>
+                    <TextCell Text="1234" Detail="456"></TextCell>
+                </TableSection>
+                <TableSection Title="字母">
+                    <SwitchCell Text="aaa"></SwitchCell>
+                    <SwitchCell Text="bbb"></SwitchCell>
+                    <SwitchCell Text="ccc"></SwitchCell>
+                    <SwitchCell Text="ddd"></SwitchCell>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+    </Grid>
+
+</ContentPage>

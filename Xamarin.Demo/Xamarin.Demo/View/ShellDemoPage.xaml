@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:view="clr-namespace:Xamarin.Demo.View;assembly=Xamarin.Demo"
+       xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+       android:TabbedPage.ToolbarPlacement="Bottom"
+       x:Class="Xamarin.Demo.View.ShellDemoPage"
+       NavBarIsVisible="True"
+       >
+
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent Title="主页面" ContentTemplate="{DataTemplate view:HomePage}" Route="homePage"/>
+        <Tab Title="社交">
+            <ShellContent Title="主页面" ContentTemplate="{DataTemplate view:HomePage}"/>
+            <ShellContent Title="购物页" ContentTemplate="{DataTemplate view:ShoppingPage}"/>
+        </Tab>
+    </FlyoutItem>
+    <!-- <ShellContent Title="主页面" ContentTemplate="{DataTemplate view:HomePage}" Route="homePage"/> -->
+    <!--<Tab>
+        <ShellContent Title="主页面" ContentTemplate="{DataTemplate view:HomePage}"/>
+        <ShellContent Title="购物页" ContentTemplate="{DataTemplate view:ShoppingPage}"/>
+    </Tab>-->
+    <!-- <ShellContent Title="购物页" ContentTemplate="{DataTemplate view:ShoppingPage}" Route="shoppingPage"/> -->
+    <!--<FlyoutItem Title="主页">
+        <ShellContent Title="主页面" ContentTemplate="{DataTemplate view:HomePage}"/>
+        <ShellContent Title="购物页" ContentTemplate="{DataTemplate view:ShoppingPage}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="购物页">
+        <Tab>
+            <ShellContent Title="主页面" ContentTemplate="{DataTemplate view:HomePage}"/>
+            <ShellContent Title="购物页" ContentTemplate="{DataTemplate view:ShoppingPage}"/>
+        </Tab>
+    </FlyoutItem>-->
+    <!--<TabBar>
+        <Tab Title="浏览">
+            <ShellContent Title="主页面" ContentTemplate="{DataTemplate view:HomePage}"/>
+        </Tab>
+        <Tab Title="收藏" >
+            <ShellContent Title="购物页" ContentTemplate="{DataTemplate view:ShoppingPage}"/>
+        </Tab>
+    </TabBar>-->
+</Shell>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Demo.ShellExample.SysUserRegister">
+    <StackLayout>
+        <Label Text="这是系统用户注册页" />
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,123 @@
+﻿<local:BaseComponent x:Class="Nobody.DigitaPlatform.Components.AirCompressor"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:local="clr-namespace:Nobody.DigitaPlatform.Components"
+                     mc:Ignorable="d"
+                     x:Name="root"
+                     d:DesignHeight="250" d:DesignWidth="300">
+    <local:BaseComponent.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <BooleanToVisibilityConverter x:Key="b2v" />
+                </ResourceDictionary>
+                <ResourceDictionary
+                    Source="pack://application:,,,/Nobody.DigitaPlatform.Assets;component/Styles/ButtonStyle.xaml">
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </local:BaseComponent.Resources>
+    <Grid>
+
+        <Grid Background="Transparent" Margin="5">
+            <Grid.Effect>
+                <DropShadowEffect Color="#ccc"
+                                  BlurRadius="10"
+                                  Opacity="0.3" />
+            </Grid.Effect>
+            <Path Fill="#5db5cc" Stretch="Fill">
+                <Path.Data>
+                    <RectangleGeometry Rect="10,10,230,180" RadiusX="10" RadiusY="10"></RectangleGeometry>
+                </Path.Data>
+            </Path>
+            <Path Fill="#eee" Stretch="Fill">
+                <Path.Data>
+                    <GeometryGroup>
+                        <RectangleGeometry Rect="0,0,250,200" RadiusX="10" RadiusY="10" />
+                        <!--中间竖线-->
+                        <RectangleGeometry Rect="120,10,4,180" RadiusX="2" RadiusY="2" />
+                        <!--两边圆-->
+                        <EllipseGeometry Center="110,100" RadiusX="5" RadiusY="5" />
+                        <EllipseGeometry Center="133.5,100" RadiusX="5" RadiusY="5" />
+                        <RectangleGeometry Rect="10,125,90,2" />
+                        <RectangleGeometry Rect="10,135,90,2" />
+                        <RectangleGeometry Rect="10,145,90,2" />
+                        <RectangleGeometry Rect="10,155,90,2" />
+                        <RectangleGeometry Rect="10,165,90,2" />
+                        <RectangleGeometry Rect="10,175,90,2" />
+                        <RectangleGeometry Rect="10,185,90,2" />
+
+                        <RectangleGeometry Rect="145,125,90,2" />
+                        <RectangleGeometry Rect="145,135,90,2" />
+                        <RectangleGeometry Rect="145,145,90,2" />
+                        <RectangleGeometry Rect="145,155,90,2" />
+                        <RectangleGeometry Rect="145,165,90,2" />
+                        <RectangleGeometry Rect="145,175,90,2" />
+                        <RectangleGeometry Rect="145,185,90,2" />
+
+                        <RectangleGeometry Rect="165,20,60,60" RadiusX="5" RadiusY="5" />
+                    </GeometryGroup>
+                </Path.Data>
+            </Path>
+        </Grid>
+        <!--Anchor锚点-->
+        <Grid Visibility="{Binding ElementName=root,Path=IsSelected,Converter={StaticResource b2v}}">
+            <Rectangle StrokeDashArray="3,3" Stroke="#666" RadiusX="5" RadiusY="5" />
+            <Ellipse VerticalAlignment="Bottom"
+                     HorizontalAlignment="Center"
+                     Margin="0,0,0,-5"
+                     Cursor="SizeNS"
+                     MouseLeftButtonDown="Ellipse_OnMouseLeftButtonDown"
+                     MouseLeftButtonUp="Ellipse_OnMouseLeftButtonUp"
+                     MouseMove="Ellipse_OnMouseMove"
+                     Width="10" Height="10" Stroke="#666" Fill="#FFF">
+
+            </Ellipse>
+            <Ellipse VerticalAlignment="Center"
+                     HorizontalAlignment="Right"
+                     Margin="0,0,-5,0"
+                     Cursor="SizeWE"
+                     MouseLeftButtonDown="Ellipse_OnMouseLeftButtonDown"
+                     MouseLeftButtonUp="Ellipse_OnMouseLeftButtonUp"
+                     MouseMove="Ellipse_OnMouseMove"
+                     Width="10" Height="10" Stroke="#666" Fill="#FFF" />
+            <Ellipse VerticalAlignment="Bottom"
+                     HorizontalAlignment="Right"
+                     Margin="0,0,-5,-5"
+                     Cursor="SizeNWSE"
+                     MouseLeftButtonDown="Ellipse_OnMouseLeftButtonDown"
+                     MouseLeftButtonUp="Ellipse_OnMouseLeftButtonUp"
+                     MouseMove="Ellipse_OnMouseMove"
+                     Width="10" Height="10" Stroke="#666" Fill="#FFF" />
+
+            <Button Visibility="{Binding ElementName=root,Path=IsSelected,Converter={StaticResource b2v}}"
+                   Click="ButtonBase_OnClick"
+                    Margin="0,-10,-10,0" Style="{StaticResource ControlButtonStyle}"
+                    HorizontalAlignment="Right"
+                    Background="Transparent"
+                    VerticalAlignment="Top">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Width="20" Height="20" Background="#80000000">
+                            <TextBlock Text="&#xeca0;"
+                                       FontSize="12"
+                                       Name="icon"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Foreground="#fff"
+                                       FontFamily="{StaticResource Iconfont}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="icon" Property="Foreground" Value="Red"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+    </Grid>
+</local:BaseComponent>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Demo.View.OtherControlView">
+    <StackLayout Padding="10">
+        <Slider Minimum="0" Maximum="100" Value="50" BackgroundColor="CadetBlue" />
+        <Stepper Maximum="150" Minimum="120"></Stepper>
+        <Switch ThumbColor="GreenYellow" OnColor="CornflowerBlue"></Switch>
+
+        <ProgressBar BackgroundColor="CadetBlue" Progress="0.5" ProgressColor="CornflowerBlue"></ProgressBar>
+        <Picker ItemsSource="{Binding PickerItems}" SelectedIndex="4"/>
+    </StackLayout>
+</ContentPage>

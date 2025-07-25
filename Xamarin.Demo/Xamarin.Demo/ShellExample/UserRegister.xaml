@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Demo.ShellExample.UserRegister">
+      <StackLayout>
+        <Label Text="这是用户注册页" />
+        <Button Text="go user info" Clicked="Button_OnClicked"></Button>
+        <Button Text="go user details" Clicked="GoDetails"></Button>
+    </StackLayout>
+</ContentPage>

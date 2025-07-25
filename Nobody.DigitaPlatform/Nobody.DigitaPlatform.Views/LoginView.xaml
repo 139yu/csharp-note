@@ -1,0 +1,208 @@
+﻿<Window x:Class="Nobody.DigitaPlatform.Views.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Nobody.DigitaPlatform.Views"
+        xmlns:common="clr-namespace:Nobody.DigitaPlatform.Common;assembly=Nobody.DigitaPlatform.Common"
+        mc:Ignorable="d"
+        Name="win"
+        ResizeMode="NoResize"
+        DataContext="{Binding Source={StaticResource Locator},Path=LoginViewModel}"
+        Background="#f1f5fd"
+        WindowStartupLocation="CenterScreen"
+        Title="系统登录" Height="520" Width="300">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1"></WindowChrome>
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/Nobody.DigitaPlatform.Assets;component/Styles/ButtonStyle.xaml" />
+                <ResourceDictionary>
+                    <Style TargetType="TextBox" x:Key="UsernameStyle">
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TextBox">
+                                    <Border Height="40"
+                                            Padding="5,0"
+                                            SnapsToDevicePixels="True"
+                                            BorderThickness="0,0,0,1"
+                                            BorderBrush="#5000">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="25" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock VerticalAlignment="Center"
+                                                       Grid.Column="0" Text="&#xe612;"
+                                                       FontFamily="{StaticResource Iconfont}">
+                                                <TextBlock.Foreground>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                        <GradientStop Color="LightSteelBlue" Offset="0" />
+                                                        <GradientStop Color="CadetBlue" Offset="0.75" />
+                                                        <GradientStop Color="LightSkyBlue" Offset="1" />
+                                                    </LinearGradientBrush>
+                                                </TextBlock.Foreground>
+                                            </TextBlock>
+                                            <TextBlock VerticalAlignment="Center"
+                                                       Grid.Column="1"
+                                                       Name="placeholder"
+                                                       Visibility="Collapsed"
+                                                       Foreground="#5000"
+                                                       Text="请输入用户名/手机号" />
+                                            <ScrollViewer VerticalAlignment="Center" Grid.Column="1"
+                                                          Name="PART_ContentHost" />
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding LoginUser.Username}" Value="">
+                                            <Setter TargetName="placeholder" Property="Visibility" Value="Visible"></Setter>
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style TargetType="PasswordBox" x:Key="PasswordStyle">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="PasswordBox">
+                                    <Border Height="40" SnapsToDevicePixels="True" Padding="5,0"
+                                            BorderThickness="0,0,0,1" BorderBrush="#5000">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="25" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock VerticalAlignment="Center"
+                                                       Grid.Column="0" Text="&#xe62e;"
+                                                       Name="placeholder"
+                                                       FontFamily="{StaticResource Iconfont}">
+                                                <TextBlock.Foreground>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                        <GradientStop Color="LightSteelBlue" Offset="0" />
+                                                        <GradientStop Color="CadetBlue" Offset="0.75" />
+                                                        <GradientStop Color="LightSkyBlue" Offset="1" />
+                                                    </LinearGradientBrush>
+                                                </TextBlock.Foreground>
+                                            </TextBlock>
+                                            <TextBlock VerticalAlignment="Center"
+                                                       Grid.Column="1"
+                                                       Name="passwordPlaceholder"
+                                                       Visibility="Collapsed"
+                                                       Foreground="#5000"
+                                                       Text="请输入密码" />
+                                            <ScrollViewer VerticalAlignment="Center" Grid.Column="1"
+                                                          Name="PART_ContentHost" />
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding LoginUser.Password}" Value="">
+                                            <Setter TargetName="passwordPlaceholder" Property="Visibility" Value="Visible"></Setter>
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+    <Grid ClipToBounds="True">
+        <Ellipse Width="400" Height="400" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-200,-200,0">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#c2e0fa" Offset="0" />
+                    <GradientStop Color="#f1f5fd" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Ellipse Width="400" Height="400" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-180,-180,0,0">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#b4fee7" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Button
+                Style="{StaticResource WindowControlButtonStyle}"
+                FontSize="18"
+                Click="ButtonBase_OnClick"
+                WindowChrome.IsHitTestVisibleInChrome="True"
+                HorizontalAlignment="Right" VerticalAlignment="Top" Content="&#xeca0;"/>
+        <Grid Margin="35,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="1.8*" />
+                <RowDefinition />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Image Grid.Row="1" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Source="pack://application:,,,/Nobody.DigitaPlatform.Assets;component/Images/logo.jpg">
+                <Image.Clip>
+                    <EllipseGeometry RadiusX="50" RadiusY="50" Center="50,50" />
+                </Image.Clip>
+                <Image.OpacityMask>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#000" Offset="0" />
+                        <GradientStop Color="Transparent" Offset="1" />
+                    </LinearGradientBrush>
+                </Image.OpacityMask>
+            </Image>
+            <TextBlock Grid.Row="2"
+                       Text="空压站数字化监控系统"
+                       SnapsToDevicePixels="True"
+                       Margin="0,10,10,0"
+                       FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#FF569BD8" Offset="0" />
+                        <GradientStop Color="#FFBDD82B" Offset="0.75" />
+                        <GradientStop Color="#FF18548A" Offset="1" />
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+                <TextBlock.Effect>
+                    <DropShadowEffect
+                        Color="#7777"
+                        Direction="270"
+                        ShadowDepth="5"
+                        BlurRadius="10" />
+                </TextBlock.Effect>
+            </TextBlock>
+            <TextBox Grid.Row="3"
+                     VerticalAlignment="Center"
+                     Text="{Binding LoginUser.Username, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource UsernameStyle}" />
+            <PasswordBox Grid.Row="4"
+                         VerticalAlignment="Center"
+                        common:PasswordHelper.Attach="true"
+                         common:PasswordHelper.Password="{Binding LoginUser.Password,Mode=TwoWay}"
+                         Style="{StaticResource PasswordStyle}" />
+            <Button Grid.Row="5" Width="200" 
+                    Command="{Binding LoginCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    HorizontalAlignment="Stretch"
+                    CommandParameter="{Binding ElementName=win}"
+                    VerticalAlignment="Center" Content="登  录">
+            </Button>
+            <TextBlock Grid.Row="6" 
+                       TextWrapping="Wrap" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Foreground="Red"
+                       Text="{Binding FailedMsg}"/>
+        </Grid>
+    </Grid>
+</Window>

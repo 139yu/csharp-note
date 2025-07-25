@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:uiControls="clr-namespace:Xamarin.Demo.UIControls;assembly=Xamarin.Demo"
+            xmlns:view="clr-namespace:Xamarin.Demo.View;assembly=Xamarin.Demo"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            x:Class="Xamarin.Demo.View.MainPage">
+    <view:HomePage Title="首页" />
+    <view:ShoppingPage Title="购物页" />
+    <NavigationPage Title="导航">
+        <x:Arguments>
+            <view:OtherControlView />
+        </x:Arguments>
+    </NavigationPage>
+</TabbedPage>
