@@ -81,9 +81,9 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Execute
                         foreach (ModbusAddress address in ma.Variables)
                         {
                             int index = (address.StartAddress - ma.StartAddress) * 2;
-
-                            address.valueBytes = this.SwitchEndianType(valueBytes
-                                .GetRange(index, address.Length * 2));
+                            var valBytes = valueBytes
+                                .GetRange(index, address.Length * 2);
+                            address.ValueBytes = this.SwitchEndianType(valBytes).ToArray();
                         }
                     }
                     else
@@ -104,7 +104,7 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Execute
                         foreach (ModbusAddress address in ma.Variables)
                         {
                             var start = address.StartAddress - ma.StartAddress;
-                            address.valueBytes = resultState.GetRange(start, address.Length);
+                            address.ValueBytes = resultState.GetRange(start, address.Length).ToArray();
                         }
                     }
                 }
@@ -167,7 +167,7 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Execute
             result.Data.AddRange(mas);
             return result;
         }
-        protected override ModbusAddress AnalyzeAddress(VariableProperty item)
+        public override ModbusAddress AnalyzeAddress(VariableProperty item,bool isWrite = false)
         {
             // 计算寄存器数量
             ModbusAddress ma = new ModbusAddress();
@@ -179,6 +179,10 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Execute
             {
                 ma.FuncCode = 01;
                 ma.Length = 1;
+                if (isWrite)
+                {
+                    ma.FuncCode = 15;
+                }
             }
             // 输入线圈
             else if (item.VarAddr.StartsWith("1"))
@@ -191,7 +195,7 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Execute
                 ma.FuncCode = 04;
             // 输入寄存器
             else if (item.VarAddr.StartsWith("4"))
-                ma.FuncCode = 03;
+                ma.FuncCode = isWrite ? 16 : 03;
 
             // 40001 ---> 0地址
             ma.StartAddress = int.Parse(item.VarAddr.Substring(1)) - 1;
@@ -212,6 +216,58 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Execute
             return bytes;
         }
 
-        
+        protected List<byte> CreateWritePDU(byte slaveNum, byte funcCode, ushort startAddr, byte[] data)
+        {
+            //ModbusAddress ma = address as ModbusAddress;
+            List<byte> command = new List<byte>();
+            command.Add(slaveNum);
+            command.Add(funcCode);
+            command.Add(BitConverter.GetBytes(startAddr)[1]);
+            command.Add(BitConverter.GetBytes(startAddr)[0]);
+
+            if (funcCode == 0x10)// 写多寄存器
+            {
+                // 写寄存器数量
+                command.Add(BitConverter.GetBytes(data.Length / 2)[1]);
+                command.Add(BitConverter.GetBytes(data.Length / 2)[0]);
+                // 要写入寄存器的字节数
+                command.Add((byte)data.Length);
+            }
+            command.AddRange(data);
+
+            return command;
+        }
+        public override Result Write(List<CommAddress> addresses)
+        {
+            Result result = new Result();
+            try
+            {
+                var prop = this.Props.FirstOrDefault(p => p.PropName == "SlaveId");
+                if (prop == null)
+                    throw new Exception("未配置从站地址");
+
+                byte slaveId = 0x01;
+                byte.TryParse(prop.PropValue, out slaveId);
+                
+                foreach (ModbusAddress address in addresses)
+                {
+                    var dataBytes =  CreateWritePDU(slaveId, (byte)address.FuncCode, (byte)address.StartAddress, address.ValueBytes);
+                    this.Write(slaveId,(byte)address.FuncCode,(byte)address.StartAddress,address.ValueBytes,8);    
+                }
+            }
+            catch (Exception e)
+            {
+                result.Status = false;
+                result.Message = e.Message;
+            }
+           
+
+            return result;
+        }
+
+        public virtual void Write(byte slaveNum, byte funcCode, ushort startAddr, byte[] data, ushort respLen)
+        {
+            
+        }
     }
 }

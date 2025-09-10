@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Nobody.DigitaPlatform.ViewModels;
 
 namespace Nobody.DigitaPlatform.Views.Pages
 {
@@ -23,6 +24,10 @@ namespace Nobody.DigitaPlatform.Views.Pages
         public SettingsPage()
         {
             InitializeComponent();
+            this.Unloaded += (sender, args) =>
+            {
+                ViewModelLocator.Cleanup<SettingViewModel>();
+            };
         }
     }
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Nobody.DigitaPlatform.Views"
+        xmlns:common="clr-namespace:Nobody.DigitaPlatform.Common;assembly=Nobody.DigitaPlatform.Common"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="#f1f5fd"
@@ -11,6 +12,7 @@
         Name="win"
         WindowStyle="None"
         FontWeight="ExtraLight"
+        common:WindowHelper.Close="{Binding IsWindowClose}"
         DataContext="{Binding  Source={StaticResource Locator}, Path=MainViewModel}"
         Title="智能化通信平台" Height="800" Width="1400">
     <WindowChrome.WindowChrome>
@@ -27,12 +29,12 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="RadioButton">
-                                    <Border 
+                                    <Border
                                         Margin="8,0"
                                         BorderThickness="1"
                                         Padding="10"
-                                        Background="Transparent" 
-                                            CornerRadius="5" Name="root">
+                                        Background="Transparent"
+                                        CornerRadius="5" Name="root">
                                         <StackPanel>
                                             <TextBlock
                                                 Foreground="#df333333"
@@ -72,15 +74,16 @@
             <RowDefinition Height="50" />
             <RowDefinition />
         </Grid.RowDefinitions>
+        <!--标题栏背景-->
         <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
             <Border.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="LightBlue" Offset="0" />
-                    <GradientStop Color="AliceBlue" Offset="0.5" />
-                    <GradientStop Color="#fff" Offset="1" />
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#c2e0fa" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="0.6" />
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
+        <!--标题栏-->
         <Border Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
@@ -131,6 +134,7 @@
                 </TextBlock>
             </StackPanel>
         </Border>
+        <!--装饰条-->
         <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="390" />
@@ -171,7 +175,7 @@
                     <VisualBrush Viewport="0,0,100,60" ViewportUnits="Absolute" TileMode="Tile">
                         <VisualBrush.Visual>
                             <Path Data="M18 60,0 30,18 0 50,0 69,30 50,60M69,30 100,30"
-                                  Stroke="#4f10aabb"
+                                  Stroke="#1f10aabb"
                                   StrokeThickness="1" />
                         </VisualBrush.Visual>
                     </VisualBrush>

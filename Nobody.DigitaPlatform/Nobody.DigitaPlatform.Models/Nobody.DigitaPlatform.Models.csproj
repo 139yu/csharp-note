@@ -8,7 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.8" />
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nobody.DigitaPlatform.DataAccess\Nobody.DigitaPlatform.DataAccess.csproj" />
+    <ProjectReference Include="..\Nobody.DigitaPlatform.DeviceAccess\Nobody.DigitaPlatform.DeviceAccess.csproj" />
   </ItemGroup>
 
 </Project>

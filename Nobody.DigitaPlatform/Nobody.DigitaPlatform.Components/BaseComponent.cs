@@ -60,8 +60,8 @@ namespace Nobody.DigitaPlatform.Components
         }*/
 
         public static readonly DependencyProperty ResizeDownCommandProperty = DependencyProperty
-            .Register(nameof(ResizeDownCommand), 
-                typeof(ICommand), typeof(BaseComponent), 
+            .Register(nameof(ResizeDownCommand),
+                typeof(ICommand), typeof(BaseComponent),
                 new PropertyMetadata(default(ICommand)));
 
         public ICommand ResizeDownCommand
@@ -69,6 +69,7 @@ namespace Nobody.DigitaPlatform.Components
             get => (ICommand)this.GetValue(ResizeDownCommandProperty);
             set => this.SetValue(ResizeDownCommandProperty, value);
         }
+
         public static readonly DependencyProperty ResizeUpCommandProperty = DependencyProperty
             .Register(nameof(ResizeUpCommand),
                 typeof(ICommand), typeof(BaseComponent),
@@ -79,6 +80,7 @@ namespace Nobody.DigitaPlatform.Components
             get => (ICommand)this.GetValue(ResizeUpCommandProperty);
             set => this.SetValue(ResizeUpCommandProperty, value);
         }
+
         public static readonly DependencyProperty ResizeMoveCommandProperty = DependencyProperty
             .Register(nameof(ResizeMoveCommand),
                 typeof(ICommand), typeof(BaseComponent),
@@ -90,6 +92,15 @@ namespace Nobody.DigitaPlatform.Components
             set => this.SetValue(ResizeMoveCommandProperty, value);
         }
 
+        public object VarList
+        {
+            get => (int)GetValue(VarListProperty);
+            set => SetValue(VarListProperty, value);
+        }
+
+        public static readonly DependencyProperty VarListProperty =
+            DependencyProperty.Register(nameof(VarList), typeof(object), typeof(BaseComponent),
+                new PropertyMetadata(null));
         public int RotateAngle
         {
             get => (int)GetValue(RotateAngleProperty);
@@ -97,17 +108,81 @@ namespace Nobody.DigitaPlatform.Components
         }
 
         public static readonly DependencyProperty RotateAngleProperty =
-            DependencyProperty.Register(nameof(RotateAngle), typeof(int), typeof(BaseComponent), new PropertyMetadata(0));
+            DependencyProperty.Register(nameof(RotateAngle), typeof(int), typeof(BaseComponent),
+                new PropertyMetadata(0));
+
         public int FlowDirection
         {
             get { return (int)GetValue(FlowDirectionProperty); }
             set { SetValue(FlowDirectionProperty, value); }
         }
+
         public static readonly DependencyProperty FlowDirectionProperty =
-            DependencyProperty.Register(nameof(FlowDirection), typeof(int), typeof(BaseComponent), new PropertyMetadata(0, (d, e) =>
-            {
-                var state = VisualStateManager.GoToState(d as BaseComponent, e.NewValue.ToString() == "1" ? "EWFlowState" : "WEFlowState", false);
-            }));
+            DependencyProperty.Register(nameof(FlowDirection), typeof(int), typeof(BaseComponent), new PropertyMetadata(
+                0, (d, e) =>
+                {
+                    var state = VisualStateManager.GoToState(d as BaseComponent,
+                        e.NewValue.ToString() == "1" ? "EWFlowState" : "WEFlowState", false);
+                }));
+
+        public bool IsWarning
+        {
+            get => (bool)GetValue(IsWarningProperty);
+            set => SetValue(IsWarningProperty, value);
+        }
+
+        public static readonly DependencyProperty IsWarningProperty =
+            DependencyProperty.Register(nameof(IsWarning), typeof(bool), typeof(BaseComponent), new PropertyMetadata(
+                false,
+                (obj, e) =>
+                {
+                    var isWarning = (bool)e.NewValue;
+                    if (isWarning)
+                    {
+                        VisualStateManager.GoToElementState(obj as FrameworkElement, "WarningState", false);
+                    }
+                    else
+                    {
+                        VisualStateManager.GoToElementState(obj as FrameworkElement, "NormalState", false);
+                    }
+                }));
+
+        public string WarningMessage
+        {
+            get => (string)GetValue(WarningMessageProperty);
+            set => SetValue(WarningMessageProperty, value);
+        }
+
+        public static readonly DependencyProperty WarningMessageProperty =
+            DependencyProperty.Register(nameof(WarningMessage), typeof(string), typeof(BaseComponent),
+                new PropertyMetadata(
+                    ""));
+
+        public bool IsMonitor
+        {
+            get { return (bool)GetValue(IsMonitorProperty); }
+            set { SetValue(IsMonitorProperty, value); }
+        }
+        public static readonly DependencyProperty IsMonitorProperty =
+            DependencyProperty.Register("IsMonitor", typeof(bool), typeof(BaseComponent), new PropertyMetadata(false));
+        public static readonly DependencyProperty ManualControlsProperty =
+            DependencyProperty.Register("ManualControls", typeof(object), typeof(BaseComponent), new PropertyMetadata(null));
+
+        public object ManualControls
+        {
+            get => GetValue(ManualControlsProperty);
+            set => SetValue(ManualControlsProperty, value);
+        }
+
+        public ICommand ManualControlCommand
+        {
+            get => (ICommand)GetValue(ManualControlCommandProperty);
+            set => SetValue(ManualControlCommandProperty,value);
+        }
+
+        public static readonly DependencyProperty ManualControlCommandProperty =
+            DependencyProperty.Register("ManualControlCommand", typeof(ICommand), typeof(BaseComponent), new PropertyMetadata(null));
+
         #region 缩放命令
 
         private Point _startPoint;
@@ -183,7 +258,6 @@ namespace Nobody.DigitaPlatform.Components
                 d = VisualTreeHelper.GetParent(d);
             }
             return d as Canvas; // 可能返回null需处理*/
-
         }
 
         #endregion

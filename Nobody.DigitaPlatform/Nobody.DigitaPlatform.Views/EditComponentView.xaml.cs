@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Nobody.DigitaPlatform.Common;
+using Nobody.DigitaPlatform.Views.Dialog;
 
 namespace Nobody.DigitaPlatform.Views
 {
@@ -22,6 +24,28 @@ namespace Nobody.DigitaPlatform.Views
         public EditComponentView()
         {
             InitializeComponent();
+            ActionManager.Register("OpenAlarmConditionDialog", 
+                (object obj) => new VariableAlarmConditionDialog()
+                    {
+                        Owner = this,
+                        DataContext = obj
+                    }
+                    .ShowDialog() == true);
+
+            ActionManager.Register("OpenUnionConditionDialog",
+                (object obj) => new VariableUnionCOnditionDialog()
+                    {
+                        Owner = this,
+                        DataContext = obj
+                    }
+                    .ShowDialog() == true);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            ActionManager.UnRegister("OpenAlarmConditionDialog");
+            ActionManager.UnRegister("OpenUnionConditionDialog");
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)

@@ -45,7 +45,8 @@ namespace Nobody.DigitaPlatform.Common
         {
             if (ActionDictionary.TryGetValue(key, out var value))
             {
-                if (value is Func<T, R> action) return action.Invoke(data);
+                if (value is Func<T, R> action) 
+                    return action.Invoke(data);
             }
 
             throw new Exception("key is not exists");

@@ -110,8 +110,25 @@ namespace Nobody.DigitaPlatform.Common.Converter
             instance.SetBinding(BaseComponent.IsWarningProperty, binding);
 
             binding = new Binding();
-            binding.Path = new PropertyPath("WarningMessage");
+            binding.Path = new PropertyPath("WarningMessage.AlarmContent");
             instance.SetBinding(BaseComponent.WarningMessageProperty, binding);
+
+            binding = new Binding();
+            binding.Path = new PropertyPath("DeviceVariables");
+            instance.SetBinding(BaseComponent.VarListProperty, binding);
+
+            binding = new Binding();
+            binding.Path = new PropertyPath("IsMonitor");
+            instance.SetBinding(BaseComponent.IsMonitorProperty, binding);
+
+            binding = new Binding();
+            binding.Path = new PropertyPath("ManualControls");
+            instance.SetBinding(BaseComponent.ManualControlsProperty, binding);
+
+
+            binding = new Binding();
+            binding.Path = new PropertyPath("ManualControlCommand");
+            instance.SetBinding(BaseComponent.ManualControlCommandProperty, binding);
             return instance;
         }
 

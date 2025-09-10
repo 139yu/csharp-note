@@ -10,12 +10,14 @@
 
   <ItemGroup>
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="NPOI" Version="2.7.4" />
     <PackageReference Include="System.IO.Ports" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Nobody.DigitaPlatform.Common\Nobody.DigitaPlatform.Common.csproj" />
     <ProjectReference Include="..\Nobody.DigitaPlatform.DataAccess\Nobody.DigitaPlatform.DataAccess.csproj" />
+    <ProjectReference Include="..\Nobody.DigitaPlatform.DeviceAccess\Nobody.DigitaPlatform.DeviceAccess.csproj" />
     <ProjectReference Include="..\Nobody.DigitaPlatform.Models\Nobody.DigitaPlatform.Models.csproj" />
   </ItemGroup>
 

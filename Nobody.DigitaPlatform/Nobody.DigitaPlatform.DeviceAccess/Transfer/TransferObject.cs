@@ -30,13 +30,13 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Transfer
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="readPdu"></param>
+        /// <param name="dataBytes"></param>
         /// <param name="headerLen">报文头长度</param>
         /// <param name="len2"></param>
         /// <param name="timeout"></param>
         /// <param name="calLen">通过报文头计算后续字节长度(不包括报文头长度)</param>
         /// <returns></returns>
-        public virtual Result<List<byte>> SendAndReceive(List<byte> readPdu, int headerLen, int len2, int timeout, Func<byte[],int> calLen)
+        public virtual Result<List<byte>> SendAndReceive(List<byte> dataBytes, int headerLen, int len2, int timeout, Func<byte[],int> calLen)
         {
             return new Result<List<byte>>();
         }

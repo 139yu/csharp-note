@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Nobody.DigitaPlatform.Common;
+using Nobody.DigitaPlatform.Models;
+using Nobody.DigitaPlatform.ViewModels;
+using Nobody.DigitaPlatform.Views.Dialog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +13,9 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Nobody.DigitaPlatform.Common;
 
 namespace Nobody.DigitaPlatform.Views
 {
@@ -27,16 +31,32 @@ namespace Nobody.DigitaPlatform.Views
                 Application.Current.Shutdown();
             }
 
-            InitializeComponent();
-            ActionManager.Register<bool>("ShowEditComponentView", ShowEditComponentView);
-        }
-
-        private bool ShowEditComponentView()
-        {
-            return new EditComponentView()
+            ActionManager.Register<bool>("ShowEditComponentView", () => ShowDialog(new EditComponentView()
             {
                 Owner = this,
-            }.ShowDialog() == true;
+            }));
+
+            ActionManager.Register<bool>("ShowRightDialog", () => ShowDialog(new RightDialog()
+            {
+                Owner = this
+            }));
+            ActionManager
+                .Register<TrendAxisDialogViewModel, bool>("ShowAxisEditDialog", obj => ShowDialog(new TrendAxisEditDialog()
+                {
+                    DataContext = obj,
+                    Owner = this
+                }));
+            ActionManager.Register<object,bool>("ShowTrendVars", obj => ShowDialog(new TrendDeviceChooseDialog() { Owner = this, DataContext = obj }));
+            InitializeComponent();
+        }
+
+
+        private bool ShowDialog(Window window)
+        {
+            this.Effect = new BlurEffect() { Radius = 10 };
+            var state = window.ShowDialog() == true;
+            this.Effect = null;
+            return state;
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)

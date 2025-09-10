@@ -13,5 +13,6 @@ namespace Nobody.DigitaPlatform.Entities
         public string Operator { get; set; }
         public string CompareValue { get; set; }
         public string AlarmContent { get; set; }
+        public List<UnionDeviceEntity> UnionDeviceList { get; set; }
     }
 }

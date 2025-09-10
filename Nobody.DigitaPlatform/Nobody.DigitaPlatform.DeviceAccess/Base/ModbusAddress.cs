@@ -11,7 +11,6 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Base
         public int FuncCode { get; set; }
         public int Length { get; set; }
         public int StartAddress { get; set; }
-
         public ModbusAddress()
         {
             

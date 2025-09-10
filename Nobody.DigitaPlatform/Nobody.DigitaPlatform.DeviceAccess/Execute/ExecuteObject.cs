@@ -65,8 +65,9 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Execute
         {
         }
 
-        public virtual void Write()
+        public virtual Result Write(List<CommAddress> addresses)
         {
+            return Result.Failed();
         }
 
         public virtual void WriteAsync()
@@ -114,7 +115,7 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Execute
             return null;
         }
 
-        protected virtual CommAddress AnalyzeAddress(VariableProperty item)
+        public virtual CommAddress AnalyzeAddress(VariableProperty item,bool isWrite =false)
         {
             return null;
         }

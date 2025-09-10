@@ -4,6 +4,7 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:local="clr-namespace:Nobody.DigitaPlatform.Components"
+                     xmlns:converter="clr-namespace:Nobody.DigitaPlatform.Components.Converter"
                      mc:Ignorable="d"
                      x:Name="root"
                      d:DesignHeight="250" d:DesignWidth="300">
@@ -12,6 +13,29 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <BooleanToVisibilityConverter x:Key="b2v" />
+                    <converter:InfoToggleButtonVisibilityConverter x:Key="ibv" />
+                    <Style TargetType="ToggleButton" x:Key="InfoToggleButtonStyle">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border Name="br" Background="#F2F5Ff" CornerRadius="20">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="15" Color="#16a1ff" ShadowDepth="0"
+                                                              Opacity="0.4" />
+                                        </Border.Effect>
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   Text="{TemplateBinding Content}"
+                                                   FontSize="12" Foreground="#ccc" FontWeight="Normal" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="br" Property="Background" Value="#FFBAC2C7"></Setter>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
                 </ResourceDictionary>
                 <ResourceDictionary
                     Source="pack://application:,,,/Nobody.DigitaPlatform.Assets;component/Styles/ButtonStyle.xaml">
@@ -20,13 +44,34 @@
         </ResourceDictionary>
 
     </local:BaseComponent.Resources>
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState Name="NormalState" />
+            <VisualState Name="WarningState">
+                <Storyboard>
+                    <ColorAnimationUsingKeyFrames
+                        Storyboard.TargetName="rootEf"
+                        Storyboard.TargetProperty="Color">
+                        <LinearColorKeyFrame KeyTime="0:0:0" Value="Red" />
+                    </ColorAnimationUsingKeyFrames>
+                    <DoubleAnimationUsingKeyFrames
+                        RepeatBehavior="Forever"
+                        Storyboard.TargetName="rootEf"
+                        Storyboard.TargetProperty="Opacity">
+                        <LinearDoubleKeyFrame Value="1" KeyTime="0:0:1" />
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
     <Grid>
 
         <Grid Background="Transparent" Margin="5">
             <Grid.Effect>
-                <DropShadowEffect Color="#ccc"
+                <DropShadowEffect Color="#5db5cc"
+                                  x:Name="rootEf"
                                   BlurRadius="10"
-                                  Opacity="0.3" />
+                                  Opacity="0.1" />
             </Grid.Effect>
             <Path Fill="#5db5cc" Stretch="Fill">
                 <Path.Data>
@@ -94,7 +139,7 @@
                      Width="10" Height="10" Stroke="#666" Fill="#FFF" />
 
             <Button Visibility="{Binding ElementName=root,Path=IsSelected,Converter={StaticResource b2v}}"
-                   Click="ButtonBase_OnClick"
+                    Click="ButtonBase_OnClick"
                     Margin="0,-10,-10,0" Style="{StaticResource ControlButtonStyle}"
                     HorizontalAlignment="Right"
                     Background="Transparent"
@@ -112,12 +157,147 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="icon" Property="Foreground" Value="Red"/>
+                                <Setter TargetName="icon" Property="Foreground" Value="Red" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
         </Grid>
+        <Canvas>
+            <!--报警消息-->
+            <Line X1="0" Y1="15" X2="15" Y2="0"
+                  Visibility="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                Path=IsWarning,Converter={StaticResource b2v}}"
+                  Margin="20,-5"
+                  Stroke="Red" StrokeThickness="1" />
+            <Border
+                Visibility="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+Path=IsWarning,Converter={StaticResource b2v}}"
+                MinWidth="100" MaxWidth="200" MaxHeight="55"
+                Background="#6f00"
+                Margin="0,0,0,5"
+                BorderBrush="#8f00" BorderThickness="1"
+                CornerRadius="5"
+                Canvas.Bottom="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                Path=ActualHeight}">
+                <TextBlock Foreground="#fff" LineHeight="20"
+                           Margin="5"
+                           TextWrapping="Wrap" TextTrimming="WordEllipsis">
+                    <Hyperlink TextDecorations="None">[详情]</Hyperlink>
+                    <Run
+                        Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                         Path=WarningMessage,StringFormat=- {0}}">
+                    </Run>
+                </TextBlock>
+            </Border>
+            <!--变量列表-->
+            <ToggleButton Name="varBtn" Style="{StaticResource InfoToggleButtonStyle}"
+                          Content="i" Width="20" Height="20"
+                          Canvas.Bottom="0"
+                          Canvas.Left="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=ActualWidth}">
+                <ToggleButton.Visibility>
+                    <MultiBinding Converter="{StaticResource ibv}">
+                        <Binding RelativeSource="{RelativeSource AncestorType=UserControl}" Path="VarList.Count" />
+                        <Binding RelativeSource="{RelativeSource AncestorType=UserControl}" Path="IsMonitor" />
+                    </MultiBinding>
+                </ToggleButton.Visibility>
+            </ToggleButton>
+            <Border Padding="5" Width="120"
+                    Canvas.Left="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=ActualWidth}"
+                    Canvas.Top="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=ActualHeight}"
+                    BorderThickness="1" BorderBrush="AliceBlue"
+                    CornerRadius="5"
+                    Margin="20,-25,0,0"
+                    Visibility="{Binding ElementName=varBtn,Path=IsChecked,Converter={StaticResource b2v}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.RowSpan="2" Background="#EEE">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="15" Color="#16a1ff" ShadowDepth="0" Opacity="0.2" />
+                        </Border.Effect>
+                    </Border>
+                    <TextBlock Grid.Row="0" Text="实时变量数据" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <ItemsControl Padding="3" TextBlock.FontSize="12" Margin="0,0,0,5" Grid.Row="1"
+                                  ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=VarList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="5,1" CornerRadius="3" Height="25" Background="#9fff">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center" Text="{Binding VarName}" />
+                                        <TextBlock Grid.Column="1" VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center" Text="{Binding Value}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Border>
+
+
+            <ToggleButton Name="controlBtn" Style="{StaticResource InfoToggleButtonStyle}"
+                          Content="···" Width="20" Height="20"
+                          VerticalContentAlignment="Center"
+                          Canvas.Bottom="30"
+                          Canvas.Left="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=ActualWidth}">
+                <ToggleButton.Visibility>
+                    <MultiBinding Converter="{StaticResource ibv}">
+                        <Binding RelativeSource="{RelativeSource AncestorType=UserControl}" Path="ManualControls.Count" />
+                        <Binding RelativeSource="{RelativeSource AncestorType=UserControl}" Path="IsMonitor" />
+                    </MultiBinding>
+                </ToggleButton.Visibility>
+            </ToggleButton>
+
+            <Border Padding="5"
+                    Visibility="{Binding ElementName=controlBtn,Path=IsChecked,Converter={StaticResource b2v}}"
+                    Canvas.Left="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=ActualWidth}"
+                    Canvas.Top="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=ActualHeight}"
+                    Margin="25,-40,0,0"
+                    Background="#eee" CornerRadius="5">
+                <Grid>
+                    <Border Background="#Aeee">
+                        <Border.Effect>
+                            <DropShadowEffect Color="DeepSkyBlue" Opacity="0.3" BlurRadius="10" ShadowDepth="0"></DropShadowEffect>
+                        </Border.Effect>
+                    </Border>
+                    <ItemsControl Width="100"
+                                  ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=ManualControls}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding ControlHeader}" 
+                                        Command="{Binding  ManualControlCommand,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        FontSize="12">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid Height="24" Margin="0,1">
+                                                <Border CornerRadius="5" Background="#9fff" Name="bd">
+                                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                </Border>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#dfff"></Setter>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Border>
+        </Canvas>
+
     </Grid>
 </local:BaseComponent>

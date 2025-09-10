@@ -17,5 +17,6 @@ namespace Nobody.DigitaPlatform.Entities
 
         public List<DevicePropEntity> DeviceProps { get; set; }
         public List<VariableEntity> Vars { get; set; }
+        public List<ManualEntity> ManualControls { get; set; }
     }
 }

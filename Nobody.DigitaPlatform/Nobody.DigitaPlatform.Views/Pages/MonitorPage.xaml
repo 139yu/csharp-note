@@ -16,6 +16,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <converter:DeviceConverter  x:Key="DeviceConverter"/>
+                    <converter:UserConverter  x:Key="UserConverter"/>
                     <BooleanToVisibilityConverter  x:Key="b2v"/>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/Nobody.DigitaPlatform.Assets;component/Styles/ButtonStyle.xaml"></ResourceDictionary>
@@ -628,15 +629,16 @@
             <Border Background="#FFAC9CE6" CornerRadius="5" Padding="10">
                 <StackPanel>
                     <TextBlock Foreground="#FFFAF1DF" Margin="0,0,0,10" HorizontalAlignment="Center">
-                        <Run Text="Admin" FontSize="20"></Run>
-                        <Run Text="[管理员]" FontSize="12" Foreground="#FFcccccc" />
+                        <Run Text="{Binding CurrentUser.Username}" FontSize="20"></Run>
+                        <Run Text="{Binding CurrentUser.UserType,
+                            Converter={StaticResource UserConverter},StringFormat={}[{0}]}" FontSize="12" Foreground="#FFcccccc" />
                     </TextBlock>
                     <TextBlock Margin="0,0,0,10" Text="信息技术部" FontSize="12" Foreground="#FFcccccc"
                                HorizontalAlignment="Center" />
                     <TextBlock HorizontalAlignment="Center">
                         <Hyperlink TextDecorations="None" Foreground="#FFFAF1DF" FontSize="12">修改密码</Hyperlink>
                         <Run Text="  "></Run>
-                        <Hyperlink TextDecorations="None" Foreground="#FFFAF1DF" FontSize="12">退出登录</Hyperlink>
+                        <Hyperlink TextDecorations="None" Command="{Binding  }" Foreground="#FFFAF1DF" FontSize="12">退出登录</Hyperlink>
                     </TextBlock>
                     <Button Command="{Binding EditComponentCommand }" Margin="0,10,0,0" Width="150" Style="{StaticResource PrimaryButton}">
                         <Grid VerticalAlignment="Center" HorizontalAlignment="Center">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nobody.DigitaPlatform.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,10 @@ namespace Nobody.DigitaPlatform.Views.Pages
         public ReportPage()
         {
             InitializeComponent();
+            this.Unloaded += (sender, args) =>
+            {
+                ViewModelLocator.Cleanup<ReportViewModel>();
+            };
         }
     }
 }

@@ -1,0 +1,74 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\Code\\githubCode\\csharp-note\\Record_LeadShine_SLN\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{25A30669-7F73-4515-8F97-8B0E8AAC393F}|LeiSai3800Demo\\LeiSai3800Demo.csproj|g:\\code\\githubcode\\csharp-note\\record_leadshine_sln\\leisai3800demo\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25A30669-7F73-4515-8F97-8B0E8AAC393F}|LeiSai3800Demo\\LeiSai3800Demo.csproj|solutionrelative:leisai3800demo\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25A30669-7F73-4515-8F97-8B0E8AAC393F}|LeiSai3800Demo\\LeiSai3800Demo.csproj|G:\\Code\\githubCode\\csharp-note\\Record_LeadShine_SLN\\leisai3800demo\\motion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25A30669-7F73-4515-8F97-8B0E8AAC393F}|LeiSai3800Demo\\LeiSai3800Demo.csproj|solutionrelative:leisai3800demo\\motion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25A30669-7F73-4515-8F97-8B0E8AAC393F}|LeiSai3800Demo\\LeiSai3800Demo.csproj|G:\\Code\\githubCode\\csharp-note\\Record_LeadShine_SLN\\leisai3800demo\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{25A30669-7F73-4515-8F97-8B0E8AAC393F}|LeiSai3800Demo\\LeiSai3800Demo.csproj|solutionrelative:leisai3800demo\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Motion.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Record_LeadShine_SLN\\LeiSai3800Demo\\Motion.cs",
+              "RelativeDocumentMoniker": "LeiSai3800Demo\\Motion.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Record_LeadShine_SLN\\LeiSai3800Demo\\Motion.cs",
+              "RelativeToolTip": "LeiSai3800Demo\\Motion.cs",
+              "ViewState": "AgIAALwBAAAAAAAAAAAuwM0BAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-09T06:57:04.533Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FrmMain.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Record_LeadShine_SLN\\LeiSai3800Demo\\FrmMain.cs",
+              "RelativeDocumentMoniker": "LeiSai3800Demo\\FrmMain.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Record_LeadShine_SLN\\LeiSai3800Demo\\FrmMain.cs",
+              "RelativeToolTip": "LeiSai3800Demo\\FrmMain.cs",
+              "ViewState": "AgIAALkBAAAAAAAAAAA+wMwBAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T08:38:02.653Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FrmMain.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Record_LeadShine_SLN\\LeiSai3800Demo\\FrmMain.cs",
+              "RelativeDocumentMoniker": "LeiSai3800Demo\\FrmMain.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Record_LeadShine_SLN\\LeiSai3800Demo\\FrmMain.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "LeiSai3800Demo\\FrmMain.cs [\u8BBE\u8BA1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T08:23:45.337Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

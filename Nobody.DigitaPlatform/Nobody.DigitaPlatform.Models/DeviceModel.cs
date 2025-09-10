@@ -14,11 +14,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using GalaSoft.MvvmLight.Messaging;
+using Nobody.DigitaPlatform.DataAccess;
+using Nobody.DigitaPlatform.DeviceAccess;
+using Nobody.DigitaPlatform.DeviceAccess.Base;
+using Nobody.DigitaPlatform.Entities;
 
 namespace Nobody.DigitaPlatform.Models
 {
     public class DeviceModel : ViewModelBase
     {
+        #region db prop
+
         private string _header;
 
         public string Header
@@ -37,11 +43,6 @@ namespace Nobody.DigitaPlatform.Models
 
         private bool _isSelected;
 
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set { Set(ref _isSelected, value); }
-        }
 
         private double x;
 
@@ -90,6 +91,7 @@ namespace Nobody.DigitaPlatform.Models
             get => _isVisible;
             set => Set(ref _isVisible, value);
         }
+
         private int _rotate;
 
         public int Rotate
@@ -97,6 +99,7 @@ namespace Nobody.DigitaPlatform.Models
             get { return _rotate; }
             set { Set(ref _rotate, value); }
         }
+
         private int _flowDirection;
 
         public int FlowDirection
@@ -104,26 +107,71 @@ namespace Nobody.DigitaPlatform.Models
             get { return _flowDirection; }
             set { Set(ref _flowDirection, value); }
         }
+
+        // 根据这个名称动态创建一个组件实例
+        public string DeviceType { get; set; }
+
+        #endregion
+
+        #region business prop
+
+        private bool _isMonitor = false;
+
+        public bool IsMonitor
+        {
+            get { return _isMonitor; }
+            set { Set(ref _isMonitor, value); }
+        }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set { Set(ref _isSelected, value); }
+        }
+
         private bool _isWarning = false;
+
         public bool IsWarning
         {
             get { return _isWarning; }
             set { Set(ref _isWarning, value); }
         }
-        private string _warningMessage;
-        public string WarningMessage
+
+        private DeviceAlarmModel _warningMessage;
+
+        public DeviceAlarmModel WarningMessage
         {
             get { return _warningMessage; }
             set { Set(ref _warningMessage, value); }
         }
-        // 根据这个名称动态创建一个组件实例
-        public string DeviceType { get; set; }
+        #endregion
+
+
+
 
         public Func<List<DeviceModel>> Devices { get; set; }
         private List<DeviceModel> _devicesTemp;
         private List<DeviceModel> _linesTemp;
         private List<DeviceModel> _rulesTemp;
+
+        #region collection prop
+
         private ObservableCollection<DevicePropModel> _deviceProps;
+        private ObservableCollection<ManualControlModel> _manualControls;
+
+        public ObservableCollection<ManualControlModel> ManualControls
+        {
+            get
+            {
+                if (_manualControls == null)
+                {
+                    _manualControls = new ObservableCollection<ManualControlModel>();
+                }
+
+                return _manualControls;
+            }
+            set => Set(ref _manualControls, value);
+        }
 
         public ObservableCollection<DevicePropModel> DeviceProps
         {
@@ -139,12 +187,30 @@ namespace Nobody.DigitaPlatform.Models
             set => Set(ref _deviceProps, value);
         }
 
-        public RelayCommand<DeviceModel> DeleteCommand { get; set; }
-        public RelayCommand AddPropCommand { get; }
-        public RelayCommand<object> DelPropCommand { get; }
+        private ObservableCollection<VariableModel> _deviceVariables;
 
-        public DeviceModel()
+        public ObservableCollection<VariableModel> DeviceVariables
         {
+            get
+            {
+                if (_deviceVariables == null)
+                {
+                    _deviceVariables = new ObservableCollection<VariableModel>();
+                }
+
+                return _deviceVariables;
+            }
+            set => Set(ref _deviceVariables, value);
+        }
+
+        #endregion
+
+
+        private ILocalDataAccess _localDataAccess;
+
+        public DeviceModel(ILocalDataAccess localDataAccess)
+        {
+            _localDataAccess = localDataAccess;
             AddPropCommand = new RelayCommand(DoAddPropCommand);
             DelPropCommand = new RelayCommand<object>(DoDelPropCommand);
             DelVariableCommand = new RelayCommand<object>(DoDelVariableCommand);
@@ -152,13 +218,84 @@ namespace Nobody.DigitaPlatform.Models
             ResizeDownCommand = new RelayCommand<object>(DoResizeDownCommand);
             ResizeUpCommand = new RelayCommand<object>(DoResizeUpCommand);
             ResizeMoveCommand = new RelayCommand<object>(DoResizeMoveCommand);
-            Messenger.Default.Register<DeviceAlarmModel>(this, DeviceNum, model =>
+            AddManualControlCommand = new RelayCommand(() =>
             {
-                if (this.IsWarning)
+                ManualControls.Add(new ManualControlModel()
                 {
-
-                }
+                    DNum = this.DeviceNum
+                });
             });
+            DelManualControlCommand = new RelayCommand<object>(obj =>
+            {
+                ManualControls.Remove(obj as ManualControlModel);
+            });
+            ManualControlCommand = new RelayCommand<object>(DoManualControlCommand);
+            /*Messenger.Default.Register<DeviceAlarmModel>(this, "Alarm", model =>
+            {
+                if (!IsMonitor) return;
+                if (!model.DNum.Equals(DeviceNum)) return;
+                if (this.IsWarning) return;
+                this.IsWarning = true;
+                WarningMessage = model;
+
+                _localDataAccess.SaveAlarmMessage(new AlarmEntity()
+                {
+                    AlarmNum = WarningMessage.AlarmNum,
+                    CNum = WarningMessage.CNum,
+                    DeviceNum = WarningMessage.DNum,
+                    VariableNum = WarningMessage.VNum,
+                    AlarmContent = WarningMessage.AlarmContent,
+                    RecordTime = WarningMessage.DateTime,
+                    AlarmLevel = WarningMessage.Level.ToString(),
+                    State = WarningMessage.State.ToString()
+                });
+            });*/
+        }
+
+        #region do command method
+
+        private void DoManualControlCommand(object obj)
+        {
+            var model = obj as ManualControlModel;
+            var communication = Communication.GetInstance();
+            List<DevicePropEntity> deviceEntities = this.DeviceProps
+                .Select(p => new DevicePropEntity()
+                {
+                    DeviceNum = this.DeviceNum,
+                    PropName = p.PropName,
+                    PropValue = p.PropValue
+                })
+                .ToList();
+            var executeResult = communication.GetExecuteObject(deviceEntities);
+            if (!executeResult.Status)
+            {
+                this.IsWarning = true;
+                WarningMessage = new DeviceAlarmModel(_localDataAccess)
+                {
+                    AlarmContent = executeResult.Message,
+                    DateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+                return;
+            }
+
+            var executeObject = executeResult.Data;
+            CommAddress address = executeObject.AnalyzeAddress(new VariableProperty()
+            {
+                ValueType = typeof(UInt16),
+                VarAddr = model.ControlAddress,
+            }, true);
+            var valueBytes = BitConverter.GetBytes(UInt16.Parse(model.Value)).Reverse().ToArray();
+            address.ValueBytes = valueBytes;
+            var writeResult = executeObject.Write(new List<CommAddress>() { address });
+            if (!writeResult.Status)
+            {
+                IsWarning = true;
+                WarningMessage = new DeviceAlarmModel(_localDataAccess)
+                {
+                    AlarmContent = writeResult.Message,
+                    DateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+            }
         }
 
 
@@ -185,21 +322,10 @@ namespace Nobody.DigitaPlatform.Models
             DeviceProps.Add(new DevicePropModel());
         }
 
-        private ObservableCollection<VariableModel> _deviceVariables;
+        #endregion
 
-        public ObservableCollection<VariableModel> DeviceVariables
-        {
-            get
-            {
-                if (_deviceVariables == null)
-                {
-                    _deviceVariables = new ObservableCollection<VariableModel>();
-                }
 
-                return _deviceVariables;
-            }
-            set => Set(ref _deviceVariables, value);
-        }
+        #region command prop
 
         public RelayCommand<object> DelVariableCommand { get; }
         public RelayCommand AddVariableCommand { get; }
@@ -207,6 +333,13 @@ namespace Nobody.DigitaPlatform.Models
         public RelayCommand<object> ResizeMoveCommand { get; }
         public RelayCommand<object> ResizeUpCommand { get; }
         public RelayCommand<object> ResizeDownCommand { get; }
+        public RelayCommand AddManualControlCommand { get; }
+        public RelayCommand<object> ManualControlCommand { get; }
+        public RelayCommand<DeviceModel> DeleteCommand { get; set; }
+        public RelayCommand AddPropCommand { get; }
+        public RelayCommand<object> DelPropCommand { get; }
+
+        #endregion
 
         #region drag event
 
@@ -365,7 +498,6 @@ namespace Nobody.DigitaPlatform.Models
                     {
                         this.Width = ShowWidthRule(_oldWidth + width);
                         this.Height = ShowHeightRule(_oldHeight + height);
-                        
                     }
                 }
 
@@ -380,6 +512,7 @@ namespace Nobody.DigitaPlatform.Models
             {
                 d.IsVisible = false;
             }
+
             _isResize = false;
             Mouse.Capture(null);
         }
@@ -426,7 +559,7 @@ namespace Nobody.DigitaPlatform.Models
                     {
                         _wr.Y = model.Y + model.Height;
                     }
-                        
+
                     if (dis < 5)
                     {
                         width = model.X + model.Width - X;
@@ -440,6 +573,7 @@ namespace Nobody.DigitaPlatform.Models
 
             return width;
         }
+
         private double ShowHeightRule(double height)
         {
             _hr = _rulesTemp.FirstOrDefault(d => d.DeviceType.Equals("HeightRule"));
@@ -465,7 +599,7 @@ namespace Nobody.DigitaPlatform.Models
                     {
                         _hr.X = model.X + model.Width;
                     }
-                        
+
                     if (dis < 5)
                     {
                         height = model.Y + model.Height - Y;
@@ -485,6 +619,7 @@ namespace Nobody.DigitaPlatform.Models
         #region 组件右键菜单
 
         public List<Control> ContextMenus { get; set; }
+        public RelayCommand<object> DelManualControlCommand { get; }
 
         public void InitContextMenu()
         {
@@ -492,27 +627,32 @@ namespace Nobody.DigitaPlatform.Models
             ContextMenus.Add(new MenuItem()
             {
                 Header = "顺时针旋转",
-                Command = new RelayCommand(() =>
+                Command = new RelayCommand(() => { this.Rotate += 90; }),
+                Visibility = new string[]
                 {
-                    this.Rotate += 90;
-                }),
-                Visibility = new string[] {
-                    "RAJoints", "TeeJoints","Temperature","Humidity","Pressure","Flow","Speed"
-                }.Contains(this.DeviceType) ? Visibility.Visible : Visibility.Collapsed
+                    "RAJoints", "TeeJoints", "Temperature", "Humidity", "Pressure", "Flow", "Speed"
+                }.Contains(this.DeviceType)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed
             });
             ContextMenus.Add(new MenuItem
             {
                 Header = "逆时针旋转",
                 Command = new RelayCommand(() => this.Rotate -= 90),
-                Visibility = new string[] {
-                    "RAJoints", "TeeJoints","Temperature","Humidity","Pressure","Flow","Speed"
-                }.Contains(this.DeviceType) ? Visibility.Visible : Visibility.Collapsed
+                Visibility = new string[]
+                {
+                    "RAJoints", "TeeJoints", "Temperature", "Humidity", "Pressure", "Flow", "Speed"
+                }.Contains(this.DeviceType)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed
             });
             ContextMenus.Add(new MenuItem
             {
                 Header = "改变流向",
                 Command = new RelayCommand(() => this.FlowDirection = (++this.FlowDirection) % 2),
-                Visibility = new string[] { "HorizontalPipeline", "VerticalPipeline" }.Contains(this.DeviceType) ? Visibility.Visible : Visibility.Collapsed
+                Visibility = new string[] { "HorizontalPipeline", "VerticalPipeline" }.Contains(this.DeviceType)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed
             });
             ContextMenus.Add(new Separator());
 

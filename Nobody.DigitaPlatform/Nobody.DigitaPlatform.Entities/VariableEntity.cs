@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Nobody.DigitaPlatform.Entities
 {
@@ -19,5 +20,7 @@ namespace Nobody.DigitaPlatform.Entities
         public string VarType { get; set; }
 
         public List<ConditionEntity> Conditions { get; set; }
+
+        public List<ConditionEntity> UnionConditions { get; set; }
     }
 }

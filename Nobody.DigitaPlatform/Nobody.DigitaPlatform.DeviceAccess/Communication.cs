@@ -10,6 +10,27 @@ namespace Nobody.DigitaPlatform.DeviceAccess
 {
     public class Communication
     {
+        private static Communication instance;
+        private static object lockObj = new object();
+        public static Communication GetInstance()
+        {
+            if (instance == null)
+            {
+                lock (lockObj)
+                {
+                    if (instance == null)
+                    {
+                        instance = new Communication();
+                    }
+                }
+            }
+            
+            return instance;
+        }
+        private Communication()
+        {
+            
+        }
         private readonly List<TransferObject> _transfers = new List<TransferObject>();
 
         public Result<ExecuteObject> GetExecuteObject(List<DevicePropEntity> deviceProps)

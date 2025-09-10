@@ -100,7 +100,7 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Execute
             return len;
         }
 
-        private SiemensAddress AnalysisAddress(VariableProperty point)
+        private SiemensAddress AnalysisAddress(VariableProperty point, bool isWrite = false)
         {
             var address = new SiemensAddress();
             address.DBNumber = 0;

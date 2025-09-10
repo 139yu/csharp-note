@@ -36,26 +36,26 @@ namespace Nobody.DigitaPlatform.Models
             {
                 if (_value == value) return;
 
-                foreach (var condition in AlarmConditions)
-                {
-                    bool res = false;
-                    string exp = value + condition.Condition + condition.AlarmValue;
-                    if (bool.TryParse(dataTable.Compute(exp, "").ToString(), out res) && res)
-                    {
-                        var alarmModel = CompareValue(condition.Condition, value);
-                        Messenger.Default.Send<DeviceAlarmModel>(new DeviceAlarmModel()
-                        {
-                            AlarmContent = alarmModel.AlarmMessage,
-                            AlarmNum = DateTime.Now.ToString("yyyyMMddHHmmssfff"),
-                            CNum = alarmModel.ConditionNum,
-                            VNum = alarmModel.VarNum,
-                            DNum = DeviceNum,
-                            DateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                            Level = 1,
-                            State = 0
-                        },DeviceNum);
-                    }
-                }
+                // foreach (var condition in AlarmConditions)
+                // {
+                //     bool res = false;
+                //     string exp = value + condition.Condition + condition.AlarmValue;
+                //     if (bool.TryParse(dataTable.Compute(exp, "").ToString(), out res) && res)
+                //     {
+                //         var alarmModel = CompareValue(condition.Condition, value);
+                //         Messenger.Default.Send<DeviceAlarmModel>(new DeviceAlarmModel()
+                //         {
+                //             AlarmContent = alarmModel.AlarmMessage,
+                //             AlarmNum = DateTime.Now.ToString("yyyyMMddHHmmssfff"),
+                //             CNum = alarmModel.ConditionNum,
+                //             VNum = alarmModel.VarNum,
+                //             DNum = DeviceNum,
+                //             DateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                //             Level = 1,
+                //             State = 0
+                //         },"Alarm");
+                //     }
+                // }
 
                 Set(ref _value, value);
             }
@@ -71,7 +71,11 @@ namespace Nobody.DigitaPlatform.Models
         public VariableModel()
         {
             AddConditionCommand = new RelayCommand(DoAddConditionCommand);
+            AddUnionConditionCommand = new RelayCommand(DoAddUnionConditionCommand);
+            DelUnionConditionCommand = new RelayCommand<AlarmConditionModel>(DoDelUnionConditionCommand);
         }
+
+
 
         private ObservableCollection<AlarmConditionModel> _alarmConditions;
 
@@ -89,14 +93,28 @@ namespace Nobody.DigitaPlatform.Models
             set => Set(ref _alarmConditions, value);
         }
 
-        public RelayCommand AddConditionCommand { get; set; }
+        private ObservableCollection<AlarmConditionModel> _unionConditions;
+        public ObservableCollection<AlarmConditionModel> UnionConditions
+        {
+            get
+            {
+                if (_unionConditions == null)
+                {
+                    _unionConditions = new ObservableCollection<AlarmConditionModel>();
+                }
+                return _unionConditions;
+            }
+            set => Set(ref _unionConditions, value);
+        }
 
+
+        public RelayCommand AddConditionCommand { get; set; }
         private void DoAddConditionCommand()
         {
             AlarmConditions.Add(new AlarmConditionModel()
             {
                 VarNum = this.VarNum,
-                ConditionNum = DateTime.Now.ToString("yyyyMMddHHmmssFFF"),
+                ConditionNum = "A" + DateTime.Now.ToString("yyyyMMddHHmmssFFF"),
                 RemoveConditionCommand = new RelayCommand<object>(obj =>
                 {
                     if (obj != null)
@@ -107,30 +125,24 @@ namespace Nobody.DigitaPlatform.Models
                 })
             });
         }
+        public RelayCommand AddUnionConditionCommand { get; }
 
-        private AlarmConditionModel CompareValue(string operatorStr, object currentVal)
+        private void DoAddUnionConditionCommand()
         {
-            var q = (from c in AlarmConditions
-                where c.Condition.Equals(operatorStr) &&
-                      bool.TryParse(dataTable.Compute(currentVal + operatorStr + c.AlarmValue, "").ToString(),
-                          out bool res)
-                      && res
-                select c).ToList();
-            if (q.Count > 1)
+            UnionConditions.Add(new AlarmConditionModel()
             {
-                if (operatorStr.Equals(">") || operatorStr.Equals(">="))
-                {
-                    var max = q.Max(c => double.Parse(c.AlarmValue));
-                    return q.FirstOrDefault(c => c.AlarmValue.Equals(max));
-                }
-                else if (operatorStr.Equals("<") || operatorStr.Equals("<="))
-                {
-                    var min = q.Min(c => double.Parse(c.AlarmValue));
-                    return q.FirstOrDefault(c => c.AlarmValue.Equals(min));
-                }
-            }
-
-            return q[0];
+                VarNum = this.VarNum,
+                ConditionNum = "U" + DateTime.Now.ToString("yyyyMMddHHmmssFFF"),
+            });
         }
+
+        private void DoDelUnionConditionCommand(AlarmConditionModel obj)
+        {
+            UnionConditions.Remove(obj);
+        }
+        public RelayCommand<AlarmConditionModel> DelUnionConditionCommand { get; }
+
+        
+        
     }
 }

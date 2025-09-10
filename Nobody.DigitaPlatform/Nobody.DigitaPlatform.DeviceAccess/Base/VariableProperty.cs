@@ -11,6 +11,6 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Base
         public string VarNum { get; set; }
         public string VarAddr { get; set; }
         public Type ValueType { get; set; }
-        public byte[] ValueBytes { get; set; }
+        // public byte[] ValueBytes { get; set; }
     }
 }

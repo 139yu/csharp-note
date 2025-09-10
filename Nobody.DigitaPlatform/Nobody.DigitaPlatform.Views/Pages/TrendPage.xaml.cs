@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Nobody.DigitaPlatform.Common;
+using Nobody.DigitaPlatform.Models;
+using Nobody.DigitaPlatform.ViewModels;
+using Nobody.DigitaPlatform.Views.Dialog;
 
 namespace Nobody.DigitaPlatform.Views.Pages
 {
@@ -23,6 +27,12 @@ namespace Nobody.DigitaPlatform.Views.Pages
         public TrendPage()
         {
             InitializeComponent();
+            this.Unloaded += TrendPage_Unloaded;
+        }
+
+        private void TrendPage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ViewModelLocator.Cleanup<TrendViewModel>();
         }
     }
 }

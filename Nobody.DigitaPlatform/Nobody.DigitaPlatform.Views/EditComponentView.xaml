@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:Nobody.DigitaPlatform.Views"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:converter="clr-namespace:Nobody.DigitaPlatform.Common.Converter;assembly=Nobody.DigitaPlatform.Common"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Name="win"
+        Name="win" 
+        ResizeMode="NoResize"
         FontFamily="Microsoft YaHei" FontWeight="ExtraLight" FontSize="11"
         DataContext="{Binding Source={StaticResource Locator},Path=EditComponentViewModel}"
         WindowStartupLocation="CenterOwner"
@@ -58,52 +60,88 @@
                             </Setter.Value>
                         </Setter>
                     </Style>
+                    <Style TargetType="ToggleButton" x:Key="ManualToggleButtonStyle">
+                        <Setter Property="Foreground" Value="#666"></Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border Name="br" Padding="5,2" Background="Transparent">
+                                        <ContentPresenter
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="br" Property="Background" Value="#2000"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
 
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState Name="successNormal" />
-                <VisualState Name="showSuccessBox">
-                    <Storyboard>
-                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin"
-                                                      Storyboard.TargetName="successBox">
-                            <LinearThicknessKeyFrame Value="0,-80,0,0" KeyTime="0:0:0" />
-                            <LinearThicknessKeyFrame Value="0,20,0,0" KeyTime="0:0:3" />
-                            <LinearThicknessKeyFrame Value="0,20,0,0" KeyTime="0:0:3.3" />
-                            <LinearThicknessKeyFrame Value="0,-80,0,0" KeyTime="0:0:4" />
-                        </ThicknessAnimationUsingKeyFrames>
-                        <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetName="successBox"
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState Name="SaveSuccess">
+                <Storyboard>
+                    <!--处理位置-->
+                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="successBox"
+                                                      Storyboard.TargetProperty="Margin">
+                        <LinearThicknessKeyFrame Value="0,-80,0,0" KeyTime="0:0:0" />
+                        <LinearThicknessKeyFrame Value="0,20,0,0" KeyTime="0:0:0.3" />
+                        <LinearThicknessKeyFrame Value="0,20,0,0" KeyTime="0:0:3.3" />
+                        <LinearThicknessKeyFrame Value="0,-80,0,0" KeyTime="0:0:4" />
+                    </ThicknessAnimationUsingKeyFrames>
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="successBox"
                                                    Storyboard.TargetProperty="Opacity">
                         <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0" />
                         <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.5" />
                         <LinearDoubleKeyFrame Value="1" KeyTime="0:0:3.5" />
                         <LinearDoubleKeyFrame Value="0" KeyTime="0:0:4" />
-                    </DoubleAnimationUsingKeyFrames>-->
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-            <VisualStateGroup>
-                <VisualState Name="showFailedBox">
-                    <Storyboard>
-                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="failedBox"
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </VisualState>
+            <VisualState x:Name="NormalSuccess" />
+        </VisualStateGroup>
+
+        <VisualStateGroup>
+            <VisualState Name="SaveFailedShow">
+                <Storyboard>
+                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="failedBox"
                                                       Storyboard.TargetProperty="Margin">
-                            <LinearThicknessKeyFrame Value="0,0,0,0" KeyTime="0:0:0"/>
-                            <LinearThicknessKeyFrame Value="0,20,0,0" KeyTime="0:0:1"/>
-                        </ThicknessAnimationUsingKeyFrames>
-                        <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetName="failedBox"
+                        <LinearThicknessKeyFrame Value="0,-80,0,0" KeyTime="0:0:0" />
+                        <LinearThicknessKeyFrame Value="0,20,0,0" KeyTime="0:0:0.3" />
+                    </ThicknessAnimationUsingKeyFrames>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="failedBox"
                                                    Storyboard.TargetProperty="Opacity">
-                        <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0"/>
-                        <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.5"/>
-                    </DoubleAnimationUsingKeyFrames>-->
-                    </Storyboard>
-                </VisualState>
-                <VisualState Name="failedNormal"/>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+                        <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0" />
+                        <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.5" />
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </VisualState>
+            <VisualState Name="SaveFailedClose">
+                <Storyboard>
+                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="failedBox"
+                                                      Storyboard.TargetProperty="Margin">
+                        <LinearThicknessKeyFrame Value="0,20,0,0" KeyTime="0:0:0" />
+                        <LinearThicknessKeyFrame Value="0,-80,0,0" KeyTime="0:0:0.3" />
+                    </ThicknessAnimationUsingKeyFrames>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="failedBox"
+                                                   Storyboard.TargetProperty="Opacity">
+                        <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0" />
+                        <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.3" />
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </VisualState>
+            <VisualState Name="SaveFailedNormal" />
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+    <Grid>
         <Grid.Resources>
             <ResourceDictionary>
                 <Style TargetType="ToggleButton" x:Key="ExpanderButtonStyle">
@@ -202,6 +240,28 @@ Path=IsExpanded,Mode=TwoWay }"
                                         BorderBrush="#eee">
                                     <ScrollViewer Name="PART_ContentHost"></ScrollViewer>
                                 </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="ToggleButton" x:Key="MorePointButtonStyle">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <Border Name="bor" CornerRadius="3"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="1" Background="Transparent">
+                                    <TextBlock FontSize="20"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Text="&#xe67c;"
+                                               FontFamily="{StaticResource Iconfont}" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bor" Property="Background" Value="#10000000" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -331,12 +391,6 @@ Path=IsExpanded,Mode=TwoWay }"
                                 <ContextMenu ItemsSource="{Binding ContextMenus}"
                                              AlternationCount="100">
                                     <ContextMenu.Resources>
-                                        <!--<Style TargetType="MenuItem">
-                                <Setter Property="Header" 
-                                        Value="{Binding MenuHeader}"/>
-                                <Setter Property="Command"
-                                        Value="{Binding MenuCommand}"/>
-                            </Style>-->
                                         <Style TargetType="Separator">
                                             <Style.Triggers>
                                                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">
@@ -352,7 +406,7 @@ Path=IsExpanded,Mode=TwoWay }"
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
             <!--通信参数与点位表-->
-            <Border Grid.Column="2" Width="200" CornerRadius="5" Background="#0F000000" Margin="0,20,10,10"
+            <Border Grid.Column="2" Width="200" CornerRadius="5" Background="Transparent" Margin="0,20,10,10"
                     HorizontalAlignment="Right">
                 <Grid Margin="10,0">
                     <Grid.RowDefinitions>
@@ -384,6 +438,10 @@ Path=IsExpanded,Mode=TwoWay }"
                                 <RowDefinition Height="30" />
                                 <RowDefinition Height="30" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0"
                                        HorizontalAlignment="Left"
@@ -414,12 +472,13 @@ Path=IsExpanded,Mode=TwoWay }"
                                                 Name="nameCbb"
                                                 Style="{StaticResource PropSelectorStyle}"
                                                 DisplayMemberPath="PropHeader"
+                                                SelectedValue="{Binding PropName}"
                                                 SelectedValuePath="PropName"
                                                 ItemsSource="{Binding ElementName=win,Path=DataContext.DevicePropsOptions}" />
                                             <ComboBox Grid.Column="1" Name="valueCbb"
                                                       Style="{StaticResource PropSelectorStyle}"
                                                       SelectedIndex="{Binding ElementName=nameCbb,Path=SelectedItem.DefaultSelectedIndex}"
-                                                      SelectedItem="{Binding PropValue}"
+                                                      SelectedValue="{Binding PropValue}"
                                                       ItemsSource="{Binding ElementName=nameCbb,
                                     Path=SelectedItem.PropValueOptions}"
                                                       Visibility="Collapsed" />
@@ -470,32 +529,26 @@ Path=IsExpanded,Mode=TwoWay }"
                             </StackPanel>
                             <Grid Grid.Row="3" TextBlock.Foreground="#888">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="35" />
-                                    <ColumnDefinition Width="30" />
-                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition SharedSizeGroup="a" />
+                                    <ColumnDefinition SharedSizeGroup="b" />
+                                    <ColumnDefinition Width="25" />
+                                    <ColumnDefinition Width="25" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="点位名称" HorizontalAlignment="Center"
                                            VerticalAlignment="Center" />
                                 <TextBlock Grid.Column="1" Text="地址" HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="2" Text="偏移量" HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="3" Text="系数" HorizontalAlignment="Center"
                                            VerticalAlignment="Center" />
                             </Grid>
                             <ScrollViewer Grid.Row="4" VerticalScrollBarVisibility="Hidden">
                                 <ItemsControl ItemsSource="{Binding CurrentDevice.DeviceVariables}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Grid Margin="0,1">
+                                            <Grid Margin="0,1" Name="root">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="50" />
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="35" />
-                                                    <ColumnDefinition Width="30" />
-                                                    <ColumnDefinition Width="20" />
+                                                    <ColumnDefinition SharedSizeGroup="a" />
+                                                    <ColumnDefinition SharedSizeGroup="b" />
+                                                    <ColumnDefinition Width="25" />
+                                                    <ColumnDefinition Width="25" />
                                                 </Grid.ColumnDefinitions>
                                                 <TextBox Grid.Column="0"
                                                          HorizontalContentAlignment="Center"
@@ -503,13 +556,63 @@ Path=IsExpanded,Mode=TwoWay }"
                                                 <TextBox Grid.Column="1"
                                                          HorizontalContentAlignment="Center"
                                                          Text="{Binding VarAddress}" />
-                                                <TextBox Grid.Column="2"
-                                                         HorizontalContentAlignment="Center"
-                                                         Text="{Binding Offset}" />
-                                                <TextBox Grid.Column="3"
-                                                         HorizontalContentAlignment="Center"
-                                                         Text="{Binding Modulus}" />
-                                                <TextBlock Grid.Column="4"
+                                                <ToggleButton Grid.Column="2"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"
+                                                              Margin="5,0,0,0"
+                                                              Name="morePoint"
+                                                              Style="{StaticResource MorePointButtonStyle}" />
+                                                <Popup
+                                                    StaysOpen="False" AllowsTransparency="True"
+                                                    Placement="Bottom"
+                                                    VerticalOffset="2"
+                                                    IsOpen="{Binding ElementName=morePoint,Path=IsChecked }"
+                                                    PlacementTarget="{Binding ElementName=root}">
+                                                    <Border CornerRadius="5" Padding="5,5" Background="#F7F9FA"
+                                                            Width="{Binding ElementName=root,Path=ActualWidth}">
+                                                        <Grid Margin="10,3">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="0.7*" />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="30" />
+                                                                <RowDefinition Height="30" />
+                                                                <RowDefinition Height="30" />
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" VerticalAlignment="Center"
+                                                                       Grid.Column="0" Text="数据类型" />
+                                                            <ComboBox Grid.Column="1"
+                                                                      Style="{StaticResource PropSelectorStyle}"
+                                                                      SelectedValue="{Binding VarType}"
+                                                                      Grid.Row="0">
+                                                                <ComboBox.ItemsSource>
+                                                                    <x:Array Type="sys:String">
+                                                                        <sys:String>Boolean</sys:String>
+                                                                        <sys:String>Byte</sys:String>
+                                                                        <sys:String>UInt16</sys:String>
+                                                                        <sys:String>Int16</sys:String>
+                                                                        <sys:String>UInt32</sys:String>
+                                                                        <sys:String>Int32</sys:String>
+                                                                        <sys:String>UInt64</sys:String>
+                                                                        <sys:String>Int64</sys:String>
+                                                                        <sys:String>Single</sys:String>
+                                                                        <sys:String>Double</sys:String>
+                                                                    </x:Array>
+                                                                </ComboBox.ItemsSource>
+                                                            </ComboBox>
+                                                            <TextBlock Grid.Row="1" VerticalAlignment="Center"
+                                                                       Grid.Column="0" Text="偏移量" />
+                                                            <TextBox Grid.Row="1" Grid.Column="1"
+                                                                     Text="{Binding Offset}" />
+                                                            <TextBlock Grid.Row="2" VerticalAlignment="Center"
+                                                                       Grid.Column="0" Text="系数" />
+                                                            <TextBox Grid.Row="2" Grid.Column="1"
+                                                                     Text="{Binding Modulus}" />
+                                                        </Grid>
+                                                    </Border>
+                                                </Popup>
+                                                <TextBlock Grid.Column="3"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center">
                                                     <Hyperlink
@@ -525,14 +628,52 @@ Path=DataContext.CurrentDevice.DelVariableCommand}"
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </ScrollViewer>
+
+                            <TextBlock Grid.Row="5" Text="其他配置" VerticalAlignment="Center"
+                                       Foreground="#666"
+                                       FontWeight="ExtraBold" />
+                            <ToggleButton Grid.Row="6" Height="30"
+                                          FontSize="14"
+                                          Name="manualBtn"
+                                          HorizontalContentAlignment="Stretch"
+                                          Style="{StaticResource ManualToggleButtonStyle}">
+                                <Grid>
+                                    <TextBlock HorizontalAlignment="Left" Text="手动控制选项" />
+                                    <TextBlock FontFamily="{StaticResource Iconfont}" Text="&#xe673;"
+                                               HorizontalAlignment="Right" />
+                                </Grid>
+                            </ToggleButton>
+                            <Button FontSize="14" Tag="3" Height="30"
+                                    Command="{Binding OpenAlarmConditionDialog}"
+                                    HorizontalContentAlignment="Stretch" Grid.Row="7"
+                                    Style="{StaticResource ControlButtonStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="30" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="变量报警选项" HorizontalAlignment="Left" />
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                               Text="&#xe673;" FontFamily="{StaticResource Iconfont}" />
+                                </Grid>
+                            </Button>
+                            <Button FontSize="14" Height="30" Tag="3" 
+                                    Command="{Binding OpenUnionConditionDialog}"
+                                    HorizontalContentAlignment="Stretch" Grid.Row="8"
+                                    Style="{StaticResource ControlButtonStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="30" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="自动联动选项" HorizontalAlignment="Left" />
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                               Text="&#xe673;" FontFamily="{StaticResource Iconfont}" />
+                                </Grid>
+                            </Button>
                         </Grid>
                     </ScrollViewer>
-                    <UniformGrid Grid.Row="2" Rows="1" Margin="0,0,0,0" VerticalAlignment="Center">
-                        <Button Content="保存"
-                                CommandParameter="{Binding ElementName=win}"
-                                Command="{Binding SaveCommand}" Width="80" Style="{StaticResource PrimaryButton}" />
-                        <Button Content="取消" Width="80" Style="{StaticResource InfoButton}" />
-                    </UniformGrid>
+
                 </Grid>
             </Border>
         </Grid>
@@ -554,10 +695,11 @@ Path=DataContext.CurrentDevice.DelVariableCommand}"
                            VerticalAlignment="Center" />
             </StackPanel>
         </Border>
-        <Border Name="failedBox" Margin="0,20,0,0"
+        <Border Name="failedBox" Margin="0,-80,0,0"
                 CornerRadius="6"
+                Padding="0,5"
                 Background="#EEFFFFFF"
-                Width="200" Height="40"
+                Width="230" MinHeight="40"
                 VerticalAlignment="Top" HorizontalAlignment="Center">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#DDD" ShadowDepth="0" Opacity="0.3" />
@@ -577,10 +719,14 @@ Path=DataContext.CurrentDevice.DelVariableCommand}"
                            TextWrapping="Wrap"
                            VerticalAlignment="Center"
                            Text="{Binding SaveFailedMsg,StringFormat=保存失败，异常：{0}}" />
-                <TextBlock Grid.Column="2"
-                           Foreground="OrangeRed"
-                           VerticalAlignment="Center"
-                           Text="&#xeca0;" FontFamily="{StaticResource Iconfont}" />
+                <Button Grid.Column="2"
+                        FontSize="16"
+                        Command="{Binding CloseFailedBoxCommand}"
+                        Foreground="OrangeRed"
+                        CommandParameter="{Binding ElementName=win}"
+                        Style="{StaticResource ControlButtonStyle}"
+                        VerticalAlignment="Center"
+                        Content="&#xeca0;" FontFamily="{StaticResource Iconfont}" />
             </Grid>
         </Border>
         <Border VerticalAlignment="Bottom" HorizontalAlignment="Center"
@@ -609,7 +755,9 @@ Path=DataContext.CurrentDevice.DelVariableCommand}"
                         </StackPanel>
                     </Border>
                 </Button>
-                <Button Grid.Column="1" Tag="5,0,5,0" Click="ButtonBase_OnClick" Style="{StaticResource ButtonStyle}">
+                <Button Grid.Column="1" Tag="5,0,5,0" Command="{Binding CloseCommand}"
+                        CommandParameter="{Binding ElementName=win}"
+                        Style="{StaticResource ButtonStyle}">
                     <Border Padding="5">
                         <StackPanel>
                             <TextBlock FontSize="16" HorizontalAlignment="Center" Text="&#xe60a;"
@@ -620,6 +768,76 @@ Path=DataContext.CurrentDevice.DelVariableCommand}"
                 </Button>
             </Grid>
         </Border>
+
+        <Popup Placement="Left" 
+               AllowsTransparency="True"
+               HorizontalOffset="-15"
+               StaysOpen="False" IsOpen="{Binding ElementName=manualBtn,Path=IsChecked}"
+               PlacementTarget="{Binding ElementName=manualBtn}">
+            <Border Background="#eee" Width="250" CornerRadius="5" >
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" Color="#ddd" ShadowDepth="0" Opacity="0.4"></DropShadowEffect>
+                </Border.Effect>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Canvas>
+                        <Path Data="M0 0 8 5 0 10" Fill="#F7F9FA" Canvas.Top="0" Canvas.Right="0" Margin="0,9,-10,0"/>
+                    </Canvas>
+                    <TextBlock Margin="5,0,0,0" FontSize="12" FontWeight="ExtraBlack" VerticalAlignment="Center" Grid.Row="0" Text="手动控制选项" HorizontalAlignment="Left"/>
+                    <Button Margin="5,0" VerticalAlignment="Center" Grid.Row="0" Command="{Binding CurrentDevice.AddManualControlCommand}"
+                            HorizontalAlignment="Right" Content="&#xe607;" FontFamily="{StaticResource Iconfont}" 
+                            Style="{StaticResource ControlButtonStyle}"/>
+                    <Grid Grid.Row="1" Background="#fff">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="控制名称" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="控制地址" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="写入数据" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="3" Text="操作" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding CurrentDevice.ManualControls}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="5,0,5,5">
+                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1.2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="40"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Grid.Column="0" Text="{Binding ControlHeader}" VerticalAlignment="Center"/>
+                                        <TextBox Grid.Column="1" Text="{Binding ControlAddress}" VerticalAlignment="Center"/>
+                                        <TextBox Grid.Column="2" Text="{Binding Value}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Hyperlink TextDecorations="None" 
+                                                       CommandParameter="{Binding}"
+                                                       Command="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                                Path=DataContext.CurrentDevice.DelManualControlCommand}">删除</Hyperlink>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Popup>
     </Grid>
 
 </Window>

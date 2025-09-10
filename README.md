@@ -1986,17 +1986,4 @@ BinaryReader有ReadByte,ReadBytes,Read方法,它们读取出来的是原生态�
 2. 基于NPOI组件读取Excel
 3. Office组件方式，本地必须有Office组件（速度慢，效率低，问题多——抛弃）---了解
 
-### Oledb提供程序导入
-
-这种导入方式，类似于将数据库中的一张表填充到DataTable中。这种方式，加载速度快，但受版本限制，不同版本的Excel文件，连接字符串有差别。
-
-```C#
-//如果是.xls 即07以下的版本，连接字符串   excel_path：Excel文件路径
-strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + excel_path + ";Extended Properties='Excel 8.0;HDR=YES;IMEX=1'";
-//如果是.xlsx 07即以上的版本
-strConn = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + excel_path + ";Extended Properties='Excel 12.0;HDR=YES;IMEX=1'";
-//IMEX=0 表示 Excel只能用作写入  1 只能作读取  2 读写都可
-//HDR =Yes 第一行是标题，No 第一行是数据，不是标题
-
-```
 

@@ -26,6 +26,6 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Base
             set => _addresses = value;
         }
 
-        public List<byte> valueBytes { get; set; }
+        public byte[] ValueBytes { get; set; }
     }
 }

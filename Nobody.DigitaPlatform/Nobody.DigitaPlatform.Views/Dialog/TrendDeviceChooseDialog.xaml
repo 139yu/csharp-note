@@ -1,0 +1,160 @@
+﻿<Window x:Class="Nobody.DigitaPlatform.Views.Dialog.TrendDeviceChooseDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Nobody.DigitaPlatform.Views.Dialog"
+        mc:Ignorable="d"
+        FontFamily="Microsoft YaHei" FontWeight="ExtraLight" FontSize="12"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Title="变量趋势监控配置" Height="400" Width="600">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="1" />
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/Nobody.DigitaPlatform.Assets;component/Styles/ButtonStyle.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/Nobody.DigitaPlatform.Assets;component/Styles/ComboxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" FontSize="16" Foreground="#888" Margin="10,0,0,0" VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   Text="{Binding Trend.TrendHeader,StringFormat={}{0}-纵轴配置}" />
+        <Button Grid.Row="0" VerticalAlignment="Top" FontFamily="{StaticResource Iconfont}" Content="&#xeca0;"
+                HorizontalAlignment="Right" WindowChrome.IsHitTestVisibleInChrome="True" Click="ButtonBase_OnClick"
+                Style="{StaticResource WindowControlButtonStyle}" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <ListBox Name="lb" Grid.Column="0" SelectedIndex="0" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                     Background="#eee" BorderThickness="0"
+                     ItemsSource="{Binding ChooseDevicesList}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Header}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border Name="br" Background="Transparent" CornerRadius="3" Height="28">
+                                        <ContentPresenter Margin="5,0"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="br" Property="Background" Value="#33409EFE" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="br" Property="Background" Value="#409EFE" />
+                                            <Setter TargetName="br" Property="TextBlock.Foreground" Value="#fff" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+            <Grid Grid.Column="1" Background="#7eee">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Height="28" Margin="5,0" Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="120" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="选择" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Text="变量名称" Grid.Column="1" VerticalAlignment="Center" />
+                    <TextBlock Text="数据类型" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Text="对齐到纵轴" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Text="颜色" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Border Grid.ColumnSpan="5"  VerticalAlignment="Bottom" BorderThickness="0,0,0,1" BorderBrush="#ddd"></Border>
+                </Grid>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+                    <ItemsControl ItemsSource="{Binding ElementName=lb,Path=SelectedItem.VarList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="30" Margin="5,0" Background="Transparent" Name="grid">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="90" />
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition Width="130" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox IsChecked="{Binding IsSelected}" VerticalAlignment="Center"
+                                              HorizontalAlignment="Center" />
+                                    <TextBlock Text="{Binding VarName}" Grid.Column="1" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding VarType}" Grid.Column="2" VerticalAlignment="Center"
+                                               HorizontalAlignment="Center" />
+                                    <!--纵轴信息（）-->
+                                    <ComboBox Grid.Column="3" Style="{StaticResource PropSelectorStyle}"
+                                              VerticalAlignment="Center"
+                                              SelectedIndex="0"
+                                              SelectedValue="{Binding AxisNum,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="ANum"
+                                              ItemsSource="{Binding DataContext.Trend.AxisList,RelativeSource={RelativeSource AncestorType=Window}}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Height="22">
+                                                    <TextBlock VerticalAlignment="Center">
+                                                        <Run Text="{Binding Title}" />
+                                                        <Run Text="-" />
+                                                        <Run Text="{Binding Minimum}" />
+                                                        <Run Text="-" />
+                                                        <Run Text="{Binding Maximum}" />
+                                                    </TextBlock>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+
+                                    <ComboBox Background="Orange" Grid.Column="4"
+                                              Style="{StaticResource PropSelectorStyle}"
+                                              SelectedValue="{Binding Color}" VerticalAlignment="Center"
+                                              ItemsSource="{Binding Path=DataContext.BrushList,RelativeSource={RelativeSource AncestorType=ItemsControl}}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Height="22">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="20" />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border Background="{Binding}" Width="10" Height="10" />
+                                                    <TextBlock Text="{Binding}" Grid.Column="1"
+                                                               VerticalAlignment="Center" Margin="3,0"
+                                                               TextTrimming="CharacterEllipsis" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

@@ -77,7 +77,7 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Execute
                 if (receiveResult.Data[1] > 0x80)
                 {
                     // 
-                    byte errorCode = result.Data[2];
+                    byte errorCode = receiveResult.Data[2];
                     throw new Exception(Errors[errorCode]);
                 }
 
@@ -90,6 +90,49 @@ namespace Nobody.DigitaPlatform.DeviceAccess.Execute
                 result.Message = e.Message;
             }
             return result;
+        }
+
+        public override void Write(byte slaveNum, byte funcCode, ushort startAddr, byte[] data, ushort respLen)
+        {
+            var dataBytes = this.CreateWritePDU(slaveNum, funcCode, startAddr, data);
+            this.CRC16(dataBytes);
+            var tryCountProp = this.Props.FirstOrDefault(p => p.PropName.Equals("TryCount"));
+            int tryCount = 30;
+            if (tryCountProp != null)
+            {
+                int.TryParse(tryCountProp.PropValue, out tryCount);
+            }
+
+            var connectResult = this.TransferObject.Connect(tryCount);
+            if (!connectResult.Status)
+            {
+                throw new Exception(connectResult.Message);
+            }
+            int timeout = 5000;
+            var timeoutProp = this.Props.FirstOrDefault(p => p.PropName.Equals("Timeout"));
+            if (tryCountProp != null)
+            {
+                int.TryParse(tryCountProp.PropValue, out timeout);
+            }
+            var receiveResult = this.TransferObject.SendAndReceive(dataBytes, respLen, 5, timeout);
+            if (!receiveResult.Status)
+            {
+                throw new Exception(receiveResult.Message);
+            }
+            List<byte> crcValidation = receiveResult.Data.GetRange(0, receiveResult.Data.Count - 2);
+            this.CRC16(crcValidation);
+            if (!crcValidation.SequenceEqual(receiveResult.Data))
+            {
+                throw new Exception("CRC校验检查不匹配");
+                // CRC 校验失败
+            }
+
+            // 六、检查异常报文
+            if (receiveResult.Data[1] > 0x80)
+            {
+                byte errorCode = receiveResult.Data[2];
+                throw new Exception(Errors.ContainsKey(errorCode) ? Errors[errorCode] : "自定义异常");
+            }
         }
 
 
