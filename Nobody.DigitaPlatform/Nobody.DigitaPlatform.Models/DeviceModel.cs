@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace Nobody.DigitaPlatform.Models
 {
@@ -103,6 +104,18 @@ namespace Nobody.DigitaPlatform.Models
             get { return _flowDirection; }
             set { Set(ref _flowDirection, value); }
         }
+        private bool _isWarning = false;
+        public bool IsWarning
+        {
+            get { return _isWarning; }
+            set { Set(ref _isWarning, value); }
+        }
+        private string _warningMessage;
+        public string WarningMessage
+        {
+            get { return _warningMessage; }
+            set { Set(ref _warningMessage, value); }
+        }
         // 根据这个名称动态创建一个组件实例
         public string DeviceType { get; set; }
 
@@ -139,13 +152,22 @@ namespace Nobody.DigitaPlatform.Models
             ResizeDownCommand = new RelayCommand<object>(DoResizeDownCommand);
             ResizeUpCommand = new RelayCommand<object>(DoResizeUpCommand);
             ResizeMoveCommand = new RelayCommand<object>(DoResizeMoveCommand);
-            
+            Messenger.Default.Register<DeviceAlarmModel>(this, DeviceNum, model =>
+            {
+                if (this.IsWarning)
+                {
+
+                }
+            });
         }
 
 
         private void DoAddVariableCommand()
         {
-            DeviceVariables.Add(new VariableModel());
+            DeviceVariables.Add(new VariableModel()
+            {
+                VarNum = DateTime.Now.ToString("yyyyMMddHHmmss")
+            });
         }
 
         private void DoDelVariableCommand(object obj)

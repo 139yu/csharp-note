@@ -10,6 +10,13 @@ namespace Nobody.DigitaPlatform.Common
     {
         private static readonly Dictionary<string, Delegate> ActionDictionary = new Dictionary<string, Delegate>();
 
+        public static void UnRegister(string key)
+        {
+            if (ActionDictionary.ContainsKey(key))
+            {
+                ActionDictionary.Remove(key);
+            }
+        }
         public static void Register<T>(string key, Action<T> d)
         {
             ActionDictionary.TryAdd(key, d);

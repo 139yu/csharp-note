@@ -16,5 +16,8 @@ namespace Nobody.DigitaPlatform.Entities
         public string Address { get; set; }
         public double Offset { get; set; }
         public double Modulus { get; set; }
+        public string VarType { get; set; }
+
+        public List<ConditionEntity> Conditions { get; set; }
     }
 }

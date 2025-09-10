@@ -103,6 +103,15 @@ namespace Nobody.DigitaPlatform.Common.Converter
             binding = new Binding();
             binding.Path = new PropertyPath("ResizeMoveCommand");
             instance.SetBinding(BaseComponent.ResizeMoveCommandProperty, binding);
+
+
+            binding = new Binding();
+            binding.Path = new PropertyPath("IsWarning");
+            instance.SetBinding(BaseComponent.IsWarningProperty, binding);
+
+            binding = new Binding();
+            binding.Path = new PropertyPath("WarningMessage");
+            instance.SetBinding(BaseComponent.WarningMessageProperty, binding);
             return instance;
         }
 
