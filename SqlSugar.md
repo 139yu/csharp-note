@@ -82,7 +82,7 @@ internal class Program
 
 ## CodeForst
 
-需要配合SqlSugar的特性来使用
+需要配合SqlSugar的特性来使用，见[官网](https://www.donet5.com/Doc/1/1182)
 
 ```c#
 public class CodeFirstDemo
@@ -200,6 +200,10 @@ public class CodeFirstDemo
     }
 ```
 
-### 库表操作
+## 库表操作
 
 `db.DbMaintenance`对象提供了对数据库、表、字段的操作的一系列方法。
+
+## 增删改
+
+插入数据，见[官网](https://www.donet5.com/Doc/1/1193)

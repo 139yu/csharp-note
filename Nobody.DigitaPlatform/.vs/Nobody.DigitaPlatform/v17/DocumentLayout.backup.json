@@ -1,62 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\",
+  "WorkspaceRootPath": "D:\\code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.views\\pages\\monitorpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|solutionrelative:nobody.digitaplatform.views\\pages\\monitorpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.views\\pages\\settingspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|solutionrelative:nobody.digitaplatform.views\\pages\\settingspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41E91F5E-1CD4-454F-943F-619B9C4057AF}|Nobody.DigitaPlatform.ViewModels\\Nobody.DigitaPlatform.ViewModels.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.viewmodels\\reportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E91F5E-1CD4-454F-943F-619B9C4057AF}|Nobody.DigitaPlatform.ViewModels\\Nobody.DigitaPlatform.ViewModels.csproj|solutionrelative:nobody.digitaplatform.viewmodels\\reportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.views\\pages\\monitorpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|solutionrelative:nobody.digitaplatform.views\\pages\\monitorpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.views\\pages\\reportpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|solutionrelative:nobody.digitaplatform.views\\pages\\reportpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.views\\pages\\settingspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|solutionrelative:nobody.digitaplatform.views\\pages\\settingspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41E91F5E-1CD4-454F-943F-619B9C4057AF}|Nobody.DigitaPlatform.ViewModels\\Nobody.DigitaPlatform.ViewModels.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.viewmodels\\settingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E91F5E-1CD4-454F-943F-619B9C4057AF}|Nobody.DigitaPlatform.ViewModels\\Nobody.DigitaPlatform.ViewModels.csproj|solutionrelative:nobody.digitaplatform.viewmodels\\settingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41E91F5E-1CD4-454F-943F-619B9C4057AF}|Nobody.DigitaPlatform.ViewModels\\Nobody.DigitaPlatform.ViewModels.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.viewmodels\\viewmodellocator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E91F5E-1CD4-454F-943F-619B9C4057AF}|Nobody.DigitaPlatform.ViewModels\\Nobody.DigitaPlatform.ViewModels.csproj|solutionrelative:nobody.digitaplatform.viewmodels\\viewmodellocator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.views\\pages\\trendpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|solutionrelative:nobody.digitaplatform.views\\pages\\trendpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41E91F5E-1CD4-454F-943F-619B9C4057AF}|Nobody.DigitaPlatform.ViewModels\\Nobody.DigitaPlatform.ViewModels.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.viewmodels\\trendviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E91F5E-1CD4-454F-943F-619B9C4057AF}|Nobody.DigitaPlatform.ViewModels\\Nobody.DigitaPlatform.ViewModels.csproj|solutionrelative:nobody.digitaplatform.viewmodels\\trendviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8B6C7E8-4FCD-4CDA-962E-8097EF8A43ED}|Nobody.DigitaPlatform.Entities\\Nobody.DigitaPlatform.Entities.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.entities\\baseinfoentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8B6C7E8-4FCD-4CDA-962E-8097EF8A43ED}|Nobody.DigitaPlatform.Entities\\Nobody.DigitaPlatform.Entities.csproj|solutionrelative:nobody.digitaplatform.entities\\baseinfoentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{63C54D45-1324-48BE-BFC5-12697AB98160}|Nobody.DigitaPlatform.Models\\Nobody.DigitaPlatform.Models.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.models\\settingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{63C54D45-1324-48BE-BFC5-12697AB98160}|Nobody.DigitaPlatform.Models\\Nobody.DigitaPlatform.Models.csproj|solutionrelative:nobody.digitaplatform.models\\settingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27C7CCB4-C703-48C9-A1A9-BE5A1F56A4D4}|Nobody.DigitaPlatform.DataAccess\\Nobody.DigitaPlatform.DataAccess.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.dataaccess\\ilocaldataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{27C7CCB4-C703-48C9-A1A9-BE5A1F56A4D4}|Nobody.DigitaPlatform.DataAccess\\Nobody.DigitaPlatform.DataAccess.csproj|solutionrelative:nobody.digitaplatform.dataaccess\\ilocaldataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27C7CCB4-C703-48C9-A1A9-BE5A1F56A4D4}|Nobody.DigitaPlatform.DataAccess\\Nobody.DigitaPlatform.DataAccess.csproj|g:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.dataaccess\\impl\\localdataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{27C7CCB4-C703-48C9-A1A9-BE5A1F56A4D4}|Nobody.DigitaPlatform.DataAccess\\Nobody.DigitaPlatform.DataAccess.csproj|d:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.dataaccess\\impl\\localdataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27C7CCB4-C703-48C9-A1A9-BE5A1F56A4D4}|Nobody.DigitaPlatform.DataAccess\\Nobody.DigitaPlatform.DataAccess.csproj|solutionrelative:nobody.digitaplatform.dataaccess\\impl\\localdataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|d:\\code\\githubcode\\csharp-note\\nobody.digitaplatform\\nobody.digitaplatform.views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{96A2435B-373F-415E-997D-039BDCB01842}|Nobody.DigitaPlatform.Views\\Nobody.DigitaPlatform.Views.csproj|solutionrelative:nobody.digitaplatform.views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,179 +18,31 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MonitorPage.xaml",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\MonitorPage.xaml",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.Views\\Pages\\MonitorPage.xaml",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\MonitorPage.xaml",
-              "RelativeToolTip": "Nobody.DigitaPlatform.Views\\Pages\\MonitorPage.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-09-01T06:29:46.696Z",
+              "Title": "LocalDataAccess.cs",
+              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.DataAccess\\Impl\\LocalDataAccess.cs",
+              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.DataAccess\\Impl\\LocalDataAccess.cs",
+              "ToolTip": "D:\\code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.DataAccess\\Impl\\LocalDataAccess.cs",
+              "RelativeToolTip": "Nobody.DigitaPlatform.DataAccess\\Impl\\LocalDataAccess.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAkwH4AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-11T14:18:58.856Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MonitorPage.xaml.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\MonitorPage.xaml.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.Views\\Pages\\MonitorPage.xaml.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\MonitorPage.xaml.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.Views\\Pages\\MonitorPage.xaml.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAABkAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T12:22:40.921Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ReportViewModel.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.ViewModels\\ReportViewModel.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.ViewModels\\ReportViewModel.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.ViewModels\\ReportViewModel.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.ViewModels\\ReportViewModel.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAA1wBEAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T12:22:33.744Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ReportPage.xaml.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\ReportPage.xaml.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.Views\\Pages\\ReportPage.xaml.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\ReportPage.xaml.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.Views\\Pages\\ReportPage.xaml.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAuwBwAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T12:22:22.519Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "TrendViewModel.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.ViewModels\\TrendViewModel.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.ViewModels\\TrendViewModel.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.ViewModels\\TrendViewModel.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.ViewModels\\TrendViewModel.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAqwBUAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T12:21:50.64Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "TrendPage.xaml.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\TrendPage.xaml.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.Views\\Pages\\TrendPage.xaml.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\TrendPage.xaml.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.Views\\Pages\\TrendPage.xaml.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAA7wCIAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T12:21:48.277Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ViewModelLocator.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.ViewModels\\ViewModelLocator.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.ViewModels\\ViewModelLocator.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.ViewModels\\ViewModelLocator.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.ViewModels\\ViewModelLocator.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAArwDMAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T12:21:41.808Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SettingsPage.xaml.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\SettingsPage.xaml.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.Views\\Pages\\SettingsPage.xaml.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\SettingsPage.xaml.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.Views\\Pages\\SettingsPage.xaml.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAuwBoAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T12:20:54.362Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "BaseInfoEntity.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Entities\\BaseInfoEntity.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.Entities\\BaseInfoEntity.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Entities\\BaseInfoEntity.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.Entities\\BaseInfoEntity.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAA+wBYAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T12:19:50.778Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "SettingModel.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Models\\SettingModel.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.Models\\SettingModel.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Models\\SettingModel.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.Models\\SettingModel.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAA2wAoAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T12:17:47.442Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "SettingsPage.xaml",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\SettingsPage.xaml",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.Views\\Pages\\SettingsPage.xaml",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\Pages\\SettingsPage.xaml",
-              "RelativeToolTip": "Nobody.DigitaPlatform.Views\\Pages\\SettingsPage.xaml",
+              "Title": "MainView.xaml",
+              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\MainView.xaml",
+              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.Views\\MainView.xaml",
+              "ToolTip": "D:\\code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.Views\\MainView.xaml",
+              "RelativeToolTip": "Nobody.DigitaPlatform.Views\\MainView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-08-31T10:55:52.625Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "LocalDataAccess.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.DataAccess\\Impl\\LocalDataAccess.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.DataAccess\\Impl\\LocalDataAccess.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.DataAccess\\Impl\\LocalDataAccess.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.DataAccess\\Impl\\LocalDataAccess.cs",
-              "ViewState": "AgIAAFsCAAAAAAAAAAAAAGcCAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T10:54:28.027Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ILocalDataAccess.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.DataAccess\\ILocalDataAccess.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.DataAccess\\ILocalDataAccess.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.DataAccess\\ILocalDataAccess.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.DataAccess\\ILocalDataAccess.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAnwCAAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T10:54:25.881Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SettingViewModel.cs",
-              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.ViewModels\\SettingViewModel.cs",
-              "RelativeDocumentMoniker": "Nobody.DigitaPlatform.ViewModels\\SettingViewModel.cs",
-              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Nobody.DigitaPlatform\\Nobody.DigitaPlatform.ViewModels\\SettingViewModel.cs",
-              "RelativeToolTip": "Nobody.DigitaPlatform.ViewModels\\SettingViewModel.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAqwA4AAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-31T10:54:04.758Z"
+              "WhenOpened": "2025-09-11T14:18:33.371Z"
             }
           ]
         }

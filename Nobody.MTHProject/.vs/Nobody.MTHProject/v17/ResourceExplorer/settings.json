@@ -1,0 +1,23 @@
+{
+  "ShowEmptyProjects": false,
+  "SelectedGroups": [
+    "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\Properties\\Resources.resx",
+    "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\FrmMain.resx"
+  ],
+  "ExpandedProjects": [
+    "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\Nobody.MTHProject.csproj"
+  ],
+  "EnableSpellChecker": true,
+  "ColumnOrder": [
+    "name",
+    "file-path",
+    "file-name",
+    "type",
+    "neutral-value",
+    "neutral-comment"
+  ],
+  "VisibleColumnKeys": [
+    "name",
+    "neutral-value"
+  ]
+}
