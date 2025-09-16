@@ -26,11 +26,10 @@ namespace Nobody.MTHProject
                 new FrmMsgBoxWithoutAck("添加变量", "请先添加通信组");
                 return;
             }
-            this.selector_groupName.DataSource = totalGroups;
-            this.selector_groupName.DisplayMember = "GroupName";
-            this.selector_groupName.ValueMember = "GroupName";
+            this.selector_groupName.DataSource = totalGroups.Select(g => g.GroupName).ToArray<string>();
+            this.selector_groupName.SelectedIndex = 0;
             this.selector_dataType.DataSource = new string[] { "UInt16", "Int16", "UInt32", "Int32","Boolean","Single", "Double", "UInt64","Int64" };
-            
+            this.selector_dataType.SelectedIndex = 0;
             totalVars = GetAllVars();
             this.dgv_main.AutoGenerateColumns = false;
             if (totalVars.Count > 0)
@@ -71,11 +70,22 @@ namespace Nobody.MTHProject
         }
         private void btn_addVariable_Click(object sender, EventArgs e)
         {
-            var groupName = this.selector_groupName.SelectedText;
-            var dataType = this.selector_dataType.SelectedText;
+            var groupName = this.selector_groupName.SelectedItem.ToString();
+            var dataType = this.selector_dataType.SelectedItem.ToString();
             if (string.IsNullOrEmpty(groupName) || string.IsNullOrEmpty(dataType))
             {
                 new FrmMsgBoxWithoutAck("添加变量", "请选择通信组或数据类型").Show();
+                return;
+            }
+            var varName = this.txt_varName.Text;
+            if (string.IsNullOrEmpty(varName))
+            {
+                new FrmMsgBoxWithoutAck("添加变量", "请填写变量名").Show();
+                return;
+            }
+            if (IsVarExist(varName))
+            {
+                new FrmMsgBoxWithoutAck("添加变量", "变量名已存在").Show();
                 return;
             }
             totalVars.Add(new Variable()
@@ -84,7 +94,7 @@ namespace Nobody.MTHProject
                 VarName = this.txt_varName.Text,
                 Start = decimal.ToUInt16(this.txt_start.Value),
                 Length = decimal.ToUInt16(this.txt_length.Value),
-                DataType = this.selector_dataType.SelectedText,
+                DataType = this.selector_dataType.SelectedItem.ToString(),
                 PosAlarm = this.check_posAlarm.Checked,
                 NegAlarm = this.check_negAlarm.Checked,
                 Scale = decimal.ToSingle(this.txt_scale.Value),
@@ -131,24 +141,69 @@ namespace Nobody.MTHProject
             {
                 return;
             }
-            this.selector_groupName.SelectedText = variable.GroupName;
+            this.selector_groupName.SelectedItem = variable.GroupName;
             this.txt_start.Value = variable.Start;
-            this.txt_start.Value = variable.Length;
-           
-            
+            this.txt_varName.Text = variable.VarName;
+            this.txt_start.Value = variable.Start;
+            this.txt_length.Value =variable.Length;
+            this.selector_dataType.SelectedItem = variable.DataType;
+            this.check_posAlarm.Checked = variable.PosAlarm;
+            this.check_negAlarm.Checked = variable.NegAlarm;
+            this.txt_scale.Value = Convert.ToDecimal(variable.Scale);
+            this.txt_offset.Value = Convert.ToDecimal(variable.Offset);
             this.txt_remark.Text = variable.Remark;
         }
 
         private void btn_editVariable_Click(object sender, EventArgs e)
         {
-            
+            var varName = this.txt_varName;
+            var variable = GetVariable(varName.Text);
+            if (variable == null) return;
+            variable.Start = decimal.ToUInt16(this.txt_start.Value);
+            variable.GroupName = this.selector_groupName.SelectedItem.ToString(); ;
+            variable.Length = decimal.ToUInt16(this.txt_start.Value);
+            variable.DataType = this.selector_dataType.SelectedItem.ToString(); ;
+            variable.PosAlarm = this.check_posAlarm.Checked;
+            variable.NegAlarm = this.check_negAlarm.Checked;
+            variable.Scale = decimal.ToSingle(this.txt_scale.Value);
+            variable.Offset = decimal.ToSingle(this.txt_offset.Value);
+
+            try
+            {
+                MiniExcel.SaveAs(variablePath, totalVars, overwriteFile: true);
+
+                RefreshVars();
+            }
+            catch (Exception ex)
+            {
+                new FrmMsgBoxWithoutAck("编辑参数", "编辑参数失败：" + ex.Message).Show();
+            }
         }
 
         private void btn_delVariable_Click(object sender, EventArgs e)
         {
-            
+            string varName = this.txt_varName.Text;
+            if (varName == null || !IsVarExist(varName))
+            {
+                return;
+            }
+            totalVars.Remove(GetVariable(varName));
+            try
+            {
+                MiniExcel.SaveAs(variablePath, totalVars, overwriteFile: true);
+
+                RefreshVars();
+            }
+            catch (Exception ex)
+            {
+                new FrmMsgBoxWithoutAck("编辑参数", "编辑参数失败：" + ex.Message).Show();
+            }
         }
 
+        private bool IsVarExist(string varName)
+        {
+            return totalVars.Where(v => v.VarName.Equals(varName)).Any();
+        }
         private void dgv_main_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.ColumnIndex >= 0 && e.RowIndex >= 0) 
@@ -159,6 +214,17 @@ namespace Nobody.MTHProject
                     e.Value = "---";
                 }
             }
+        }
+
+
+        private Variable GetVariable(string varName)
+        {
+            return totalVars.FirstOrDefault(v => v.VarName.Equals(varName));
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

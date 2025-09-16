@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelEx1 = new Nobody.MTHControlLib.PanelEx();
             this.btn_editVariable = new System.Windows.Forms.Button();
             this.btn_delVariable = new System.Windows.Forms.Button();
@@ -43,6 +43,16 @@
             this.selector_dataType = new System.Windows.Forms.ComboBox();
             this.selector_groupName = new System.Windows.Forms.ComboBox();
             this.dgv_main = new System.Windows.Forms.DataGridView();
+            this.GroupName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VarName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Start = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Length = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Scale = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Offset = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PosAlarm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NegAlarm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txt_length = new System.Windows.Forms.NumericUpDown();
             this.txt_offset = new System.Windows.Forms.NumericUpDown();
             this.txt_scale = new System.Windows.Forms.NumericUpDown();
@@ -58,16 +68,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.GroupName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VarName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Start = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Length = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Scale = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Offset = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PosAlarm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NegAlarm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_main)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txt_length)).BeginInit();
@@ -126,6 +126,7 @@
             this.btn_editVariable.TabIndex = 11;
             this.btn_editVariable.Text = "修改变量";
             this.btn_editVariable.UseVisualStyleBackColor = false;
+            this.btn_editVariable.Click += new System.EventHandler(this.btn_editVariable_Click);
             // 
             // btn_delVariable
             // 
@@ -221,14 +222,14 @@
             this.dgv_main.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
             this.dgv_main.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgv_main.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_main.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_main.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
             this.dgv_main.ColumnHeadersHeight = 30;
             this.dgv_main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgv_main.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -242,34 +243,34 @@
             this.PosAlarm,
             this.NegAlarm,
             this.Remark});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_main.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_main.DefaultCellStyle = dataGridViewCellStyle18;
             this.dgv_main.EnableHeadersVisualStyles = false;
             this.dgv_main.GridColor = System.Drawing.Color.DeepSkyBlue;
             this.dgv_main.Location = new System.Drawing.Point(26, 241);
             this.dgv_main.Name = "dgv_main";
             this.dgv_main.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_main.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
-            this.dgv_main.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_main.RowHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(30)))), ((int)(((byte)(78)))));
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.White;
+            this.dgv_main.RowsDefaultCellStyle = dataGridViewCellStyle20;
             this.dgv_main.RowTemplate.Height = 25;
             this.dgv_main.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_main.Size = new System.Drawing.Size(943, 371);
@@ -277,6 +278,79 @@
             this.dgv_main.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_main_CellClick);
             this.dgv_main.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_main_CellFormatting);
             this.dgv_main.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_main_RowPostPaint);
+            // 
+            // GroupName
+            // 
+            this.GroupName.DataPropertyName = "GroupName";
+            this.GroupName.HeaderText = "通信组";
+            this.GroupName.Name = "GroupName";
+            this.GroupName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // VarName
+            // 
+            this.VarName.DataPropertyName = "VarName";
+            this.VarName.HeaderText = "变量名";
+            this.VarName.Name = "VarName";
+            this.VarName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Start
+            // 
+            this.Start.DataPropertyName = "Start";
+            this.Start.HeaderText = "起始地址";
+            this.Start.Name = "Start";
+            this.Start.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Length
+            // 
+            this.Length.DataPropertyName = "Length";
+            this.Length.HeaderText = "长度";
+            this.Length.Name = "Length";
+            this.Length.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Length.Width = 70;
+            // 
+            // DataType
+            // 
+            this.DataType.DataPropertyName = "DataType";
+            this.DataType.HeaderText = "数据类型";
+            this.DataType.Name = "DataType";
+            this.DataType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Scale
+            // 
+            this.Scale.DataPropertyName = "Scale";
+            this.Scale.HeaderText = "系数";
+            this.Scale.Name = "Scale";
+            this.Scale.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Scale.Width = 70;
+            // 
+            // Offset
+            // 
+            this.Offset.DataPropertyName = "Offset";
+            this.Offset.HeaderText = "偏移量";
+            this.Offset.Name = "Offset";
+            this.Offset.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Offset.Width = 70;
+            // 
+            // PosAlarm
+            // 
+            this.PosAlarm.DataPropertyName = "PosAlarm";
+            this.PosAlarm.HeaderText = "上升沿报警";
+            this.PosAlarm.Name = "PosAlarm";
+            // 
+            // NegAlarm
+            // 
+            this.NegAlarm.DataPropertyName = "NegAlarm";
+            this.NegAlarm.HeaderText = "下降沿报警";
+            this.NegAlarm.Name = "NegAlarm";
+            this.NegAlarm.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Remark
+            // 
+            this.Remark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Remark.DataPropertyName = "Remark";
+            this.Remark.HeaderText = "备注说明";
+            this.Remark.Name = "Remark";
+            this.Remark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // txt_length
             // 
@@ -287,6 +361,12 @@
             // 
             // txt_offset
             // 
+            this.txt_offset.DecimalPlaces = 2;
+            this.txt_offset.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.txt_offset.Location = new System.Drawing.Point(837, 125);
             this.txt_offset.Name = "txt_offset";
             this.txt_offset.Size = new System.Drawing.Size(92, 29);
@@ -294,10 +374,21 @@
             // 
             // txt_scale
             // 
+            this.txt_scale.DecimalPlaces = 2;
+            this.txt_scale.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.txt_scale.Location = new System.Drawing.Point(625, 124);
             this.txt_scale.Name = "txt_scale";
             this.txt_scale.Size = new System.Drawing.Size(92, 29);
             this.txt_scale.TabIndex = 4;
+            this.txt_scale.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // label7
             // 
@@ -379,15 +470,18 @@
             // button1
             // 
             this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("微软雅黑 Light", 13.75F);
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(952, 4);
+            this.button1.Location = new System.Drawing.Point(955, 8);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(45, 38);
+            this.button1.Size = new System.Drawing.Size(37, 33);
             this.button1.TabIndex = 3;
             this.button1.Text = "X";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -436,79 +530,6 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "通信组名称";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // GroupName
-            // 
-            this.GroupName.DataPropertyName = "GroupName";
-            this.GroupName.HeaderText = "通信组";
-            this.GroupName.Name = "GroupName";
-            this.GroupName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // VarName
-            // 
-            this.VarName.DataPropertyName = "VarName";
-            this.VarName.HeaderText = "变量名";
-            this.VarName.Name = "VarName";
-            this.VarName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Start
-            // 
-            this.Start.DataPropertyName = "Start";
-            this.Start.HeaderText = "起始地址";
-            this.Start.Name = "Start";
-            this.Start.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Length
-            // 
-            this.Length.DataPropertyName = "Length";
-            this.Length.HeaderText = "长度";
-            this.Length.Name = "Length";
-            this.Length.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Length.Width = 70;
-            // 
-            // DataType
-            // 
-            this.DataType.DataPropertyName = "DataType";
-            this.DataType.HeaderText = "数据类型";
-            this.DataType.Name = "DataType";
-            this.DataType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Scale
-            // 
-            this.Scale.DataPropertyName = "Scale";
-            this.Scale.HeaderText = "系数";
-            this.Scale.Name = "Scale";
-            this.Scale.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Scale.Width = 70;
-            // 
-            // Offset
-            // 
-            this.Offset.DataPropertyName = "Offset";
-            this.Offset.HeaderText = "偏移量";
-            this.Offset.Name = "Offset";
-            this.Offset.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Offset.Width = 70;
-            // 
-            // PosAlarm
-            // 
-            this.PosAlarm.DataPropertyName = "PosAlarm";
-            this.PosAlarm.HeaderText = "上升沿报警";
-            this.PosAlarm.Name = "PosAlarm";
-            // 
-            // NegAlarm
-            // 
-            this.NegAlarm.DataPropertyName = "NegAlarm";
-            this.NegAlarm.HeaderText = "下降沿报警";
-            this.NegAlarm.Name = "NegAlarm";
-            this.NegAlarm.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Remark
-            // 
-            this.Remark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Remark.DataPropertyName = "Remark";
-            this.Remark.HeaderText = "备注说明";
-            this.Remark.Name = "Remark";
-            this.Remark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // FrmVariableConfig
             // 

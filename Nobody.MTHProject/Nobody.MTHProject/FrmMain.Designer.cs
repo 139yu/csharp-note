@@ -35,7 +35,7 @@
             this.naviButton3 = new Nobody.MTHControlLib.NaviButton();
             this.naviButton4 = new Nobody.MTHControlLib.NaviButton();
             this.naviButton2 = new Nobody.MTHControlLib.NaviButton();
-            this.naviButton1 = new Nobody.MTHControlLib.NaviButton();
+            this.navi_monitor = new Nobody.MTHControlLib.NaviButton();
             this.exit_btn = new System.Windows.Forms.Button();
             this.top_title = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -65,7 +65,7 @@
             this.panel1.Controls.Add(this.naviButton3);
             this.panel1.Controls.Add(this.naviButton4);
             this.panel1.Controls.Add(this.naviButton2);
-            this.panel1.Controls.Add(this.naviButton1);
+            this.panel1.Controls.Add(this.navi_monitor);
             this.panel1.Controls.Add(this.exit_btn);
             this.panel1.Controls.Add(this.top_title);
             this.panel1.Controls.Add(this.label1);
@@ -158,21 +158,21 @@
             this.naviButton2.TitleName = "参数设置";
             this.naviButton2.Click += new System.EventHandler(this.CommNaviBtn_Click);
             // 
-            // naviButton1
+            // navi_monitor
             // 
-            this.naviButton1.BackColor = System.Drawing.Color.Transparent;
-            this.naviButton1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("naviButton1.BackgroundImage")));
-            this.naviButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.naviButton1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.naviButton1.IsLeft = true;
-            this.naviButton1.IsSelected = false;
-            this.naviButton1.Location = new System.Drawing.Point(28, 72);
-            this.naviButton1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.naviButton1.Name = "naviButton1";
-            this.naviButton1.Size = new System.Drawing.Size(129, 43);
-            this.naviButton1.TabIndex = 3;
-            this.naviButton1.TitleName = "集中监控";
-            this.naviButton1.Click += new System.EventHandler(this.CommNaviBtn_Click);
+            this.navi_monitor.BackColor = System.Drawing.Color.Transparent;
+            this.navi_monitor.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("navi_monitor.BackgroundImage")));
+            this.navi_monitor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.navi_monitor.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.navi_monitor.IsLeft = true;
+            this.navi_monitor.IsSelected = false;
+            this.navi_monitor.Location = new System.Drawing.Point(28, 72);
+            this.navi_monitor.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.navi_monitor.Name = "navi_monitor";
+            this.navi_monitor.Size = new System.Drawing.Size(129, 43);
+            this.navi_monitor.TabIndex = 3;
+            this.navi_monitor.TitleName = "集中监控";
+            this.navi_monitor.Click += new System.EventHandler(this.CommNaviBtn_Click);
             // 
             // exit_btn
             // 
@@ -406,7 +406,7 @@
         private MTHControlLib.NaviButton naviButton3;
         private MTHControlLib.NaviButton naviButton4;
         private MTHControlLib.NaviButton naviButton2;
-        private MTHControlLib.NaviButton naviButton1;
+        private MTHControlLib.NaviButton navi_monitor;
         private MTHControlLib.PanelEx mainPanel;
     }
 }

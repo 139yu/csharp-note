@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            SeeSharpTools.JY.GUI.StripChartXSeries stripChartXSeries1 = new SeeSharpTools.JY.GUI.StripChartXSeries();
+            SeeSharpTools.JY.GUI.StripChartXSeries stripChartXSeries5 = new SeeSharpTools.JY.GUI.StripChartXSeries();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMonitor));
             this.stripChartX1 = new SeeSharpTools.JY.GUI.StripChartX();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lv_log = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -166,15 +166,15 @@
             this.stripChartX1.LegendFont = new System.Drawing.Font("微软雅黑", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.stripChartX1.LegendForeColor = System.Drawing.Color.White;
             this.stripChartX1.LegendVisible = true;
-            stripChartXSeries1.Color = System.Drawing.Color.Orange;
-            stripChartXSeries1.Marker = SeeSharpTools.JY.GUI.StripChartXSeries.MarkerType.None;
-            stripChartXSeries1.Name = "1#站点温度";
-            stripChartXSeries1.Type = SeeSharpTools.JY.GUI.StripChartXSeries.LineType.FastLine;
-            stripChartXSeries1.Visible = true;
-            stripChartXSeries1.Width = SeeSharpTools.JY.GUI.StripChartXSeries.LineWidth.Thin;
-            stripChartXSeries1.XPlotAxis = SeeSharpTools.JY.GUI.StripChartXAxis.PlotAxis.Primary;
-            stripChartXSeries1.YPlotAxis = SeeSharpTools.JY.GUI.StripChartXAxis.PlotAxis.Primary;
-            this.stripChartX1.LineSeries.Add(stripChartXSeries1);
+            stripChartXSeries5.Color = System.Drawing.Color.Orange;
+            stripChartXSeries5.Marker = SeeSharpTools.JY.GUI.StripChartXSeries.MarkerType.None;
+            stripChartXSeries5.Name = "1#站点温度";
+            stripChartXSeries5.Type = SeeSharpTools.JY.GUI.StripChartXSeries.LineType.FastLine;
+            stripChartXSeries5.Visible = true;
+            stripChartXSeries5.Width = SeeSharpTools.JY.GUI.StripChartXSeries.LineWidth.Thin;
+            stripChartXSeries5.XPlotAxis = SeeSharpTools.JY.GUI.StripChartXAxis.PlotAxis.Primary;
+            stripChartXSeries5.YPlotAxis = SeeSharpTools.JY.GUI.StripChartXAxis.PlotAxis.Primary;
+            this.stripChartX1.LineSeries.Add(stripChartXSeries5);
             this.stripChartX1.Location = new System.Drawing.Point(809, 63);
             this.stripChartX1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.stripChartX1.Miscellaneous.CheckInfinity = false;
@@ -212,33 +212,33 @@
             this.stripChartX1.YCursor.SelectionColor = System.Drawing.Color.LightGray;
             this.stripChartX1.YCursor.Value = double.NaN;
             // 
-            // listView1
+            // lv_log
             // 
-            this.listView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(28)))), ((int)(((byte)(68)))));
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lv_log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(28)))), ((int)(((byte)(68)))));
+            this.lv_log.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
-            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(809, 541);
-            this.listView1.Name = "listView1";
-            this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(591, 192);
-            this.listView1.SmallImageList = this.imageList1;
-            this.listView1.TabIndex = 4;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.lv_log.ForeColor = System.Drawing.Color.White;
+            this.lv_log.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lv_log.HideSelection = false;
+            this.lv_log.Location = new System.Drawing.Point(809, 541);
+            this.lv_log.Name = "lv_log";
+            this.lv_log.ShowItemToolTips = true;
+            this.lv_log.Size = new System.Drawing.Size(591, 192);
+            this.lv_log.SmallImageList = this.imageList1;
+            this.lv_log.TabIndex = 4;
+            this.lv_log.UseCompatibleStateImageBehavior = false;
+            this.lv_log.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "日志时间";
-            this.columnHeader1.Width = 150;
+            this.columnHeader1.Width = 200;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "日志内容";
-            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader2.Width = 100;
+            this.columnHeader2.Width = 350;
             // 
             // imageList1
             // 
@@ -547,7 +547,7 @@
             // panelEnhanced1
             // 
             this.panelEnhanced1.BackgroundImage = global::Nobody.MTHProject.Properties.Resources.BackGround;
-            this.panelEnhanced1.Controls.Add(this.listView1);
+            this.panelEnhanced1.Controls.Add(this.lv_log);
             this.panelEnhanced1.Controls.Add(this.thmControl2);
             this.panelEnhanced1.Controls.Add(this.checkBoxEx12);
             this.panelEnhanced1.Controls.Add(this.thmControl1);
@@ -597,7 +597,7 @@
         private SeeSharpTools.JY.GUI.StripChartX stripChartX1;
         private MTHControlLib.CheckBoxEx checkBoxEx1;
         private MTHControlLib.CheckBoxEx checkBoxEx2;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lv_log;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ImageList imageList1;
