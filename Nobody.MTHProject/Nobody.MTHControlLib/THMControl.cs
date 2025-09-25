@@ -39,11 +39,11 @@ namespace Nobody.MTHControlLib
         }
 
 
-        private float tempValue;
+        private string tempValue;
         [Browsable(true)]
         [Category("自定义属性")]
         [Description("温度")]
-        public float TempVlaue
+        public string TempValue
         {
             get { return tempValue; }
             set
@@ -52,16 +52,16 @@ namespace Nobody.MTHControlLib
                 {
                     tempValue = value;
                     this.lbl_temp.Text = tempValue.ToString();
-                    dialPlate.TempValue = tempValue; 
+                    dialPlate.TempValue = Convert.ToSingle(tempValue); 
                 }
             }
         }
 
-        private float humidityValue;
+        private string humidityValue;
         [Browsable(true)]
         [Category("自定义属性")]
         [Description("湿度")]
-        public float HumidityValue
+        public string HumidityValue
         {
             get { return humidityValue; }
             set
@@ -70,7 +70,7 @@ namespace Nobody.MTHControlLib
                 {
                     humidityValue = value;
                     this.lbl_humidity.Text = humidityValue.ToString();
-                    dialPlate.HumidityValue = humidityValue;
+                    dialPlate.HumidityValue = Convert.ToSingle(humidityValue);
                 }
             }
         }

@@ -15,6 +15,7 @@ namespace Nobody.MTHControlLib
         public PanelEnhanced()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
@@ -24,7 +25,6 @@ namespace Nobody.MTHControlLib
         }
         protected override void OnPaint(PaintEventArgs e)
         {
-            this.DoubleBuffered = true;
 
             if(this.BackgroundImage != null)
             {
@@ -32,7 +32,6 @@ namespace Nobody.MTHControlLib
 
                 e.Graphics.DrawImage(this.BackgroundImage, new Rectangle(0, 0, this.Width,this.Height), new Rectangle(0, 0, this.BackgroundImage.Width, this.BackgroundImage.Height), GraphicsUnit.Pixel);
             }
-
             base.OnPaint(e);
         }
     }

@@ -34,8 +34,14 @@
     </Win32Resource>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SeeSharpTools.JY.GUI">
+      <HintPath>..\Nobody.MTHProject\bin\Debug\SeeSharpTools.JY.GUI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,6 +88,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RecipeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RecipeControl.Designer.cs">
+      <DependentUpon>RecipeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextSetEx.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextSetEx.Designer.cs">
+      <DependentUpon>TextSetEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextSet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextSet.Designer.cs">
+      <DependentUpon>TextSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="THMControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -107,6 +131,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="RecipeControl.resx">
+      <DependentUpon>RecipeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextSetEx.resx">
+      <DependentUpon>TextSetEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextSet.resx">
+      <DependentUpon>TextSet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="THMControl.resx">
       <DependentUpon>THMControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -128,6 +161,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nobody.MTHModels\Nobody.MTHModels.csproj">
+      <Project>{08D2B854-F5D8-4805-ADDD-21136A91B39D}</Project>
+      <Name>Nobody.MTHModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiniExcelLibs.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace Nobody.MTHModels
         /// </summary>
         public ushort Start { get; set; }
         /// <summary>
-        /// 长度
+        /// 寄存器数量或位偏移量
         /// </summary>
         public ushort Length { get; set; }
         /// <summary>
@@ -48,5 +49,12 @@ namespace Nobody.MTHModels
         /// 是否下降沿报警
         /// </summary>
         public bool NegAlarm { get; set; }
+
+        [ExcelIgnore]
+        public object VarValue { get; set; }
+        [ExcelIgnore]
+        public bool PosAlarmCache { get; set; } = false;
+        [ExcelIgnore]
+        public bool NegAlarmCache { get; set; } = true;
     }
 }

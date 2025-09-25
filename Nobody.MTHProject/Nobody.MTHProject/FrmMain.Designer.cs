@@ -46,6 +46,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.scroll_warning = new SeeSharpTools.JY.GUI.ScrollingText();
             this.label6 = new System.Windows.Forms.Label();
             this.right_btn = new System.Windows.Forms.Button();
             this.center_title = new System.Windows.Forms.Label();
@@ -55,6 +56,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -187,6 +189,7 @@
             this.exit_btn.Size = new System.Drawing.Size(80, 30);
             this.exit_btn.TabIndex = 2;
             this.exit_btn.UseVisualStyleBackColor = true;
+            this.exit_btn.Click += new System.EventHandler(this.exit_btn_Click);
             // 
             // top_title
             // 
@@ -286,10 +289,29 @@
             // panel3
             // 
             this.panel3.BackgroundImage = global::Nobody.MTHProject.Properties.Resources.Alarm;
+            this.panel3.Controls.Add(this.scroll_warning);
             this.panel3.Location = new System.Drawing.Point(1009, 17);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(300, 27);
             this.panel3.TabIndex = 4;
+            // 
+            // scroll_warning
+            // 
+            this.scroll_warning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(35)))), ((int)(((byte)(89)))));
+            this.scroll_warning.BorderColor = System.Drawing.Color.Transparent;
+            this.scroll_warning.BorderVisible = true;
+            this.scroll_warning.Cursor = System.Windows.Forms.Cursors.Default;
+            this.scroll_warning.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scroll_warning.ForeColor = System.Drawing.Color.White;
+            this.scroll_warning.Location = new System.Drawing.Point(0, 0);
+            this.scroll_warning.Name = "scroll_warning";
+            this.scroll_warning.Padding = new System.Windows.Forms.Padding(3);
+            this.scroll_warning.ScrollDirection = SeeSharpTools.JY.GUI.ScrollingText.TextDirection.RightToLeft;
+            this.scroll_warning.ScrollSpeed = 25;
+            this.scroll_warning.Size = new System.Drawing.Size(300, 27);
+            this.scroll_warning.TabIndex = 0;
+            this.scroll_warning.Text = "当前系统无报警";
+            this.scroll_warning.VerticleAligment = SeeSharpTools.JY.GUI.ScrollingText.TextVerticalAlignment.Center;
             // 
             // label6
             // 
@@ -380,6 +402,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -408,6 +431,7 @@
         private MTHControlLib.NaviButton naviButton2;
         private MTHControlLib.NaviButton navi_monitor;
         private MTHControlLib.PanelEx mainPanel;
+        private SeeSharpTools.JY.GUI.ScrollingText scroll_warning;
     }
 }
 

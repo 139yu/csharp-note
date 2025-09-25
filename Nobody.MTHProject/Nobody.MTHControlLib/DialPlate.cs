@@ -129,6 +129,7 @@ namespace Nobody.MTHControlLib
                 if (value >= minValue && value <= maxValue)
                 {
                     tempValue = value;
+                    this.Invalidate();
                 }
             }
         }
@@ -144,6 +145,7 @@ namespace Nobody.MTHControlLib
                 if (value >= minValue && value <= maxValue)
                 {
                     humidityValue = value;
+                    this.Invalidate();
                 }
             }
         }

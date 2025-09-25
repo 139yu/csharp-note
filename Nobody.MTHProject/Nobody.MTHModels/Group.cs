@@ -18,7 +18,7 @@ namespace Nobody.MTHModels
         /// </summary>
         public ushort Start { get; set; }
         /// <summary>
-        /// 字节长度
+        /// 读取变量个数
         /// </summary>
         public ushort Length { get; set; }
         /// <summary>

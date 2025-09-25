@@ -16,7 +16,15 @@ namespace Nobody.MTHProject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMain());
+
+            FrmLogin frmLogin = new FrmLogin();
+            if(frmLogin.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new FrmMain());
+            }else
+            {
+                Application.Exit();
+            }
         }
     }
 }

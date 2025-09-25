@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Nobody.MTHModels
 {
-    public class CommonMethods
+    public class RecipeInfo
     {
-        public static Device Device { get; set; }
-
-        public static Action<int,string> AddLogAction { get; set; }
+        public string RecipeName { get; set; }
+        public List<RecipeParam> RecipeParams { get; set; }
     }
 }

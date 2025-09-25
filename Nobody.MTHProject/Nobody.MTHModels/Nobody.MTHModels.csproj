@@ -34,6 +34,9 @@
     <Reference Include="MiniExcel">
       <HintPath>..\Nobody.MTHProject\bin\Debug\MiniExcel.dll</HintPath>
     </Reference>
+    <Reference Include="SqlSugar, Version=5.1.4.200, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SqlSugar.5.1.4.200\lib\SqlSugar.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,12 +47,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonMethods.cs" />
+    <Compile Include="ActualData.cs" />
     <Compile Include="Device.cs" />
     <Compile Include="FormNames.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecipeInfo.cs" />
+    <Compile Include="RecipeParam.cs" />
+    <Compile Include="SysAdmin.cs" />
+    <Compile Include="SysLog.cs" />
     <Compile Include="Variable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
