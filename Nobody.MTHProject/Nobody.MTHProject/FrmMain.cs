@@ -411,18 +411,38 @@ namespace Nobody.MTHProject
                         CommonMethods.AddLogAction = ((FrmMonitor)frm).AddLog;
                         break;
                     case FormNames.参数设置:
+                        if (!CommonMethods.CurrentUser.ParamSet)
+                        {
+                            new FrmMsgBoxWithoutAck("切换页面", "当前用户权限不足！").Show();
+                            return;
+                        }
                         frm = new FrmParamSet(devPath);
                         break;
                     case FormNames.配方管理:
                         frm = new FrmRecipe(devPath);
+                        if (!CommonMethods.CurrentUser.Recipe)
+                        {
+                            new FrmMsgBoxWithoutAck("切换页面", "当前用户权限不足！").Show();
+                            return;
+                        }
                         break;
                     case FormNames.历史趋势:
+                        if (!CommonMethods.CurrentUser.HistoryTrend)
+                        {
+                            new FrmMsgBoxWithoutAck("切换页面", "当前用户权限不足！").Show();
+                            return;
+                        }
                         frm = new FrmHistory();
                         break;
                     case FormNames.用户管理:
                         frm = new FrmUserManager();
                         break;
                     case FormNames.报警追溯:
+                        if (!CommonMethods.CurrentUser.HistoryLog)
+                        {
+                            new FrmMsgBoxWithoutAck("切换页面", "当前用户权限不足！").Show();
+                            return;
+                        }
                         frm = new FrmAlarm();
                         break;
                     default: break;

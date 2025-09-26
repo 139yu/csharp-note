@@ -17,15 +17,29 @@ namespace Nobody.MTHBLL
             adminService = new AdminService();
         }
 
-        public SysAdmin Login(SysAdmin admin)
-        {
-            return adminService.Login(admin);
-        }
-
         public SysAdmin Login(string uname,string pwd)
         {
             return adminService.Login(uname,pwd);
         }
 
+        public List<SysAdmin> GetAdminList()
+        {
+            return adminService.GetAll();
+        }
+
+        public int Add(SysAdmin admin)
+        {
+            return adminService.Add(admin);
+        }
+
+        public bool Update(SysAdmin admin)
+        {
+            return adminService.Update(admin);
+        }
+
+        public bool Delete(int id)
+        {
+            return adminService.Delete(id);
+        }
     }
 }

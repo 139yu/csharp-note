@@ -44,8 +44,6 @@ namespace Nobody.MTHProject
             var admin = adminManager.Login(loginName,loginPwd);
             if (admin.LoginId != null)
             {
-                CommonMethods.CurrentUser = admin;
-                new FrmMsgBoxWithoutAck("用户登录", "登录成功!").Show();
                 this.DialogResult = DialogResult.OK;
             }else
             {
