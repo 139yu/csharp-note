@@ -3,24 +3,16 @@
   "WorkspaceRootPath": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8B825323-7123-48FC-B716-D09F35E4639B}|Nobody.MTHProject\\Nobody.MTHProject.csproj|d:\\code\\githubcode\\csharp-note\\nobody.mthproject\\nobody.mthproject\\frmusermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B825323-7123-48FC-B716-D09F35E4639B}|Nobody.MTHProject\\Nobody.MTHProject.csproj|solutionrelative:nobody.mthproject\\frmusermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B825323-7123-48FC-B716-D09F35E4639B}|Nobody.MTHProject\\Nobody.MTHProject.csproj|d:\\code\\githubcode\\csharp-note\\nobody.mthproject\\nobody.mthproject\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B825323-7123-48FC-B716-D09F35E4639B}|Nobody.MTHProject\\Nobody.MTHProject.csproj|solutionrelative:nobody.mthproject\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4225AA6-F31F-4083-985D-1AAC877A2B6A}|Nobody.MTHBLL\\Nobody.MTHBLL.csproj|D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\nobody.mthbll\\adminmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4225AA6-F31F-4083-985D-1AAC877A2B6A}|Nobody.MTHBLL\\Nobody.MTHBLL.csproj|solutionrelative:nobody.mthbll\\adminmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B825323-7123-48FC-B716-D09F35E4639B}|Nobody.MTHProject\\Nobody.MTHProject.csproj|d:\\code\\githubcode\\csharp-note\\nobody.mthproject\\nobody.mthproject\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{8B825323-7123-48FC-B716-D09F35E4639B}|Nobody.MTHProject\\Nobody.MTHProject.csproj|solutionrelative:nobody.mthproject\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{08D2B854-F5D8-4805-ADDD-21136A91B39D}|Nobody.MTHModels\\Nobody.MTHModels.csproj|D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\nobody.mthmodels\\sysadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08D2B854-F5D8-4805-ADDD-21136A91B39D}|Nobody.MTHModels\\Nobody.MTHModels.csproj|solutionrelative:nobody.mthmodels\\sysadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8B825323-7123-48FC-B716-D09F35E4639B}|Nobody.MTHProject\\Nobody.MTHProject.csproj|D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\nobody.mthproject\\frmusermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{8B825323-7123-48FC-B716-D09F35E4639B}|Nobody.MTHProject\\Nobody.MTHProject.csproj|d:\\code\\githubcode\\csharp-note\\nobody.mthproject\\nobody.mthproject\\frmusermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{8B825323-7123-48FC-B716-D09F35E4639B}|Nobody.MTHProject\\Nobody.MTHProject.csproj|solutionrelative:nobody.mthproject\\frmusermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C6EA796A-C8AC-424E-899B-67FAD9A53A2E}|Nobody.MTHDAL\\Nobody.MTHDAL.csproj|D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\nobody.mthdal\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C6EA796A-C8AC-424E-899B-67FAD9A53A2E}|Nobody.MTHDAL\\Nobody.MTHDAL.csproj|solutionrelative:nobody.mthdal\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,65 +30,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AdminService.cs",
-              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHDAL\\AdminService.cs",
-              "RelativeDocumentMoniker": "Nobody.MTHDAL\\AdminService.cs",
-              "ToolTip": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHDAL\\AdminService.cs",
-              "RelativeToolTip": "Nobody.MTHDAL\\AdminService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T13:20:37.099Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AdminManager.cs",
-              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHBLL\\AdminManager.cs",
-              "RelativeDocumentMoniker": "Nobody.MTHBLL\\AdminManager.cs",
-              "ToolTip": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHBLL\\AdminManager.cs",
-              "RelativeToolTip": "Nobody.MTHBLL\\AdminManager.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAiwCcAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T13:19:23.117Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "SysAdmin.cs",
-              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHModels\\SysAdmin.cs",
-              "RelativeDocumentMoniker": "Nobody.MTHModels\\SysAdmin.cs",
-              "ToolTip": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHModels\\SysAdmin.cs",
-              "RelativeToolTip": "Nobody.MTHModels\\SysAdmin.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAUAAAAAAAAAA==",
+              "Title": "FrmUserManager.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\FrmUserManager.cs",
+              "RelativeDocumentMoniker": "Nobody.MTHProject\\FrmUserManager.cs",
+              "ToolTip": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\FrmUserManager.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "Nobody.MTHProject\\FrmUserManager.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T09:04:52.095Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-26T02:17:45.765Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "FrmUserManager.cs",
-              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\FrmUserManager.cs",
-              "RelativeDocumentMoniker": "Nobody.MTHProject\\FrmUserManager.cs",
-              "ToolTip": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\FrmUserManager.cs*",
-              "RelativeToolTip": "Nobody.MTHProject\\FrmUserManager.cs*",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAiwCYAAABRAAAAAAAAAA==",
+              "Title": "FrmMain.cs",
+              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\FrmMain.cs",
+              "RelativeDocumentMoniker": "Nobody.MTHProject\\FrmMain.cs",
+              "ToolTip": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\FrmMain.cs",
+              "RelativeToolTip": "Nobody.MTHProject\\FrmMain.cs",
+              "ViewState": "AgIAAKoBAAAAAAAAAAAgwLgBAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T09:01:29.778Z",
+              "WhenOpened": "2025-09-26T02:16:49.811Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FrmUserManager.cs [\u8BBE\u8BA1]",
-              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\FrmUserManager.cs",
-              "RelativeDocumentMoniker": "Nobody.MTHProject\\FrmUserManager.cs",
-              "ToolTip": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\FrmUserManager.cs [\u8BBE\u8BA1]*",
-              "RelativeToolTip": "Nobody.MTHProject\\FrmUserManager.cs [\u8BBE\u8BA1]*",
+              "DocumentIndex": 1,
+              "Title": "FrmMain.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\FrmMain.cs",
+              "RelativeDocumentMoniker": "Nobody.MTHProject\\FrmMain.cs",
+              "ToolTip": "D:\\code\\githubCode\\csharp-note\\Nobody.MTHProject\\Nobody.MTHProject\\FrmMain.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "Nobody.MTHProject\\FrmMain.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T08:53:00.446Z",
+              "WhenOpened": "2025-09-26T02:16:48.22Z",
               "EditorCaption": " [\u8BBE\u8BA1]"
             }
           ]

@@ -109,12 +109,18 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="AddDataDemo.cs" />
+        <Compile Include="AddOrUpdateDemo.cs" />
         <Compile Include="CodeFirstDemo.cs" />
+        <Compile Include="DbFirstDemo.cs" />
+        <Compile Include="DeleteDataDemo.cs" />
+        <Compile Include="entity\InsertTable.cs" />
+        <Compile Include="entity\Student.cs" />
         <Compile Include="entity\SysDept.cs" />
         <Compile Include="entity\SysRole.cs" />
         <Compile Include="entity\SysUser.cs" />
         <Compile Include="Program.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="UpdateDataDemo.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="App.config" />

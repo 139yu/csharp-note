@@ -1,18 +1,47 @@
+﻿using System;
+using System.Linq;
+using System.Text;
 using SqlSugar;
 
 namespace SqlSugarDemo.entity
 {
-    [SugarTable(TableName = "sys_dept",TableDescription = "部门")]
-    public class SysDept
+    ///<summary>
+    ///部门
+    ///</summary>
+    [SugarTable("sys_dept")]
+    public partial class SysDept
     {
-        [SugarColumn(IsPrimaryKey = true, ColumnName = "id", IsIdentity = true, IsNullable = false,
-            ColumnDataType = "int(4)")]
-        public int Id { get; set; }
-        [SugarColumn( ColumnName = "dept_name",  IsNullable = false,ColumnDescription = "部门名称",
-            ColumnDataType = "varchar(30)")]
-        public string DeptName { get; set; }
-        [SugarColumn( ColumnName = "dept_desc",  IsNullable = true,ColumnDescription = "部门描述",
-            ColumnDataType = "varchar(255)")]
-        public string DeptDesc { get; set; }
+           public SysDept(){
+
+
+           }
+           /// <summary>
+           /// Desc:
+           /// Default:
+           /// Nullable:False
+           /// </summary>           
+           [SugarColumn(IsPrimaryKey=true,IsIdentity=true,ColumnName="id")]
+           public int Id {get;set;}
+
+           /// <summary>
+           /// Desc:部门名称
+           /// Default:
+           /// Nullable:False
+           /// </summary>
+           [SugarColumn(ColumnName="dept_name")]           
+           public string DeptName {get;set;}
+
+           /// <summary>
+           /// Desc:部门描述
+           /// Default:
+           /// Nullable:True
+           /// </summary>
+           [SugarColumn(ColumnName="dept_desc")]           
+           public string DeptDesc {get;set;}
+
+           public void GenerateDesc()
+           {
+               DeptDesc = "描述：" + DeptName;
+           }
     }
 }

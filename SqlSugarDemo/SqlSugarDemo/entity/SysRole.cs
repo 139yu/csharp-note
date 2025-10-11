@@ -1,13 +1,35 @@
+﻿using System;
+using System.Linq;
+using System.Text;
 using SqlSugar;
 
 namespace SqlSugarDemo.entity
 {
-    [SugarTable(TableName = "sys_role")]
-    public class SysRole
+    ///<summary>
+    ///
+    ///</summary>
+    [SugarTable("sys_role")]
+    public partial class SysRole
     {
-        [SugarColumn(IsPrimaryKey = true,ColumnName = "id", ColumnDataType = "bigint")]
-        public long Id { get; set; }
-        [SugarColumn(ColumnName = "role_name", ColumnDataType = "varchar",Length = 30 )]
-        public string RoleName { get; set; }
+           public SysRole(){
+
+
+           }
+           /// <summary>
+           /// Desc:
+           /// Default:
+           /// Nullable:False
+           /// </summary>           
+           [SugarColumn(IsPrimaryKey=true,ColumnName="id")]
+           public long? Id {get;set;}
+
+           /// <summary>
+           /// Desc:
+           /// Default:
+           /// Nullable:False
+           /// </summary>
+           [SugarColumn(ColumnName="role_name")]           
+           public string RoleName {get;set;}
+
     }
 }

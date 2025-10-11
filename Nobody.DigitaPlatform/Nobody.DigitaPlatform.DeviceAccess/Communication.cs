@@ -31,6 +31,7 @@ namespace Nobody.DigitaPlatform.DeviceAccess
         {
             
         }
+
         private readonly List<TransferObject> _transfers = new List<TransferObject>();
 
         public Result<ExecuteObject> GetExecuteObject(List<DevicePropEntity> deviceProps)
