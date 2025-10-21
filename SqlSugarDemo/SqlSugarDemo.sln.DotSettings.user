@@ -1,0 +1,8 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AISugarQueryable_00601_002Ecs_002Fl_003AC_0021_003FUsers_003Fyu_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F1aa7a53a2ec44a10b02016874bfebf992c2000_003F50_003F09c1b627_003FISugarQueryable_00601_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=dd9af9ad_002D3f65_002D4f7a_002D96b7_002D94b20413c5bb/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Query" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B9C4D782-C30B-48F8-B08B-AC921EC1609F::.NETFramework,Version=v4.7.2::SqlSugarDemo.UnionQuery.InitData&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B9C4D782-C30B-48F8-B08B-AC921EC1609F::.NETFramework,Version=v4.7.2::SqlSugarDemo.UnionQuery.Query&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -12,8 +12,8 @@
             // AddDataDemo.Insert();
             // UpdateDataDemo.UpdateData();
             // DeleteDataDemo.LogicDelete();
-            AddOrUpdateDemo.Storageable();
+            // AddOrUpdateDemo.Storageable();
+            // QueryDemo.InitData();
         }
-        
     }
 }
