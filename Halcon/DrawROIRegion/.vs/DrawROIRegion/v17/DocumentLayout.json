@@ -1,0 +1,109 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C004436E-91FF-4720-9E12-CD2254827522}|DrawROIRegion\\DrawROIRegion.csproj|g:\\code\\githubcode\\csharp-note\\halcon\\drawroiregion\\drawroiregion\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C004436E-91FF-4720-9E12-CD2254827522}|DrawROIRegion\\DrawROIRegion.csproj|solutionrelative:drawroiregion\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C004436E-91FF-4720-9E12-CD2254827522}|DrawROIRegion\\DrawROIRegion.csproj|g:\\code\\githubcode\\csharp-note\\halcon\\drawroiregion\\drawroiregion\\form1.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{C004436E-91FF-4720-9E12-CD2254827522}|DrawROIRegion\\DrawROIRegion.csproj|solutionrelative:drawroiregion\\form1.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C004436E-91FF-4720-9E12-CD2254827522}|DrawROIRegion\\DrawROIRegion.csproj|g:\\code\\githubcode\\csharp-note\\halcon\\drawroiregion\\drawroiregion\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C004436E-91FF-4720-9E12-CD2254827522}|DrawROIRegion\\DrawROIRegion.csproj|solutionrelative:drawroiregion\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C004436E-91FF-4720-9E12-CD2254827522}|DrawROIRegion\\DrawROIRegion.csproj|G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\drawroiregion\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{C004436E-91FF-4720-9E12-CD2254827522}|DrawROIRegion\\DrawROIRegion.csproj|solutionrelative:drawroiregion\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C004436E-91FF-4720-9E12-CD2254827522}|DrawROIRegion\\DrawROIRegion.csproj|G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\drawroiregion\\roi_02.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C004436E-91FF-4720-9E12-CD2254827522}|DrawROIRegion\\DrawROIRegion.csproj|solutionrelative:drawroiregion\\roi_02.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\DrawROIRegion\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "DrawROIRegion\\Form1.Designer.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\DrawROIRegion\\Form1.Designer.cs",
+              "RelativeToolTip": "DrawROIRegion\\Form1.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAA8wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T11:44:54.689Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.resx",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\DrawROIRegion\\Form1.resx",
+              "RelativeDocumentMoniker": "DrawROIRegion\\Form1.resx",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\DrawROIRegion\\Form1.resx",
+              "RelativeToolTip": "DrawROIRegion\\Form1.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-10-31T11:44:54.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ROI_02.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\DrawROIRegion\\ROI_02.cs",
+              "RelativeDocumentMoniker": "DrawROIRegion\\ROI_02.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\DrawROIRegion\\ROI_02.cs",
+              "RelativeToolTip": "DrawROIRegion\\ROI_02.cs",
+              "ViewState": "AgIAANUAAAAAAAAAAAAAAOAAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T01:37:26.234Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\DrawROIRegion\\Form1.cs",
+              "RelativeDocumentMoniker": "DrawROIRegion\\Form1.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\DrawROIRegion\\Form1.cs",
+              "RelativeToolTip": "DrawROIRegion\\Form1.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAwDsAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T01:34:35.827Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Form1.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\DrawROIRegion\\Form1.cs",
+              "RelativeDocumentMoniker": "DrawROIRegion\\Form1.cs",
+              "ToolTip": "G:\\Code\\githubCode\\csharp-note\\Halcon\\DrawROIRegion\\DrawROIRegion\\Form1.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "DrawROIRegion\\Form1.cs [\u8BBE\u8BA1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T01:32:02.529Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

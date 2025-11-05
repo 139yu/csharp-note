@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="24.05.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<c>* 读取图片</c>
+<l>read_image(Image, '../Halcon素材/Floppies.jpg')</l>
+<c>* 获取图片大小</c>
+<l>get_image_size (Image, Width, Height)</l>
+<c>* 关闭显示窗体</c>
+<l>dev_close_window()</l>
+<c>* 根据图像大小打开显示窗体</c>
+<l>dev_open_window_fit_size(0, 0, Width, Height, -1, -1, WindowHandle)</l>
+<c>* 显示图像</c>
+<l>dev_display(Image)</l>
+<c>* 使用灰度阈值（0-255）对图像进行分割</c>
+<l>threshold (Image, Regions, 119, 255)</l>
+<c>* 清除窗体</c>
+<l>dev_clear_window()</l>
+<c>* 显示分割的区域</c>
+<l>dev_display(Regions)</l>
+<c>* 将区域打散</c>
+<l> connection(Regions, ConnectedRegions)</l>
+<c>* 选中满足特征的区域，根据面积来选择</c>
+<l>select_shape (ConnectedRegions, SelectedRegions, 'area', 'and', 191, 283.65)</l>
+<l>select_shape (SelectedRegions, SelectedRegions1, 'roundness', 'and', 0.8012, 0.90448)</l>
+<c></c>
+<l>dev_clear_window()</l>
+<c>* 显示分割的区域</c>
+<l>dev_set_color('red')</l>
+<l>dev_display(Image)</l>
+<l>dev_display(SelectedRegions1)</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

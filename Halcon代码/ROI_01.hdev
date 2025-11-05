@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="24.05.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(Image, '../Halcon素材/Floppies.jpg')</l>
+<l>get_image_size(Image, Width, Height)</l>
+<l>dev_close_window()</l>
+<l>dev_open_window_fit_size(0, 0, Width, Height, -1, -1, WindowHandle)</l>
+<l>dev_display(Image)</l>
+<l>* dev_set_draw('margin')</l>
+<c>* 生成一个圆形ROI区域</c>
+<l>gen_circle (ROI_0, 383.598, 324.417, 52.9679)</l>
+<c>* 生成一个圆形ROI轮廓</c>
+<l>gen_circle_contour_xld (ROI_0, 300.975, 107.069, 50.3561, 0, 6.28318, 'positive', 1)</l>
+<c>* 生成一个可旋转矩形ROI区域</c>
+<l>gen_rectangle2 (ROI_0, 139.664, 317.533, rad(-19.6562), 14.6207, 8.72452)</l>
+<c>* 生成一个矩形轮廓</c>
+<l>gen_contour_polygon_xld (ROI_0, [111,111,127,127,111], [93,122,122,93,93])</l>
+<c></c>
+<c></c>
+<c>* 用鼠标自己绘制一个区域</c>
+<l>draw_rectangle1(WindowHandle, Row1, Column1, Row2, Column2)</l>
+<c>* 生成绘制的区域</c>
+<l>gen_rectangle1(Rectangle, Row1, Column1, Row2, Column2)</l>
+<c>* 提取图像中的ROI区域</c>
+<l>reduce_domain(Image, Rectangle, ImageReduced)</l>
+<c></c>
+<c>* 将图片保存到指定为止，第三参数默认为0</c>
+<l>write_image(ImageReduced, 'png', 0, './roi')</l>
+<c></c>
+<c>* 剪切区域图像，然后输出到图像窗口</c>
+<l>* crop_domain(ImageReduced, ImagePart)</l>
+<c></c>
+<l>draw_rectangle1(WindowHandle, Row11, Column11, Row21, Column21)</l>
+<l>gen_rectangle1(Rectangle1, Row11, Column11, Row21, Column21)</l>
+<c></c>
+<l>draw_circle(WindowHandle, Row, Column, Radius)</l>
+<l>gen_circle(Circle, Row, Column, Radius)</l>
+<c></c>
+<c>* 合并区域，然后</c>
+<l>union2(Rectangle1, Circle, RegionUnion)</l>
+<c></c>
+<l>reduce_domain(Image, RegionUnion, ImageReduced1)</l>
+<l>crop_domain(ImageReduced1, ImagePart)</l>
+<l>write_image(ImagePart, 'png', 0, 'union_part')</l>
+<c></c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

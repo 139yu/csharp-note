@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="24.05.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(Image, 'G:/Code/githubCode/csharp-note/Halcon素材/Floppies.jpg')</l>
+<l>dev_close_window()</l>
+<l>get_image_size(Image, Width, Height)</l>
+<l>dev_open_window_fit_size (0, 0, Width, Height, -1, -1, WindowHandle)</l>
+<c>* 控制程序执行期间是否自动将图形输出对象（如图像、区域、轮廓）显示在活动的图形窗口中</c>
+<l>dev_update_window('off')</l>
+<l>dev_set_draw('margin')</l>
+<l>dev_display(Image)</l>
+<c></c>
+<l>draw_circle(WindowHandle, Row1, Column1, Radius)</l>
+<l>gen_circle(Circle, Row1, Column1, Radius)</l>
+<c>* 计算输入区域的面积和中心坐标</c>
+<l>area_center(Circle, Area, CenterY, CenterX)</l>
+<c>* 保留感兴趣区域</c>
+<l>reduce_domain (Image, Circle, ImageReduced)</l>
+<c>* 创建用于匹配的NCC模型</c>
+<l>create_ncc_model (ImageReduced, 'auto', 0, 0, 'auto', 'use_polarity', ModelID)</l>
+<l>dev_display(Circle)</l>
+<l>Rows := []</l>
+<l>Columns := []</l>
+<c></c>
+<l>find_ncc_model(Image, ModelID, 0, 0, 0.5, 5, 0.5, 'true', [4,1], Row, Column, Angle, Score)</l>
+<c></c>
+<l>dev_update_window('on')</l>
+<l>for Index := 0 to |Score| - 1 by 1</l>
+<c>    * 计算一个从模板中心到匹配点的刚体变换矩阵HomMat2D，该变换包括平移和旋转</c>
+<l>    vector_angle_to_rigid (CenterY, CenterX, 0, Row[Index], Column[Index], 0, HomMat2D)</l>
+<c>    * 将原始的圆形模板区域应用上述变换，使其与图像中匹配目标的位置和方向对齐</c>
+<l>    affine_trans_region (Circle, RegionAffineTrans, HomMat2D, 'nearest_neighbor')</l>
+<l>    dev_display(RegionAffineTrans)</l>
+<c>    * 在匹配中心点生成一个十字形轮廓标记，其方向与匹配角度一致</c>
+<l>    gen_cross_contour_xld(Cross, Row[Index], Column[Index], 12, Angle[Index])</l>
+<c></c>
+<l>endfor</l>
+<l>stop()</l>
+<l>clear_ncc_model (ModelID)</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

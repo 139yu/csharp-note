@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="24.05.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(Image, '../Halcon素材/螺丝分拣.png')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>dev_close_window()</l>
+<l>dev_open_window_fit_size(0, 0, Width, Height, -1, -1, WindowHandle)</l>
+<l>dev_display (Image)</l>
+<c>* 将彩色图片转成灰色</c>
+<l>rgb1_to_gray(Image, GrayImage)</l>
+<l>threshold (GrayImage, Regions, 0, 77)</l>
+<l>connection(Regions, ConnectedRegions)</l>
+<l>select_shape (ConnectedRegions, SelectedRegions, 'area', 'and', 1783.99, 1911.36)</l>
+<c>* 计算区域面积，以及中心点坐标</c>
+<l>area_center(SelectedRegions, Area, Row, Column)</l>
+<c>* 计算区域数量</c>
+<l>count_obj(SelectedRegions,Count)</l>
+<l>dev_clear_window()</l>
+<l>dev_display (Image)</l>
+<l>dev_set_color('red')</l>
+<l>dev_display (SelectedRegions)</l>
+<c>* 设置光标位置</c>
+<l>set_tposition (WindowHandle, 30, 330)</l>
+<l>write_string(WindowHandle, '螺栓数量' + Count + '个')</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

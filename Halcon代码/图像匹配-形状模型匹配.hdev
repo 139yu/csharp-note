@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="24.05.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<c as_id="matching" as_name="Matching 01" as_grp="[0]" as_ord="5"></c>
+<c as_id="matching" as_name="Matching 01" as_grp="[1,1,1]" as_ord="1">* Matching 01: Obtain the model image</c>
+<l as_id="matching" as_name="Matching 01" as_grp="[1,1,1]" as_ord="2">read_image (Image, 'G:/Code/githubCode/csharp-note/Halcon素材/Floppies.jpg')</l>
+<l>dev_close_window()</l>
+<l>get_image_size(Image, Width, Height)</l>
+<l>dev_open_window_fit_size(0, 0, Width, Height, -1, -1, WindowHandle)</l>
+<l>dev_display(Image)</l>
+<c as_id="matching" as_name="Matching 01" as_grp="[1,1,2]" as_ord="1">* </c>
+<c as_id="matching" as_name="Matching 01" as_grp="[1,1,2]" as_ord="2">* Matching 01: Build the ROI from basic regions</c>
+<l as_id="matching" as_name="Matching 01" as_grp="[1,1,2]" as_ord="3">gen_rectangle2 (ModelRegion, 158.807, 298.374, rad(145.487), 16.1506, 14.1379)</l>
+<c as_id="matching" as_name="Matching 01" as_grp="[1,1,3]" as_ord="1">* </c>
+<c as_id="matching" as_name="Matching 01" as_grp="[1,1,3]" as_ord="2">* Matching 01: Reduce the model template</c>
+<l as_id="matching" as_name="Matching 01" as_grp="[1,1,3]" as_ord="3">reduce_domain (Image, ModelRegion, TemplateImage)</l>
+<c as_id="matching" as_name="Matching 01" as_grp="[1,1,4]" as_ord="2"></c>
+<c>*创建形状模型，返回它的句柄</c>
+<l>create_shape_model(TemplateImage, 2, rad(0), rad(360), rad(7.04), ['none','no_pregeneration'], 'use_polarity', [54,86,6], 6, ModelID)</l>
+<c></c>
+<l>find_shape_model(Image, ModelID, rad(0), rad(360), 0.79, 5, 0.5, 'least_squares', [2,1], 0.9, Row, Column, Angle, ModelScore)</l>
+<c>*从形状模型句柄中提取轮廓</c>
+<l>get_shape_model_contours (ModelContours, ModelID, 1)</l>
+<c></c>
+<l>for index := 0 to |ModelScore| - 1 by 1</l>
+<c>    * 定义一个仿射变换矩阵</c>
+<l>    hom_mat2d_identity (HomMat)</l>
+<c>    * 旋转矩阵</c>
+<l>    hom_mat2d_rotate(HomMat, Angle[index], 0, 0, HomMat)</l>
+<c>    * 平移</c>
+<l>    hom_mat2d_translate(HomMat, Row[index], Column[index], HomMat)</l>
+<c>    * 使用构建好的变换矩阵，实际计算模板轮廓的新坐标</c>
+<l>    affine_trans_contour_xld(ModelContours, ContoursAffineTrans, HomMat)</l>
+<c></c>
+<l>endfor</l>
+<c>* 关闭句柄</c>
+<l>clear_shape_model(ModelID)</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

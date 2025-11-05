@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="24.05.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(Image,'G:/Code/githubCode/csharp-note/Halcon素材/Floppies.jpg')</l>
+<l>get_image_size(Image, Width, Height)</l>
+<l>dev_close_window()</l>
+<l>dev_open_window_fit_size(0, 0, Width, Height, -1, -1, WindowHandle)</l>
+<l>dev_display(Image)</l>
+<l>dev_set_system ('jit_enabled','')</l>
+<l>dev_set_color('red')</l>
+<l>dev_set_draw('margin')</l>
+<c>** 绘制不感兴趣区域</c>
+<l>draw_circle(WindowHandle, Row, Column, Radius)</l>
+<l>gen_circle(Circle, Row, Column, Radius)</l>
+<c></c>
+<l>draw_rectangle1(WindowHandle, Row1, Column1, Row2, Column2)</l>
+<l>gen_rectangle1(Rectangle, Row1, Column1, Row2, Column2)</l>
+<c>* 求两个区域差</c>
+<l>difference(Circle, Rectangle, RegionDifference)</l>
+<l>reduce_domain(Image, RegionDifference, ImageReduced)</l>
+<l>dev_clear_window()</l>
+<l>dev_display(Image)</l>
+<c></c>
+<c>* 绘制任意区域</c>
+<l>draw_region (Region, WindowHandle)</l>
+<c></c>
+<l>reduce_domain(Image, Region, ImageRegion)</l>
+<c></c>
+<l>crop_domain(ImageRegion, ImagePart)</l>
+<l>write_image(ImagePart, 'png', 0, 'roi_region')</l>
+<c></c>
+<c>* 使用缩放工具绘制区域</c>
+<c>* 创建一个可拉伸的圆形</c>
+<l>create_drawing_object_circle(Row, Column, Radius, DrawID)</l>
+<c>* 将所创建的圆形放到窗体上显示出来</c>
+<l>attach_drawing_object_to_window(WindowHandle, DrawID)</l>
+<l>dev_display(Image)</l>
+<c>* 获取创建对象的参数</c>
+<l>get_drawing_object_params(DrawID, ['row','column','radius'], ParamValues)</l>
+<c>* 根据返回的参数将它绘制出来</c>
+<l>gen_circle(Circle1, ParamValues[0], ParamValues[1], ParamValues[2])</l>
+<l>reduce_domain(Image, Circle1, ImageReduced1)</l>
+<l>crop_domain(ImageReduced1, ImagePart1)</l>
+<l>write_image(ImagePart1, 'png', 0, 'draw_object')</l>
+<c>* 将创建的对象从窗体上删除</c>
+<l>detach_drawing_object_from_window(WindowHandle, DrawID)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
