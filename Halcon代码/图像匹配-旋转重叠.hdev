@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="25.05.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(ImageSearch, '../Halcon素材/green-dots.png')</l>
+<l>get_image_size (ImageSearch, Width, Height)</l>
+<c></c>
+<l>dev_close_window()</l>
+<l>dev_open_window_fit_size (0, 0, Width, Height, -1, -1, WindowHandle)</l>
+<c></c>
+<l>dev_display(ImageSearch)</l>
+<c></c>
+<l>set_display_font(WindowHandle, 16, 'mono', 'true', 'false')</l>
+<c></c>
+<l>dev_set_draw ('margin')</l>
+<l>dev_set_line_width (2)</l>
+<l>dev_set_color('green')</l>
+<c></c>
+<l>file_exists ('../Halcon素材/green-dot.png', FileExists)</l>
+<c></c>
+<l>if(FileExists)</l>
+<l>    read_shape_model('green-dot.png',ModelID)</l>
+<l>    find_scaled_shape_model(ImageSearch, ModelID, -rad(45), rad(90), 0.8, 1, 0.5, 0, 0.5, 'least_squares', 5, 0.8, Row, Column, Angle, Scale, Score)</l>
+<l>    get_shape_model_contours (ModelContours, ModelID, 1)</l>
+<l>    for i := 0 to |Score| - 1 by 1</l>
+<l>        vector_angle_to_rigid(0, 0, 0, Row[i], Column[i], Angle[i], HomMat2DRotate)</l>
+<l>        hom_mat2d_scale(HomMat2DRotate, Scale[i],  Scale[i], Column[i], Row[i], HomMat2DScale)</l>
+<l>        affine_trans_contour_xld(ModelContours, ContoursAffineTrans, HomMat2DScale)</l>
+<l>        dev_display (ContoursAffineTrans)</l>
+<l>    endfor</l>
+<l>    stop()</l>
+<l>    clear_shape_model(ModelID)</l>
+<l>else</l>
+<c>    </c>
+<l>endif</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

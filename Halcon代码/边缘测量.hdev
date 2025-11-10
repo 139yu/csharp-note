@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="25.05.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(Image, '../Halcon素材/bracket.png')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<c></c>
+<l>dev_close_window ()</l>
+<l>dev_open_window_fit_size(0, 0, Width, Height, -1, -1, WindowHandle)</l>
+<l>dev_display(Image)</l>
+<c></c>
+<l>dev_set_draw ('margin')</l>
+<l>dev_set_color('red')</l>
+<c></c>
+<c>* 矩形中心点y</c>
+<l>Row := 250</l>
+<c>* 矩形中心点x</c>
+<l>Column := 400</l>
+<c>* 矩形与水平线夹角，逆时针方向</c>
+<l>Angle := rad(90)</l>
+<c>* 半边宽</c>
+<l>Length1 := 150</l>
+<c>* 半边长</c>
+<l>Length2 := 15</l>
+<c></c>
+<l>gen_rectangle2(Rectangle, Row, Column, Angle, Length1, Length2)</l>
+<c>* 准备提取与矩形长轴垂直的直线边缘， width、height被测量图像的宽高</c>
+<l>gen_measure_rectangle2(Row, Column, Angle, Length1, Length2, Width, Height, 'nearest_neighbor', MeasureHandle)</l>
+<l>measure_pairs(Image, MeasureHandle, 1, 40, 'all', 'all', RowEdgeFirst, ColumnEdgeFirst, AmplitudeFirst, RowEdgeSecond, ColumnEdgeSecond, AmplitudeSecond, IntraDistance, InterDistance)</l>
+<l>for i := 0 to |RowEdgeFirst| - 1 by 1</l>
+<l>     TargetAngle := rad(90) - Angle</l>
+<l>     X1 := ColumnEdgeFirst[i] -  Length2 * cos(TargetAngle)</l>
+<l>     Y1 := RowEdgeFirst[i] - Length2 * sin(TargetAngle)</l>
+<l>     X2 := ColumnEdgeFirst[i] +  Length2 * cos(TargetAngle)</l>
+<l>     Y2 :=  RowEdgeFirst[i] + Length2 * sin(TargetAngle)</l>
+<l>     gen_contour_polygon_xld (Contour, [Y1,RowEdgeFirst[i],Y2], [X1,ColumnEdgeFirst[i],X2])</l>
+<l>     X1 := ColumnEdgeSecond[i] -  Length2 * cos(TargetAngle)</l>
+<l>     Y1 := RowEdgeSecond[i] - Length2 * sin(TargetAngle)</l>
+<l>     X2 := ColumnEdgeSecond[i] +  Length2 * cos(TargetAngle)</l>
+<l>     Y2 :=  RowEdgeSecond[i] + Length2 * sin(TargetAngle)</l>
+<l>     gen_contour_polygon_xld (Contour, [Y1,RowEdgeSecond[i],Y2], [X1,ColumnEdgeSecond[i],X2])</l>
+<l>endfor</l>
+<c></c>
+<l>close_measure (MeasureHandle)</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

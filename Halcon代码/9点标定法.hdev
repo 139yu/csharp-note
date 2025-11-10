@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="25.05.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(Image, '../Halcon素材/cal.tif')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>dev_close_window()</l>
+<l>dev_open_window_fit_size (0, 0, Width, Height, -1, -1, WindowHandle)</l>
+<l>dev_display(Image)</l>
+<c>* 定义元组，用于储存9个点</c>
+<l>tuple_gen_const(9,0,X)</l>
+<l>tuple_gen_const(9,0,Y)</l>
+<c></c>
+<l>X[0] := 0</l>
+<l>Y[0] := 0</l>
+<c></c>
+<l>X[1] := 10</l>
+<l>Y[1] := 0</l>
+<c></c>
+<l>X[2] := 25</l>
+<l>Y[2] := 0</l>
+<c></c>
+<l>X[3] := 0</l>
+<l>Y[3] := 5</l>
+<c></c>
+<l>X[4] := 10</l>
+<l>Y[4] := 5</l>
+<c></c>
+<l>X[5] := 20</l>
+<l>Y[5] := 5</l>
+<c></c>
+<l>X[6] := 0</l>
+<l>Y[6] := 15</l>
+<c></c>
+<l>X[7] := 10</l>
+<l>Y[7] := 15</l>
+<c></c>
+<l>X[8] := 20</l>
+<l>Y[8] := 15</l>
+<c></c>
+<l>ColX := []</l>
+<l>RowY := []</l>
+<c></c>
+<l>dev_set_draw ('margin')</l>
+<l>dev_set_color('cyan')</l>
+<l>dev_set_line_width (1)</l>
+<c></c>
+<l>for i := 0 to 8 by 1</l>
+<l>    set_tposition (WindowHandle, 10, 10)</l>
+<l>    disp_message (WindowHandle, '绘制第' + (i + 1) + '个点，坐标为（'+ X[i]+','+Y[i]+'）', 'window', 12, 12, 'black', 'true')</l>
+<c>  </c>
+<l>    draw_circle(WindowHandle, Row, Column, Radius)</l>
+<l>    gen_circle(Circle, Row, Column, Radius)</l>
+<l>    reduce_domain(Image, Circle, ImageReduced)</l>
+<c>    </c>
+<l>    threshold(ImageReduced, Region, 0, 100)</l>
+<l>    closing_circle(Region, RegionClosing, 3.5)</l>
+<c>    * 将区域对象转成轮廓对象</c>
+<l>    gen_contour_region_xld (RegionClosing, Contours, 'border')</l>
+<c>    * 使用圆逼近轮廓，得到一个标准圆</c>
+<l>    fit_circle_contour_xld (Contours, 'algebraic', -1, 0, 0, 3, 2, Row1, Column1, Radius1, StartPhi, EndPhi, PointOrder)</l>
+<c>    </c>
+<l>    gen_circle_contour_xld(ContCircle, Row1, Column1, Radius1, StartPhi, EndPhi, 'positive', 1)</l>
+<l>    ColX := [ColX,Column1]</l>
+<l>    RowY := [RowY,Row1]</l>
+<l>    wait_seconds (1)</l>
+<l>endfor</l>
+<c>* 通过至少3组对应关系，计算出一个仿射变换矩阵</c>
+<l>vector_to_hom_mat2d(ColX,RowY,X,Y,HomMat2D)</l>
+<c></c>
+<l>write_tuple(HomMat2D, 'Homat.tup')</l>
+<l>read_tuple ( 'Homat.tup',HomMat2D)</l>
+<l>draw_circle(WindowHandle, Row2, Column2, Radius2)</l>
+<l>gen_circle(Circle1, Row2, Column2, Radius2)</l>
+<l>reduce_domain (Image, Circle1, ImageReduced1)</l>
+<l>threshold(ImageReduced1, Region1, 5, 115)</l>
+<c> </c>
+<l>closing_circle(Region1, RegionClosing1, 3.5)</l>
+<c> </c>
+<l>gen_contour_region_xld (RegionClosing1, Contours1, 'border')</l>
+<c> </c>
+<l>fit_circle_contour_xld (Contours1, 'algebraic', -1, 0, 0, 3, 2, Row3, Column3, Radius3, StartPhi1, EndPhi1, PointOrder1)</l>
+<c></c>
+<l>affine_trans_point_2d(HomMat2D, Column3, Row3, Qx, Qy)</l>
+<c> </c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

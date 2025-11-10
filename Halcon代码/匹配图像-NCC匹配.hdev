@@ -1,40 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<hdevelop file_version="1.2" halcon_version="24.05.0.0">
+<hdevelop file_version="1.2" halcon_version="25.05.0.0">
 <procedure name="main">
 <interface/>
 <body>
-<l>read_image(Image, 'G:/Code/githubCode/csharp-note/Halcon素材/Floppies.jpg')</l>
+<l>read_image(Image, '../Halcon素材/圆点.jpg')</l>
+<l>rgb1_to_gray(Image, GrayImage)</l>
+<l>count_channels(GrayImage, Channels)</l>
+<l>get_image_size(GrayImage, Width, Height)</l>
 <l>dev_close_window()</l>
-<l>get_image_size(Image, Width, Height)</l>
 <l>dev_open_window_fit_size (0, 0, Width, Height, -1, -1, WindowHandle)</l>
 <c>* 控制程序执行期间是否自动将图形输出对象（如图像、区域、轮廓）显示在活动的图形窗口中</c>
 <l>dev_update_window('off')</l>
 <l>dev_set_draw('margin')</l>
-<l>dev_display(Image)</l>
+<l>dev_display(GrayImage)</l>
 <c></c>
 <l>draw_circle(WindowHandle, Row1, Column1, Radius)</l>
 <l>gen_circle(Circle, Row1, Column1, Radius)</l>
 <c>* 计算输入区域的面积和中心坐标</c>
 <l>area_center(Circle, Area, CenterY, CenterX)</l>
 <c>* 保留感兴趣区域</c>
-<l>reduce_domain (Image, Circle, ImageReduced)</l>
+<l>reduce_domain (GrayImage, Circle, ImageReduced)</l>
+<c></c>
 <c>* 创建用于匹配的NCC模型</c>
 <l>create_ncc_model (ImageReduced, 'auto', 0, 0, 'auto', 'use_polarity', ModelID)</l>
+<l>threshold(ImageReduced, Region, 0,100)</l>
+<c>* 对圆进行膨胀</c>
+<l>dilation_circle (Region, RegionDilation, 5.5)</l>
+<c>* 将区域转成轮廓对象</c>
+<l>gen_contour_region_xld(Region, Contours, 'border')</l>
+<c>* 通过圆逼近输入的轮廓，生成一个圆</c>
+<l>fit_circle_contour_xld (Contours, 'algebraic', -1, 0, 0, 3, 2, Row2, Column2, Radius1, StartPhi, EndPhi, PointOrder)</l>
+<l>dev_clear_window ()</l>
+<l>dev_display(Image)</l>
+<l>gen_circle(Circle1, Row2, Column2, Radius1)</l>
 <l>dev_display(Circle)</l>
 <l>Rows := []</l>
 <l>Columns := []</l>
 <c></c>
-<l>find_ncc_model(Image, ModelID, 0, 0, 0.5, 5, 0.5, 'true', [4,1], Row, Column, Angle, Score)</l>
+<l>find_ncc_model(GrayImage, ModelID, 0, 0, 0.5, 5, 0.5, 'true', [4,1], Row, Column, Angle, Score)</l>
 <c></c>
 <l>dev_update_window('on')</l>
 <l>for Index := 0 to |Score| - 1 by 1</l>
-<c>    * 计算一个从模板中心到匹配点的刚体变换矩阵HomMat2D，该变换包括平移和旋转</c>
+<c>    * 通过一组对应点和两个对应角度，计算出一个刚性仿射变换  ，并以齐次变换矩阵HomMat2D的形式返回。</c>
 <l>    vector_angle_to_rigid (CenterY, CenterX, 0, Row[Index], Column[Index], 0, HomMat2D)</l>
 <c>    * 将原始的圆形模板区域应用上述变换，使其与图像中匹配目标的位置和方向对齐</c>
 <l>    affine_trans_region (Circle, RegionAffineTrans, HomMat2D, 'nearest_neighbor')</l>
 <l>    dev_display(RegionAffineTrans)</l>
 <c>    * 在匹配中心点生成一个十字形轮廓标记，其方向与匹配角度一致</c>
 <l>    gen_cross_contour_xld(Cross, Row[Index], Column[Index], 12, Angle[Index])</l>
+<l>    dev_set_color('white')</l>
+<l>    gen_cross_contour_xld(Cross2, Row2, Column2, 12, Angle[Index])</l>
 <c></c>
 <l>endfor</l>
 <l>stop()</l>

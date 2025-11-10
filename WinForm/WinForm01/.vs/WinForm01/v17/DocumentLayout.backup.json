@@ -1,0 +1,106 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\code\\githubCode\\csharp-note\\WinForm\\WinForm01\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{48FE38EE-EE17-405B-AF3A-0713CB12C14E}|WinForm01\\WinForm01.csproj|d:\\code\\githubcode\\csharp-note\\winform\\winform01\\winform01\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48FE38EE-EE17-405B-AF3A-0713CB12C14E}|WinForm01\\WinForm01.csproj|solutionrelative:winform01\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48FE38EE-EE17-405B-AF3A-0713CB12C14E}|WinForm01\\WinForm01.csproj|d:\\code\\githubcode\\csharp-note\\winform\\winform01\\winform01\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{48FE38EE-EE17-405B-AF3A-0713CB12C14E}|WinForm01\\WinForm01.csproj|solutionrelative:winform01\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48FE38EE-EE17-405B-AF3A-0713CB12C14E}|WinForm01\\WinForm01.csproj|d:\\code\\githubcode\\csharp-note\\winform\\winform01\\winform01\\form01.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{48FE38EE-EE17-405B-AF3A-0713CB12C14E}|WinForm01\\WinForm01.csproj|solutionrelative:winform01\\form01.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48FE38EE-EE17-405B-AF3A-0713CB12C14E}|WinForm01\\WinForm01.csproj|d:\\code\\githubcode\\csharp-note\\winform\\winform01\\winform01\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48FE38EE-EE17-405B-AF3A-0713CB12C14E}|WinForm01\\WinForm01.csproj|solutionrelative:winform01\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48FE38EE-EE17-405B-AF3A-0713CB12C14E}|WinForm01\\WinForm01.csproj|d:\\code\\githubcode\\csharp-note\\winform\\winform01\\winform01\\form02.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{48FE38EE-EE17-405B-AF3A-0713CB12C14E}|WinForm01\\WinForm01.csproj|solutionrelative:winform01\\form02.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\WinForm\\WinForm01\\WinForm01\\Program.cs",
+              "RelativeDocumentMoniker": "WinForm01\\Program.cs",
+              "ToolTip": "D:\\code\\githubCode\\csharp-note\\WinForm\\WinForm01\\WinForm01\\Program.cs",
+              "RelativeToolTip": "WinForm01\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAiwBIAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-08T01:53:42.959Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Form02.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\WinForm\\WinForm01\\WinForm01\\Form02.cs",
+              "RelativeDocumentMoniker": "WinForm01\\Form02.cs",
+              "ToolTip": "D:\\code\\githubCode\\csharp-note\\WinForm\\WinForm01\\WinForm01\\Form02.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "WinForm01\\Form02.cs [\u8BBE\u8BA1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-08T01:58:20.941Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form01.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\WinForm\\WinForm01\\WinForm01\\Form01.cs",
+              "RelativeDocumentMoniker": "WinForm01\\Form01.cs",
+              "ToolTip": "D:\\code\\githubCode\\csharp-note\\WinForm\\WinForm01\\WinForm01\\Form01.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "WinForm01\\Form01.cs [\u8BBE\u8BA1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-08T01:55:40.177Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FrmMain.cs",
+              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\WinForm\\WinForm01\\WinForm01\\FrmMain.cs",
+              "RelativeDocumentMoniker": "WinForm01\\FrmMain.cs",
+              "ToolTip": "D:\\code\\githubCode\\csharp-note\\WinForm\\WinForm01\\WinForm01\\FrmMain.cs",
+              "RelativeToolTip": "WinForm01\\FrmMain.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAA1wDwAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-08T01:55:21.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FrmMain.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "D:\\code\\githubCode\\csharp-note\\WinForm\\WinForm01\\WinForm01\\FrmMain.cs",
+              "RelativeDocumentMoniker": "WinForm01\\FrmMain.cs",
+              "ToolTip": "D:\\code\\githubCode\\csharp-note\\WinForm\\WinForm01\\WinForm01\\FrmMain.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "WinForm01\\FrmMain.cs [\u8BBE\u8BA1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-08T01:54:33.541Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

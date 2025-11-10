@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="25.05.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(Image, 'D:/code/githubCode/csharp-note/Halcon素材/metal-parts-01.png')</l>
+<l>get_image_size(Image, Width, Height)</l>
+<c></c>
+<l>dev_close_window()</l>
+<l>dev_open_window_fit_size(0, 0, Width, Height, -1, -1, WindowHandle)</l>
+<l>dev_display(Image)</l>
+<c></c>
+<l>dev_set_draw ('margin')</l>
+<l>dev_set_line_width (2)</l>
+<c></c>
+<l>set_display_font (WindowHandle, 16, 'mono', 'true', 'false')</l>
+<c>* 提取亚像素边缘并显示</c>
+<l>edges_sub_pix (Image, Edges, 'lanser2', 0.5, 40,90)</l>
+<c>* 将 XLD 轮廓分割为线段、圆弧或椭圆弧。</c>
+<l>segment_contours_xld (Edges, ContoursSplit, 'lines_circles', 6, 4, 4)</l>
+<c>* 根据轮廓相对位置进行排序</c>
+<l>sort_contours_xld (ContoursSplit, SortedContours, 'upper_left', 'true', 'column')</l>
+<l>dev_clear_window ()</l>
+<l>dev_display(ContoursSplit)</l>
+<c></c>
+<l>ROI := [115,225,395,535]</l>
+<l>dev_open_window(0, round(Width /2), (ROI[3] - ROI[1]) * 2,  (ROI[2] - ROI[0]) * 2, 'black', WindowHandleZoom)</l>
+<c>* 修改显示图像的区域</c>
+<l>dev_set_part (round(ROI[0]), round(ROI[1]), round(ROI[2]), round(ROI[3]))</l>
+<c></c>
+<l>dev_display(Image)</l>
+<c></c>
+<l>count_obj(SortedContours,Count)</l>
+<l>CountLine := 0</l>
+<l>CountCircle := 0</l>
+<l>for i := 1 to Count by 1</l>
+<l>    select_obj(SortedContours,Item,i)</l>
+<c>    * 获取轮廓的类型; Attrib为-1，轮廓是线条；为0，是拖圆弧；为1，是圆弧</c>
+<l>    get_contour_global_attrib_xld (Item, 'cont_approx', Attrib)</l>
+<c></c>
+<l>    if(Attrib == 1)</l>
+<l>        CountCircle := CountCircle + 1</l>
+<l>        fit_circle_contour_xld (Item, 'algebraic', -1, 0, 0, 5, 2, Row, Column, Radius, StartPhi, EndPhi, PointOrder)</l>
+<l>        gen_ellipse_contour_xld (ContEllipse, Row, Column, StartPhi, Radius, Radius, rad(0), rad(360), 'positive', 1.5)</l>
+<l>        dev_set_color('white')</l>
+<l>        dev_display(ContEllipse)</l>
+<l>        set_tposition(WindowHandleZoom, Row - Radius - 10, Column)</l>
+<l>        write_string (WindowHandleZoom, 'C' + CountCircle)</l>
+<l>        ResultText := 'C' + CountCircle + ': radius = ' + Radius</l>
+<c>    * 线段   </c>
+<l>    else</l>
+<l>        CountLine := CountLine + 1</l>
+<l>        fit_line_contour_xld (Item, 'tukey', -1, 0, 5, 2, RowBegin, ColBegin, RowEnd, ColEnd, Nr, Nc, Dist)</l>
+<l>        gen_contour_polygon_xld (Line, [RowBegin,RowEnd], [ColBegin,ColEnd])</l>
+<l>        dev_set_color('yellow')</l>
+<l>        dev_display (Line)</l>
+<c>        </c>
+<l>        distance_pp (RowBegin, ColBegin, RowEnd, ColEnd, Distance)</l>
+<l>        set_tposition (WindowHandleZoom, (RowBegin + RowEnd) / 2 - Nr * 10, (ColBegin + ColEnd) / 2)</l>
+<l>        write_string(WindowHandleZoom, 'L' + CountLine)</l>
+<l>        ResultText := 'L' + CountLine + ': length = ' + Distance</l>
+<l>    endif</l>
+<l>    set_tposition (WindowHandleZoom, 280 + i * 10, 250)</l>
+<l>    write_string(WindowHandleZoom, ResultText)</l>
+<l>endfor</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

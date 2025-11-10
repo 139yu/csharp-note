@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="25.05.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(Image, 'D:/code/githubCode/csharp-note/Halcon素材/直尺.bmp')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<c></c>
+<l>dev_close_window()</l>
+<l>dev_open_window_fit_size(0, 0, Width, Height, -1, -1, WindowHandle)</l>
+<l>dev_display(Image)</l>
+<c></c>
+<l>dev_set_draw ('margin')</l>
+<l>dev_set_color('cyan')</l>
+<l>dev_set_line_width (1)</l>
+<c></c>
+<l>draw_rectangle2(WindowHandle, Row, Column, Angle, Length1, Length2)</l>
+<l>gen_rectangle2(Rectangle, Row, Column, Angle, Length1, Length2)</l>
+<c></c>
+<l>gen_measure_rectangle2(Row, Column, Angle, Length1, Length2, Width, Height, 'nearest_neighbor', MeasureHandle)</l>
+<c></c>
+<l>measure_pos(Image, MeasureHandle, 1, 80, 'all', 'all', RowEdge, ColumnEdge, Amplitude, Distance)</l>
+<l>ArrayLength := |RowEdge|</l>
+<l>for i := 0 to |RowEdge| - 1 by 1</l>
+<l>    TargetAngle := rad(90) - Angle</l>
+<l>     X1 := ColumnEdge[i] -  Length2 * cos(TargetAngle)</l>
+<l>     Y1 := RowEdge[i] - Length2 * sin(TargetAngle)</l>
+<l>     X2 := ColumnEdge[i] +  Length2 * cos(TargetAngle)</l>
+<l>     Y2 :=  RowEdge[i] + Length2 * sin(TargetAngle)</l>
+<l>     gen_contour_polygon_xld (Contour, [Y1,RowEdge[i],Y2], [X1,ColumnEdge[i],X2])</l>
+<l>endfor</l>
+<c></c>
+<l>read_tuple ('Homat.tup', Homat)</l>
+<c></c>
+<l>affine_trans_point_2d(Homat, ColumnEdge, RowEdge, Qx, Qy)</l>
+<c></c>
+<l>distance_pp(Qy[0], Qx[0], Qy[1], Qx[1], Distance1)</l>
+<l>distance_pp (Qy[0], Qx[0], Qy[2], Qx[2], Distance2)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
